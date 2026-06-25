@@ -9,25 +9,22 @@ const previewVideos: PreviewVideo[] = [
     src: "/video1.mp4",
   },
   {
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
+    src: "/video2.mp4",
   },
   {
-    src: "https://www.w3schools.com/html/movie.mp4",
+    src: "/video3.mp4",
   },
   {
-    src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm",
+    src: "/video4.mp4",
   },
   {
-    src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    src: "/video5.mp4",
   },
   {
-    src: "https://media.w3.org/2010/05/bunny/trailer.mp4",
+    src: "/video6.mp4",
   },
   {
-    src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
-  },
-  {
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
+  
   },
 ];
 
