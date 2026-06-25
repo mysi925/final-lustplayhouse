@@ -1,184 +1,72 @@
-import { useEffect, useState } from "react";
-import { LandingHero } from "@/sections/LandingHero";
-
-const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
-
-type TierOption = {
-  id: string;
-  name: string;
-  price: string;
-  perk: string;
-  features: string[];
-};
-
-const steps = [
-  { id: "1", icon: "💳", copy: "Pick a tier & pay with card or crypto" },
-  { id: "2", icon: "🔗", copy: "Your private channel link appears instantly" },
-  { id: "3", icon: "🚀", copy: "Join your channel — access forever" },
-];
-
-const tiers: TierOption[] = [
+const communityLinks = [
   {
-    id: "tease-15",
-    name: "Tease",
-    price: "$15",
-    perk: "Starter lounge access with a clean entry path.",
-    features: ["Access 1000+ Videos", "Bop Content", "Snapchat Leaks"],
+    id: "free-channel",
+    icon: "📡",
+    title: "Join Free Channel",
+    subtitle: "Official link · previews & drops",
+    href: "https://t.me/+FZv49DSqQ_lmODcx",
   },
   {
-    id: "desire-25",
-    name: "Desire",
-    price: "$25",
-    perk: "Expanded access with higher-quality premium drops.",
-    features: [
-      "Access 3000+ Videos",
-      "Everything in Tease",
-      "Higher Quality Drops",
-      "Real Homemade Content",
-    ],
+    id: "chatroom",
+    icon: "💬",
+    title: "Official Chatroom",
+    subtitle: "Active now · talk to members",
+    href: "https://t.me/+KsCdMv3mCSVlY2Vh",
   },
   {
-    id: "obsession-50",
-    name: "Obsession",
-    price: "$50",
-    perk: "Complete experience for premium members.",
-    features: [
-      "Access 5000+ Videos",
-      "All Categories",
-      "18+ Exclusives",
-      "Priority Updates",
-      "Member Requests",
-      "Real Homemade Content",
-    ],
+    id: "admin",
+    icon: "🛡️",
+    title: "Contact Admin",
+    subtitle: "Support & manual orders",
+    href: "https://t.me/savslayr",
   },
 ];
 
-export const StepsSection = () => {
-  const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
-    if (stored) {
-      setSelectedTier(tiers.find((t) => t.id === stored) ?? tiers[0]);
-    }
-  }, []);
-
-  const handleTierSelect = (tier: TierOption) => {
-    setSelectedTier(tier);
-    window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
-  };
-
+export const ActionLinks = () => {
   return (
-    <div className="w-full mx-auto max-w-[720px] px-4">
-
-      {/* ================= STEPS ================= */}
-      <div className="grid grid-cols-3 gap-5 mb-14">
-
-        {steps.map((step) => (
-          <article
-            key={step.id}
-            className="
-              relative
-              aspect-square
-              min-h-[170px]
-              rounded-2xl
-              border border-emerald-500/20
-              bg-[linear-gradient(165deg,rgba(8,10,10,0.95)_0%,rgba(6,8,8,0.92)_100%)]
-              flex flex-col items-center justify-center
-              p-6
-            "
-          >
-            <span className="absolute top-3 right-3 h-7 w-7 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[12px] flex items-center justify-center">
-              {step.id}
-            </span>
-
-            <span className="text-3xl mb-3">{step.icon}</span>
-
-            <p className="text-sm text-center text-gray-100 leading-5 px-2">
-              {step.copy}
-            </p>
-          </article>
-        ))}
-
-      </div>
-
-      {/* ================= TIERS ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-
-        {tiers.map((tier) => {
-          const isSelected = selectedTier.id === tier.id;
-
-          return (
-            <button
-              key={tier.id}
-              onClick={() => handleTierSelect(tier)}
-              className={`
-                flex flex-col justify-between
-                w-full
-                min-h-[520px]
-
-                rounded-2xl
-                border
-                p-6
-                text-left
-
-                bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.92)_100%)]
-
-                transition-all duration-200
-
-                ${isSelected
-                  ? "border-emerald-300/70 shadow-[0_0_45px_rgba(34,197,94,0.25)]"
-                  : "border-emerald-500/25"}
-              `}
-            >
-
-              <div>
-                <p className="text-xs uppercase font-bold text-emerald-200 tracking-widest">
-                  {tier.name}
-                </p>
-
-                <div className="mt-2 text-5xl font-black text-emerald-300">
-                  {tier.price}
-                </div>
-
-                <div className="mt-6 space-y-2.5">
-                  {tier.features.map((f) => (
-                    <div key={f} className="text-sm text-gray-100">
-                      ✓ {f}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="mt-8 space-y-2">
-                <div className="w-full text-center rounded-xl bg-gradient-to-r from-emerald-200 to-emerald-400 py-3 font-bold text-black">
-                  Get {tier.name}
-                </div>
-
-                <p className="text-xs text-center text-gray-400">
-                  One-time payment · instant access
-                </p>
-              </div>
-
-            </button>
-          );
-        })}
-
-      </div>
-
-      {/* ================= COMMUNITY ================= */}
-      <section className="mt-16 text-center md:text-left">
-        <h3 className="text-[44px] md:text-[52px] font-extrabold text-white leading-tight">
+    <section className="mt-6 space-y-3 md:mt-7 md:space-y-4">
+      <div className="px-1 text-center md:text-left">
+        <h3 className="text-[30px] font-extrabold tracking-tight text-white md:text-[42px] md:leading-[1.02]">
           Join The Community
         </h3>
-
-        <p className="mt-5 text-lg md:text-xl text-gray-300">
-          Free channel, live chatroom & direct support
+        <p className="mt-2 text-sm text-green-200/85 md:text-base">
+          Free channel, live chatroom & direct admin support
         </p>
-      </section>
+      </div>
 
-      <LandingHero />
-    </div>
+      <div className="space-y-3 md:space-y-4">
+        {communityLinks.map((link) => (
+          <a
+            key={link.id}
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            className="group relative flex items-center gap-4 overflow-hidden rounded-[30px] border border-green-400/45 bg-[linear-gradient(180deg,rgba(2,15,9,0.96)_0%,rgba(2,9,6,0.98)_100%)] px-4 py-4 shadow-[0_0_0_1px_rgba(34,197,94,0.12)_inset,0_0_24px_rgba(34,197,94,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:border-green-300/75 hover:shadow-[0_0_0_1px_rgba(134,239,172,0.32)_inset,0_0_34px_rgba(74,222,128,0.26)] md:px-6 md:py-5"
+          >
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-green-300/35 bg-green-500/10 text-2xl shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+              {link.icon}
+            </span>
+
+            <span className="min-w-0 flex-1 text-left">
+              <span className="block text-[27px] font-bold leading-none text-white md:text-[39px] md:leading-none">
+                {link.title}
+              </span>
+              <span className="mt-1 block text-xs text-green-100/70 md:text-sm">
+                {link.subtitle}
+              </span>
+            </span>
+
+            <span
+              aria-hidden="true"
+              className="text-[28px] font-light leading-none text-green-200/75 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-green-100 md:text-[34px]"
+            >
+              →
+            </span>
+
+            <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(74,222,128,0.2)_0%,rgba(0,0,0,0)_46%),radial-gradient(circle_at_88%_100%,rgba(16,185,129,0.16)_0%,rgba(0,0,0,0)_46%)] opacity-80"></span>
+          </a>
+        ))}
+      </div>
+    </section>
   );
 };
