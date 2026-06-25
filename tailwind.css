@@ -1,134 +1,141 @@
-module.exports = {
-  content: [
-    "./src/**/*.{html,js,ts,jsx,tsx}",
-    "app/**/*.{ts,tsx}",
-    "components/**/*.{ts,tsx}",
-  ],
+@font-face {
+  font-family: "STIX Two Text";
+  src: url("https://fonts.gstatic.com/s/stixtwotext/v18/YA9Gr02F12Xkf5whdwKf11l0jbKkeidMTtZ5YiiH3hOfURA.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
 
-  theme: {
-    extend: {
-      colors: {
-        /* =========================
-           BASE SYSTEM COLORS
-        ========================= */
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
 
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+    format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
 
-        /* =========================
-           PREMIUM DARK SURFACES
-        ========================= */
-        surface: "#050505",
-        surface2: "#070707",
-        surface3: "#0a0a0a",
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+    format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
 
-        /* VERY SUBTLE GREEN (minimal UI accent) */
-        glow: "rgba(34, 197, 94, 0.06)",
-        glowStrong: "rgba(34, 197, 94, 0.12)",
-      },
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+    format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
 
-      spacing: {
-        card: "1.25rem",
-      },
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
 
-      aspectRatio: {
-        square: "1 / 1",
-      },
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
 
-      borderRadius: {
-        lg: "1rem",
-        md: "0.85rem",
-        sm: "0.65rem",
-      },
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-      boxShadow: {
-        glow: "0 0 0 1px rgba(255,255,255,0.04), 0 0 40px rgba(0,0,0,0.8)",
-        "glow-hover":
-          "0 0 0 1px rgba(255,255,255,0.08), 0 0 60px rgba(0,0,0,0.9)",
-        neon: "0 0 25px rgba(34, 197, 94, 0.08)",
-      },
+@layer base {
+  :root {
+    --background: 150 30% 5%;
+    --foreground: 140 22% 95%;
 
-      fontFamily: {
-        sans: [
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-        ],
-        heading: [
-          "Space Grotesk",
-          "Inter",
-          "sans-serif",
-        ],
-      },
+    --muted: 152 20% 11%;
+    --muted-foreground: 145 12% 72%;
 
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        fadeUp: {
-          from: { opacity: "0", transform: "translateY(10px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-        glowPulse: {
-          "0%, 100%": { opacity: "0.6" },
-          "50%": { opacity: "1" },
-        },
-      },
+    --popover: 150 30% 6%;
+    --popover-foreground: 140 22% 95%;
 
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        fadeUp: "fadeUp 0.6s ease-out",
-        glowPulse: "glowPulse 2.5s ease-in-out infinite",
-      },
-    },
+    --border: 145 44% 20%;
+    --input: 145 36% 18%;
 
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-  },
+    --card: 150 24% 8%;
+    --card-foreground: 140 22% 95%;
 
-  plugins: [],
-  darkMode: ["class"],
-};
+    --primary: 142 72% 45%;
+    --primary-foreground: 150 20% 8%;
+
+    --secondary: 150 30% 14%;
+    --secondary-foreground: 140 22% 95%;
+
+    --accent: 153 48% 22%;
+    --accent-foreground: 140 24% 92%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --ring: 142 72% 45%;
+
+    --radius: 0.65rem;
+  }
+
+  .dark {
+    --background: 150 30% 5%;
+    --foreground: 140 22% 95%;
+    --muted: 152 20% 11%;
+    --muted-foreground: 145 12% 72%;
+    --accent: 153 48% 22%;
+    --accent-foreground: 140 24% 92%;
+    --popover: 150 30% 6%;
+    --popover-foreground: 140 22% 95%;
+    --border: 145 44% 20%;
+    --input: 145 36% 18%;
+    --card: 150 24% 8%;
+    --card-foreground: 140 22% 95%;
+    --primary: 142 72% 45%;
+    --primary-foreground: 150 20% 8%;
+    --secondary: 150 30% 14%;
+    --secondary-foreground: 140 22% 95%;
+    --destructive: 0 62% 36%;
+    --destructive-foreground: 0 0% 98%;
+    --ring: 142 72% 45%;
+    --radius: 0.65rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(
+        circle at 20% 10%,
+        rgba(34, 197, 94, 0.18),
+        rgba(0, 0, 0, 0) 35%
+      ),
+      radial-gradient(
+        circle at 80% 0%,
+        rgba(16, 185, 129, 0.16),
+        rgba(0, 0, 0, 0) 38%
+      );
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+}
