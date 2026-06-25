@@ -35,7 +35,7 @@ const tiers: TierOption[] = [
     name: "Tease",
     price: "$15",
     perk: "Starter lounge access with a clean entry path.",
-    features: ["Access 750+ Videos", "Bop Content", "Snapchat Leaks"],
+    features: ["Access 1000+ Videos", "Bop Content", "Snapchat Leaks"],
   },
   {
     id: "desire-25",
@@ -43,9 +43,10 @@ const tiers: TierOption[] = [
     price: "$25",
     perk: "Expanded access with higher-quality premium drops.",
     features: [
-      "Access 5000+ Videos",
+      "Access 3000+ Videos",
       "Everything in Tease",
       "Higher Quality Drops",
+      "Snowunny Content"
     ],
   },
   {
@@ -54,11 +55,12 @@ const tiers: TierOption[] = [
     price: "$50",
     perk: "Complete Lust Playhouse experience for premium members.",
     features: [
-      "Access 10000+ Videos",
+      "Access 5000+ Videos",
       "All Categories",
       "Teen Exclusives (18+)",
       "Priority Updates",
       "Member Requests",
+      "Snowbunny Content",
     ],
   },
 ];
@@ -243,7 +245,7 @@ export const StepsSection = () => {
               Selected tier: {selectedTier.name} {selectedTier.price}
             </span>
             <span className="text-[10px] text-gray-300 md:text-[13px]">
-              This tier now carries into the payment guidance and membership
+              These tiers are delivered instantly after checkout.
               CTA.
             </span>
           </div>
