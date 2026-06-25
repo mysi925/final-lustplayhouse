@@ -14,7 +14,7 @@ export const FloatingAdminCta = () => {
           </span>
         </p>
         <a
-          href="https://t.me/doctorbtcxxx"
+          href="https://t.me/savslayr"
           className="items-center bg-[linear-gradient(135deg,rgb(212,175,55)_0%,rgb(249,228,152)_50%,rgb(184,134,11)_100%)] shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(212,175,55,0.2)_0px_0px_15px_0px] box-border caret-transparent text-black gap-x-[6.66667px] flex text-[10px] font-extrabold justify-center tracking-[2px] leading-[15px] min-h-[auto] min-w-[auto] outline-[3px] break-words relative gap-y-[6.66667px] text-center no-underline uppercase w-full overflow-hidden py-[8.33333px] rounded-[3.33333px] md:gap-x-[8.66667px] md:text-[13px] md:tracking-[2.6px] md:leading-[17.3333px] md:gap-y-[8.66667px] md:text-left md:py-[10.8333px] md:rounded-[4.33333px] after:accent-auto after:bg-[linear-gradient(45deg,rgba(0,0,0,0),rgba(255,255,255,0.5),rgba(0,0,0,0))] after:box-border after:caret-transparent after:text-black after:block after:text-[10px] after:not-italic after:normal-nums after:font-extrabold after:h-[200%] after:tracking-[2px] after:leading-[15px] after:list-outside after:list-disc after:outline-[3px] after:break-words after:pointer-events-none after:absolute after:text-center after:no-underline after:indent-[0px] after:uppercase after:rotate-45 after:visible after:w-[200%] after:border-separate after:-left-2/4 after:-top-2/4 after:font-plus_jakarta_sans after:md:text-[13px] after:md:tracking-[2.6px] after:md:leading-[17.3333px] after:md:text-left"
         >
           {" "}
