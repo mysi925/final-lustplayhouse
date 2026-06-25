@@ -67,22 +67,22 @@ const faq = [
   {
     question: "What is Lust Playhouse?",
     answer:
-      "A private digital lounge with curated content drops and exclusive member experiences.",
+      "A collection of private channels full of exclusive content updated daily.",
   },
   {
-    question: "Who is this built for?",
+    question: "How long does it take to gain access?",
     answer:
-      "Members who want a clean, discreet, and premium access flow with clear onboarding.",
+      "After purchase you will be prompted with your links to join immediately.",
   },
   {
-    question: "How do I join the lounge?",
+    question: "How do I join the playhouse?",
     answer:
       "Follow the guided steps on this page and select your membership tier in the join section.",
   },
   {
     question: "Can I upgrade my access later?",
     answer:
-      "Yes. Membership access can be upgraded as new tiers and experiences are released.",
+      "Yes. Membership access can be upgraded as new tiers release. One-time payments & no monthly subscriptions. ",
   },
 ];
 
