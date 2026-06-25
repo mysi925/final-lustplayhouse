@@ -6,7 +6,7 @@ type PreviewVideo = {
 
 const previewVideos: PreviewVideo[] = [
   {
-    src: "/video1.mp4",
+    src: "https://res.cloudinary.com/dvaidypgy/video/upload/v1782374356/video1_zoqpk2.mp4",
   },
   {
     src: "/video2.mp4",
