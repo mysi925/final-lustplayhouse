@@ -1,56 +1,16 @@
 @font-face {
-  font-family: "STIX Two Text";
-  src: url("https://fonts.gstatic.com/s/stixtwotext/v18/YA9Gr02F12Xkf5whdwKf11l0jbKkeidMTtZ5YiiH3hOfURA.woff2")
+  font-family: "Space Grotesk";
+  src: url("https://fonts.gstatic.com/s/spacegrotesk/v16/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2")
     format("woff2");
-  font-weight: 700;
+  font-weight: 300 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
+  font-family: "Inter";
+  src: url("https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTcviYw.woff2")
     format("woff2");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
-    format("woff2");
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
-    format("woff2");
-  font-weight: 800;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
-    format("woff2");
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
-    format("woff2");
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2")
-    format("woff2");
-  font-weight: 700;
+  font-weight: 100 900;
   font-style: normal;
 }
 
@@ -58,63 +18,87 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================
+   FUTURISTIC DESIGN SYSTEM
+========================= */
+
 @layer base {
   :root {
-    --background: 150 30% 5%;
-    --foreground: 140 22% 95%;
+    /* CORE BACKGROUND (deep black tech feel) */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 95%;
 
-    --muted: 152 20% 11%;
-    --muted-foreground: 145 12% 72%;
+    /* SURFACES */
+    --muted: 0 0% 7%;
+    --muted-foreground: 0 0% 65%;
 
-    --popover: 150 30% 6%;
-    --popover-foreground: 140 22% 95%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 95%;
 
-    --border: 145 44% 20%;
-    --input: 145 36% 18%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 95%;
 
-    --card: 150 24% 8%;
-    --card-foreground: 140 22% 95%;
+    /* BORDER (subtle neon edge) */
+    --border: 145 80% 18%;
+    --input: 145 60% 14%;
 
-    --primary: 142 72% 45%;
-    --primary-foreground: 150 20% 8%;
+    /* PRIMARY (sharp neon green) */
+    --primary: 145 85% 52%;
+    --primary-foreground: 0 0% 6%;
 
-    --secondary: 150 30% 14%;
-    --secondary-foreground: 140 22% 95%;
+    /* SECONDARY (dark tech green tint) */
+    --secondary: 150 15% 10%;
+    --secondary-foreground: 0 0% 92%;
 
-    --accent: 153 48% 22%;
-    --accent-foreground: 140 24% 92%;
+    /* ACCENT (electric glow green) */
+    --accent: 145 90% 45%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84% 60%;
+    /* DESTRUCTIVE */
+    --destructive: 0 72% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --ring: 142 72% 45%;
+    /* RING (focus glow) */
+    --ring: 145 90% 50%;
 
-    --radius: 0.65rem;
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 150 30% 5%;
-    --foreground: 140 22% 95%;
-    --muted: 152 20% 11%;
-    --muted-foreground: 145 12% 72%;
-    --accent: 153 48% 22%;
-    --accent-foreground: 140 24% 92%;
-    --popover: 150 30% 6%;
-    --popover-foreground: 140 22% 95%;
-    --border: 145 44% 20%;
-    --input: 145 36% 18%;
-    --card: 150 24% 8%;
-    --card-foreground: 140 22% 95%;
-    --primary: 142 72% 45%;
-    --primary-foreground: 150 20% 8%;
-    --secondary: 150 30% 14%;
-    --secondary-foreground: 140 22% 95%;
-    --destructive: 0 62% 36%;
+    --background: 0 0% 3%;
+    --foreground: 0 0% 95%;
+
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 65%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 95%;
+
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 95%;
+
+    --border: 145 80% 18%;
+    --input: 145 60% 14%;
+
+    --primary: 145 85% 52%;
+    --primary-foreground: 0 0% 6%;
+
+    --secondary: 150 15% 10%;
+    --secondary-foreground: 0 0% 92%;
+
+    --accent: 145 90% 45%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 98%;
-    --ring: 142 72% 45%;
-    --radius: 0.65rem;
+
+    --ring: 145 90% 50%;
   }
 }
+
+/* =========================
+   GLOBAL BASE STYLES
+========================= */
 
 @layer base {
   * {
@@ -123,19 +107,34 @@
 
   body {
     @apply bg-background text-foreground;
+
+    /* FUTURISTIC DARK BACKGROUND (cleaner, less “foggy”) */
     background-image:
       radial-gradient(
-        circle at 20% 10%,
-        rgba(34, 197, 94, 0.18),
-        rgba(0, 0, 0, 0) 35%
+        circle at 15% 10%,
+        rgba(34, 197, 94, 0.10),
+        transparent 40%
       ),
       radial-gradient(
-        circle at 80% 0%,
-        rgba(16, 185, 129, 0.16),
-        rgba(0, 0, 0, 0) 38%
+        circle at 85% 5%,
+        rgba(34, 197, 94, 0.08),
+        transparent 45%
       );
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  button {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
   }
 }
