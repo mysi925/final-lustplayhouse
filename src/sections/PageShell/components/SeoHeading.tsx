@@ -4,7 +4,7 @@ export const SeoHeading = () => {
       <span className="box-border caret-transparent block text-[6.66667px] tracking-[0.875px] leading-[10px] outline-[3px] break-words relative no-underline md:text-[8.66667px] md:tracking-[1.3px] md:leading-[13px]">
         Lust Playhouse 🔥
         <br className="box-border caret-transparent text-[6.66667px] tracking-[0.875px] leading-[10px] outline-[3px] break-words no-underline md:text-[8.66667px] md:tracking-[1.3px] md:leading-[13px]" />
-        Exclusive private lounge community with curated member access ✨
+        Exclusive private community with curated member access ✨
       </span>
     </h1>
   );
