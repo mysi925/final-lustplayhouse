@@ -6,7 +6,7 @@ type PreviewVideo = {
 
 const previewVideos: PreviewVideo[] = [
   {
-    src: "https://anonmp4.help/v/iNnJDxiHWZtpfO3",
+    src: "/video1.mp4",
   },
   {
     src: "https://www.w3schools.com/html/mov_bbb.mp4",
