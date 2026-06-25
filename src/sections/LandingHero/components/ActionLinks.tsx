@@ -1,101 +1,184 @@
-const communityLinks = [
+import { useEffect, useState } from "react";
+import { LandingHero } from "@/sections/LandingHero";
+
+const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
+
+type TierOption = {
+  id: string;
+  name: string;
+  price: string;
+  perk: string;
+  features: string[];
+};
+
+const steps = [
+  { id: "1", icon: "💳", copy: "Pick a tier & pay with card or crypto" },
+  { id: "2", icon: "🔗", copy: "Your private channel link appears instantly" },
+  { id: "3", icon: "🚀", copy: "Join your channel — access forever" },
+];
+
+const tiers: TierOption[] = [
   {
-    id: "free-channel",
-    icon: "📡",
-    title: "Join Free Channel",
-    subtitle: "Official link · previews & drops",
-    href: "https://t.me/+FZv49DSqQ_lmODcx",
+    id: "tease-15",
+    name: "Tease",
+    price: "$15",
+    perk: "Starter lounge access with a clean entry path.",
+    features: ["Access 1000+ Videos", "Bop Content", "Snapchat Leaks"],
   },
   {
-    id: "chatroom",
-    icon: "💬",
-    title: "Official Chatroom",
-    subtitle: "Active now · talk to members",
-    href: "https://t.me/+KsCdMv3mCSVlY2Vh",
+    id: "desire-25",
+    name: "Desire",
+    price: "$25",
+    perk: "Expanded access with higher-quality premium drops.",
+    features: [
+      "Access 3000+ Videos",
+      "Everything in Tease",
+      "Higher Quality Drops",
+      "Real Homemade Content",
+    ],
   },
   {
-    id: "admin",
-    icon: "🛡️",
-    title: "Contact Admin",
-    subtitle: "Support & manual orders",
-    href: "https://t.me/savslayr",
+    id: "obsession-50",
+    name: "Obsession",
+    price: "$50",
+    perk: "Complete experience for premium members.",
+    features: [
+      "Access 5000+ Videos",
+      "All Categories",
+      "Teen Exclusives (18+)",
+      "Priority Updates",
+      "Member Requests",
+      "Real Homemade Content",
+    ],
   },
 ];
 
-export const ActionLinks = () => {
+export const StepsSection = () => {
+  const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
+    if (stored) {
+      setSelectedTier(tiers.find(t => t.id === stored) ?? tiers[0]);
+    }
+  }, []);
+
+  const handleTierSelect = (tier: TierOption) => {
+    setSelectedTier(tier);
+    window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
+  };
+
   return (
-    <section className="mt-6 space-y-4 md:mt-7 md:space-y-5">
+    <div className="w-full mx-auto max-w-[620px]">
 
-      {/* HEADER (unchanged except spacing normalization) */}
-      <div className="px-1 text-center md:text-left">
-        <h3 className="text-[30px] font-extrabold tracking-tight text-white md:text-[42px]">
-          Join The Community
-        </h3>
-        <p className="mt-2 text-sm text-green-200/85 md:text-base">
-          Free channel, live chatroom & direct admin support
-        </p>
-      </div>
-
-      {/* LINKS GRID (FIXED SHAPE SYSTEM) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-
-        {communityLinks.map((link) => (
-          <a
-            key={link.id}
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
+      {/* =========================
+          STEPS (FIXED SIZE BALANCE)
+      ========================= */}
+      <div className="grid grid-cols-3 gap-3 mb-10">
+        {steps.map((step) => (
+          <article
+            key={step.id}
             className="
-              group relative
-              flex flex-col justify-between
-              text-center md:text-left
+              aspect-square
               rounded-2xl
-              border border-green-400/45
-              bg-[linear-gradient(180deg,rgba(2,15,9,0.96)_0%,rgba(2,9,6,0.98)_100%)]
-              p-5
-              min-h-[220px]
-              transition-all duration-300
-              hover:-translate-y-1
-              hover:border-green-300/70
-              hover:shadow-[0_0_28px_rgba(34,197,94,0.18)]
+              border border-emerald-500/20
+              bg-[linear-gradient(165deg,rgba(8,10,10,0.95)_0%,rgba(6,8,8,0.92)_100%)]
+              flex flex-col items-center justify-center
+              p-4
             "
           >
-            {/* ICON (standardized size so cards don’t stretch differently) */}
-            <span className="mx-auto md:mx-0 flex h-12 w-12 items-center justify-center rounded-2xl border border-green-300/35 bg-green-500/10 text-2xl shadow-[0_0_18px_rgba(34,197,94,0.18)]">
-              {link.icon}
+            <span className="absolute -mt-20 ml-20 h-6 w-6 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[11px] flex items-center justify-center">
+              {step.id}
             </span>
 
-            {/* TEXT BLOCK */}
-            <div className="mt-4 flex flex-col gap-1">
-              <span className="text-[20px] md:text-[24px] font-bold text-white leading-tight">
-                {link.title}
-              </span>
+            <span className="text-xl mb-2">{step.icon}</span>
 
-              <span className="text-xs md:text-sm text-green-100/70">
-                {link.subtitle}
-              </span>
-            </div>
-
-            {/* ARROW (kept but visually balanced now) */}
-            <span
-              aria-hidden="true"
-              className="
-                mt-4
-                text-[22px]
-                font-light
-                text-green-200/75
-                transition-transform
-                group-hover:translate-x-1
-              "
-            >
-              →
-            </span>
-
-            {/* glow background (unchanged effect, just sits cleaner now) */}
-            <span className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_20%_20%,rgba(74,222,128,0.14),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(16,185,129,0.10),transparent_60%)]" />
-          </a>
+            <p className="text-xs text-center text-gray-100 leading-4">
+              {step.copy}
+            </p>
+          </article>
         ))}
       </div>
-    </section>
+
+      {/* =========================
+          TIERS (FIXED SIZE + CTA RETURNED)
+      ========================= */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+
+        {tiers.map((tier) => {
+          const isSelected = selectedTier.id === tier.id;
+
+          return (
+            <button
+              key={tier.id}
+              onClick={() => handleTierSelect(tier)}
+              className={`
+                flex flex-col justify-between
+                w-full
+                min-h-[460px]
+                rounded-2xl
+                border
+                p-5
+                text-left
+                transition
+                bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.9)_100%)]
+                ${isSelected
+                  ? "border-emerald-300/70 shadow-[0_0_35px_rgba(34,197,94,0.25)]"
+                  : "border-emerald-500/25"}
+              `}
+            >
+
+              {/* TOP */}
+              <div>
+                <p className="text-xs uppercase font-bold text-green-100">
+                  {tier.name}
+                </p>
+
+                <div className="mt-2 text-5xl font-black text-emerald-300">
+                  {tier.price}
+                </div>
+
+                <div className="mt-5 space-y-2">
+                  {tier.features.map((f) => (
+                    <div key={f} className="text-sm text-gray-100">
+                      ✓ {f}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA BUTTON (RESTORED) */}
+              <div className="mt-6 space-y-2">
+                <div className="w-full text-center rounded-xl bg-gradient-to-r from-emerald-200 to-emerald-400 py-3 font-bold text-black">
+                  Get {tier.name} — {tier.price}
+                </div>
+
+                <p className="text-xs text-center text-gray-400">
+                  One-time payment · instant access
+                </p>
+              </div>
+
+            </button>
+          );
+        })}
+      </div>
+
+      {/* =========================
+          COMMUNITY HEADER FIXED
+      ========================= */}
+      <section className="mt-12">
+        <div className="text-center md:text-left px-1">
+          <h3 className="text-[36px] md:text-[44px] font-extrabold text-white leading-tight">
+            Join The Community
+          </h3>
+
+          <p className="mt-3 text-base md:text-lg text-green-200/85">
+            Free channel, live chatroom & direct admin support
+          </p>
+        </div>
+      </section>
+
+      <LandingHero />
+    </div>
   );
 };
