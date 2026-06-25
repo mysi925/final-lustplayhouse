@@ -82,7 +82,7 @@ const faq = [
   {
     question: "Can I upgrade my access later?",
     answer:
-      "Yes. Membership access can be upgraded as new tiers release. One-time payments & no monthly subscriptions. ",
+      "Yes. Membership access can be upgraded as new tiers release. One-time payment & No monthly subscriptions. ",
   },
 ];
 
