@@ -69,34 +69,32 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[680px] px-4">
+    <div className="w-full mx-auto max-w-[720px] px-4">
 
       {/* ================= STEPS ================= */}
-      <div className="grid grid-cols-3 gap-4 mb-12">
+      <div className="grid grid-cols-3 gap-5 mb-14">
 
         {steps.map((step) => (
           <article
             key={step.id}
             className="
               relative
-              aspect-[4/3]
+              aspect-square
+              min-h-[170px]
               rounded-2xl
               border border-emerald-500/20
               bg-[linear-gradient(165deg,rgba(8,10,10,0.95)_0%,rgba(6,8,8,0.92)_100%)]
-
               flex flex-col items-center justify-center
-              p-5
-              min-h-[150px]
+              p-6
             "
           >
-            {/* FIXED BAD POSITIONING */}
             <span className="absolute top-3 right-3 h-7 w-7 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[12px] flex items-center justify-center">
               {step.id}
             </span>
 
-            <span className="text-2xl mb-2">{step.icon}</span>
+            <span className="text-3xl mb-3">{step.icon}</span>
 
-            <p className="text-sm text-center text-gray-100 leading-5">
+            <p className="text-sm text-center text-gray-100 leading-5 px-2">
               {step.copy}
             </p>
           </article>
@@ -105,7 +103,7 @@ export const StepsSection = () => {
       </div>
 
       {/* ================= TIERS ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
 
         {tiers.map((tier) => {
           const isSelected = selectedTier.id === tier.id;
@@ -117,7 +115,7 @@ export const StepsSection = () => {
               className={`
                 flex flex-col justify-between
                 w-full
-                min-h-[480px]
+                min-h-[520px]
 
                 rounded-2xl
                 border
@@ -126,9 +124,10 @@ export const StepsSection = () => {
 
                 bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.92)_100%)]
 
-                transition
+                transition-all duration-200
+
                 ${isSelected
-                  ? "border-emerald-300/70 shadow-[0_0_40px_rgba(34,197,94,0.25)]"
+                  ? "border-emerald-300/70 shadow-[0_0_45px_rgba(34,197,94,0.25)]"
                   : "border-emerald-500/25"}
               `}
             >
@@ -152,7 +151,7 @@ export const StepsSection = () => {
               </div>
 
               {/* CTA */}
-              <div className="mt-6 space-y-2">
+              <div className="mt-8 space-y-2">
                 <div className="w-full text-center rounded-xl bg-gradient-to-r from-emerald-200 to-emerald-400 py-3 font-bold text-black">
                   Get {tier.name}
                 </div>
@@ -168,13 +167,13 @@ export const StepsSection = () => {
 
       </div>
 
-      {/* ================= COMMUNITY HEADER FIX ================= */}
-      <section className="mt-14 text-center md:text-left">
-        <h3 className="text-[40px] md:text-[46px] font-extrabold text-white leading-tight">
+      {/* ================= COMMUNITY ================= */}
+      <section className="mt-16 text-center md:text-left">
+        <h3 className="text-[44px] md:text-[52px] font-extrabold text-white leading-tight">
           Join The Community
         </h3>
 
-        <p className="mt-4 text-base md:text-lg text-gray-300">
+        <p className="mt-5 text-lg md:text-xl text-gray-300">
           Free channel, live chatroom & direct support
         </p>
       </section>
