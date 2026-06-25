@@ -4,21 +4,21 @@ const communityLinks = [
     icon: "📡",
     title: "Join Free Channel",
     subtitle: "Official link · previews & drops",
-    href: "https://t.me/",
+    href: "https://t.me/+FZv49DSqQ_lmODcx",
   },
   {
     id: "chatroom",
     icon: "💬",
     title: "Official Chatroom",
     subtitle: "Active now · talk to members",
-    href: "https://t.me/",
+    href: "https://t.me/+KsCdMv3mCSVlY2Vh",
   },
   {
     id: "admin",
     icon: "🛡️",
     title: "Contact Admin",
     subtitle: "Support & manual orders",
-    href: "https://t.me/",
+    href: "https://t.me/savslayr",
   },
 ];
 
