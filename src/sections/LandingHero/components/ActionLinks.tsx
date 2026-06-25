@@ -45,7 +45,7 @@ const tiers: TierOption[] = [
     features: [
       "Access 5000+ Videos",
       "All Categories",
-      "Teen Exclusives (18+)",
+      "18+ Exclusives",
       "Priority Updates",
       "Member Requests",
       "Real Homemade Content",
@@ -59,7 +59,7 @@ export const StepsSection = () => {
   useEffect(() => {
     const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
     if (stored) {
-      setSelectedTier(tiers.find(t => t.id === stored) ?? tiers[0]);
+      setSelectedTier(tiers.find((t) => t.id === stored) ?? tiers[0]);
     }
   }, []);
 
@@ -69,41 +69,43 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[620px]">
+    <div className="w-full mx-auto max-w-[680px] px-4">
 
-      {/* =========================
-          STEPS (FIXED SIZE BALANCE)
-      ========================= */}
-      <div className="grid grid-cols-3 gap-3 mb-10">
+      {/* ================= STEPS ================= */}
+      <div className="grid grid-cols-3 gap-4 mb-12">
+
         {steps.map((step) => (
           <article
             key={step.id}
             className="
-              aspect-square
+              relative
+              aspect-[4/3]
               rounded-2xl
               border border-emerald-500/20
               bg-[linear-gradient(165deg,rgba(8,10,10,0.95)_0%,rgba(6,8,8,0.92)_100%)]
+
               flex flex-col items-center justify-center
-              p-4
+              p-5
+              min-h-[150px]
             "
           >
-            <span className="absolute -mt-20 ml-20 h-6 w-6 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[11px] flex items-center justify-center">
+            {/* FIXED BAD POSITIONING */}
+            <span className="absolute top-3 right-3 h-7 w-7 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[12px] flex items-center justify-center">
               {step.id}
             </span>
 
-            <span className="text-xl mb-2">{step.icon}</span>
+            <span className="text-2xl mb-2">{step.icon}</span>
 
-            <p className="text-xs text-center text-gray-100 leading-4">
+            <p className="text-sm text-center text-gray-100 leading-5">
               {step.copy}
             </p>
           </article>
         ))}
+
       </div>
 
-      {/* =========================
-          TIERS (FIXED SIZE + CTA RETURNED)
-      ========================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+      {/* ================= TIERS ================= */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
 
         {tiers.map((tier) => {
           const isSelected = selectedTier.id === tier.id;
@@ -115,22 +117,24 @@ export const StepsSection = () => {
               className={`
                 flex flex-col justify-between
                 w-full
-                min-h-[460px]
+                min-h-[480px]
+
                 rounded-2xl
                 border
-                p-5
+                p-6
                 text-left
+
+                bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.92)_100%)]
+
                 transition
-                bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.9)_100%)]
                 ${isSelected
-                  ? "border-emerald-300/70 shadow-[0_0_35px_rgba(34,197,94,0.25)]"
+                  ? "border-emerald-300/70 shadow-[0_0_40px_rgba(34,197,94,0.25)]"
                   : "border-emerald-500/25"}
               `}
             >
 
-              {/* TOP */}
               <div>
-                <p className="text-xs uppercase font-bold text-green-100">
+                <p className="text-xs uppercase font-bold text-emerald-200 tracking-widest">
                   {tier.name}
                 </p>
 
@@ -138,7 +142,7 @@ export const StepsSection = () => {
                   {tier.price}
                 </div>
 
-                <div className="mt-5 space-y-2">
+                <div className="mt-6 space-y-2.5">
                   {tier.features.map((f) => (
                     <div key={f} className="text-sm text-gray-100">
                       ✓ {f}
@@ -147,10 +151,10 @@ export const StepsSection = () => {
                 </div>
               </div>
 
-              {/* CTA BUTTON (RESTORED) */}
+              {/* CTA */}
               <div className="mt-6 space-y-2">
                 <div className="w-full text-center rounded-xl bg-gradient-to-r from-emerald-200 to-emerald-400 py-3 font-bold text-black">
-                  Get {tier.name} — {tier.price}
+                  Get {tier.name}
                 </div>
 
                 <p className="text-xs text-center text-gray-400">
@@ -161,21 +165,18 @@ export const StepsSection = () => {
             </button>
           );
         })}
+
       </div>
 
-      {/* =========================
-          COMMUNITY HEADER FIXED
-      ========================= */}
-      <section className="mt-12">
-        <div className="text-center md:text-left px-1">
-          <h3 className="text-[36px] md:text-[44px] font-extrabold text-white leading-tight">
-            Join The Community
-          </h3>
+      {/* ================= COMMUNITY HEADER FIX ================= */}
+      <section className="mt-14 text-center md:text-left">
+        <h3 className="text-[40px] md:text-[46px] font-extrabold text-white leading-tight">
+          Join The Community
+        </h3>
 
-          <p className="mt-3 text-base md:text-lg text-green-200/85">
-            Free channel, live chatroom & direct admin support
-          </p>
-        </div>
+        <p className="mt-4 text-base md:text-lg text-gray-300">
+          Free channel, live chatroom & direct support
+        </p>
       </section>
 
       <LandingHero />
