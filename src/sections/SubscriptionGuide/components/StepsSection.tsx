@@ -41,35 +41,29 @@ const tiers: TierOption[] = [
     id: "obsession-50",
     name: "Obsession",
     price: "$50",
-    perk: "Complete Lust Playhouse experience for premium members.",
+    perk: "Complete premium experience.",
     features: [
       "Access 5000+ Videos",
       "All Categories",
-      "Teen Exclusives (18+)",
+      "18+ Exclusives",
       "Priority Updates",
       "Member Requests",
-      "Real Homemade Content",
     ],
   },
 ];
 
 const faq = [
   {
-    question: "What is Lust Playhouse?",
-    answer: "A collection of private channels full of exclusive content updated daily.",
+    question: "What is this?",
+    answer: "A private membership with exclusive content updated daily.",
   },
   {
-    question: "How long does it take to gain access?",
-    answer: "After purchase you will be prompted with your links to join immediately.",
+    question: "When do I get access?",
+    answer: "Instantly after checkout via private link.",
   },
   {
-    question: "How do I join the playhouse?",
-    answer: "Follow the guided steps on this page and select your membership tier in the join section.",
-  },
-  {
-    question: "Can I upgrade my access later?",
-    answer:
-      "Yes. Membership access can be upgraded as new tiers release. One-time payment & No monthly subscriptions.",
+    question: "Can I upgrade?",
+    answer: "Yes, you can upgrade anytime.",
   },
 ];
 
@@ -77,8 +71,10 @@ export const StepsSection = () => {
   const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
 
   useEffect(() => {
-    const storedTierId = window.localStorage.getItem(TIER_STORAGE_KEY);
-    if (storedTierId) setSelectedTier(tiers.find(t => t.id === storedTierId) ?? tiers[0]);
+    const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
+    if (stored) {
+      setSelectedTier(tiers.find((t) => t.id === stored) ?? tiers[0]);
+    }
   }, []);
 
   const handleTierSelect = (tier: TierOption) => {
@@ -87,62 +83,72 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[520px] text-center md:text-left">
+    <div className="w-full mx-auto max-w-[720px] px-4 text-center md:text-left">
 
-      {/* STEPS */}
-      <div className="grid grid-cols-3 gap-2 mb-6">
+      {/* ================= STEPS ================= */}
+      <div className="grid grid-cols-3 gap-4 mb-10">
         {steps.map((step) => (
           <article
             key={step.id}
             className="
               relative
-              aspect-square
+              aspect-[4/3]
               w-full
               rounded-2xl
               border border-emerald-500/20
-              bg-[linear-gradient(165deg,rgba(8,10,10,0.95)_0%,rgba(6,8,8,0.92)_52%,rgba(6,16,11,0.88)_100%)]
+              bg-[linear-gradient(165deg,rgba(8,10,10,0.96)_0%,rgba(6,8,8,0.92)_60%,rgba(6,16,11,0.88)_100%)]
               flex flex-col items-center justify-center
-              p-3
+              p-5
+              min-h-[140px]
             "
           >
-            <span className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[11px] flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[12px] flex items-center justify-center">
               {step.id}
             </span>
 
-            <span className="text-lg mb-2">{step.icon}</span>
+            <span className="text-2xl mb-2">{step.icon}</span>
 
-            <p className="text-[10px] leading-4 text-gray-100 text-center">
+            <p className="text-xs md:text-sm text-gray-100 text-center leading-5">
               {step.copy}
             </p>
           </article>
         ))}
       </div>
 
-      {/* TIERS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
+      {/* ================= TIER TITLE ================= */}
+      <div className="mb-6">
+        <h2 className="text-2xl md:text-4xl font-black text-white">
+          Choose Your Tier
+        </h2>
+        <p className="text-gray-400 mt-2 text-sm md:text-base">
+          One-time payment · instant access
+        </p>
+      </div>
+
+      {/* ================= TIERS ================= */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+
         {tiers.map((tier) => {
           const isSelected = selectedTier.id === tier.id;
 
           return (
-            <button
+            <div
               key={tier.id}
-              onClick={() => handleTierSelect(tier)}
               className={`
-                w-full
-                h-full
-                min-h-[420px]
                 flex flex-col justify-between
                 rounded-2xl
                 border
-                bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.9)_42%,rgba(8,20,14,0.92)_100%)]
                 p-5
-                text-left
+                min-h-[460px]
+                bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.92)_50%,rgba(8,20,14,0.92)_100%)]
                 transition
-                ${isSelected ? "border-emerald-300/70" : "border-emerald-500/25"}
+                ${isSelected ? "border-emerald-300/70 shadow-[0_0_35px_rgba(34,197,94,0.25)]" : "border-emerald-500/20"}
               `}
             >
+
+              {/* TOP */}
               <div>
-                <p className="text-xs font-bold uppercase text-green-100">
+                <p className="text-xs uppercase tracking-widest text-emerald-200">
                   {tier.name}
                 </p>
 
@@ -150,34 +156,63 @@ export const StepsSection = () => {
                   {tier.price}
                 </div>
 
-                <div className="mt-4 space-y-2">
+                <p className="text-xs text-gray-400 mt-2">
+                  {tier.perk}
+                </p>
+
+                <div className="mt-5 space-y-2">
                   {tier.features.map((f) => (
-                    <div key={f} className="text-sm text-gray-100">
+                    <div key={f} className="text-sm text-gray-200">
                       ✓ {f}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-6 text-center text-sm font-bold text-white">
-                Select {tier.name}
+              {/* BUTTON */}
+              <div className="mt-6 space-y-2">
+                <button
+                  onClick={() => handleTierSelect(tier)}
+                  className="
+                    w-full
+                    rounded-xl
+                    bg-emerald-400
+                    text-black
+                    font-bold
+                    py-3
+                    hover:bg-emerald-300
+                    transition
+                  "
+                >
+                  Buy {tier.name}
+                </button>
+
+                <p className="text-xs text-gray-400 text-center">
+                  Instant delivery after payment
+                </p>
               </div>
-            </button>
+            </div>
           );
         })}
       </div>
 
-      {/* FAQ */}
-      <div className="mt-8 grid gap-3">
+      {/* ================= FAQ ================= */}
+      <div className="mt-12 space-y-4">
+        <h3 className="text-2xl font-bold text-white">
+          FAQ
+        </h3>
+
         {faq.map((item) => (
           <div
             key={item.question}
-            className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-4"
+            className="rounded-xl border border-emerald-500/20 bg-black/40 p-4"
           >
-            <p className="text-xs font-bold uppercase text-emerald-200">
+            <p className="text-sm font-bold text-emerald-200">
               {item.question}
             </p>
-            <p className="text-sm text-gray-300 mt-2">{item.answer}</p>
+            <p className="text-sm text-gray-300 mt-2">
+              {item.answer}
+            </p>
           </div>
         ))}
       </div>
