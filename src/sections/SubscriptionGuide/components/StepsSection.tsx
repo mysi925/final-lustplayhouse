@@ -46,7 +46,7 @@ const tiers: TierOption[] = [
       "Access 3000+ Videos",
       "Everything in Tease",
       "Higher Quality Drops",
-      "Snowunny Content"
+      "Real Homemade Content"
     ],
   },
   {
@@ -60,7 +60,7 @@ const tiers: TierOption[] = [
       "Teen Exclusives (18+)",
       "Priority Updates",
       "Member Requests",
-      "Snowbunny Content",
+      "Real Homemade Content",
     ],
   },
 ];
