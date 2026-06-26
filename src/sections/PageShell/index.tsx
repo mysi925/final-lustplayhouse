@@ -2,8 +2,13 @@ import { PreviewCard } from "@/sections/PageShell/components/PreviewCard";
 
 export const PageShell = () => {
   return (
-    <div className="items-center box-border caret-transparent flex flex-col text-[13.3333px] justify-center leading-5 min-h-[1000px] min-w-[auto] outline-[3px] break-words relative no-underline z-[2] overflow-hidden p-[13.3333px] md:text-[17.3333px] md:leading-[26px] md:p-[17.3333px]">
-      <PreviewCard />
+    <div className="relative w-full min-h-screen flex flex-col items-center justify-center text-[13.3333px] md:text-[17.3333px] leading-5 md:leading-[26px] p-[13.3333px] md:p-[17.3333px] break-words caret-transparent">
+
+      {/* CONTENT */}
+      <div className="relative z-10 w-full flex flex-col items-center">
+        <PreviewCard />
+      </div>
+
     </div>
   );
 };
