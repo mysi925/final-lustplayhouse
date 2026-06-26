@@ -33,7 +33,7 @@ export const PreviewCard = () => {
           <div className="leading-none">
             <h1
               className="
-                bg-gradient-to-r from-white via-red-200 to-red-500
+                bg-gradient-to-r from-white via-purple-200 to-purple-500
                 bg-clip-text text-transparent
                 text-[54px] font-black uppercase tracking-[0.08em]
                 drop-shadow-[0_0_18px_rgba(220,38,38,0.35)]
@@ -46,7 +46,7 @@ export const PreviewCard = () => {
             <p
               className="
                 mt-1 text-[13px] font-semibold uppercase tracking-[0.52em]
-                text-red-100/90
+                text-purple-100/90
                 md:text-[16px]
               "
             >
