@@ -27,8 +27,10 @@ app.post("/create-payment-link", async (req, res) => {
   try {
     const { amountCents } = req.body;
 
-    if (!amountCents || amountCents <= 0) {
-      return res.status(400).json({ error: "Invalid amount" });
+    if (!amountCents || typeof amountCents !== "number" || amountCents <= 0) {
+      return res.status(400).json({
+        error: "Invalid amountCents",
+      });
     }
 
     const response = await fetch(
@@ -61,18 +63,38 @@ app.post("/create-payment-link", async (req, res) => {
 
     const data = await response.json();
 
+    // 🔥 IMPORTANT: show real Square errors
+    if (!response.ok) {
+      console.error("❌ Square API Error:");
+      console.error(JSON.stringify(data, null, 2));
+
+      return res.status(500).json({
+        error: "Square request failed",
+        details: data,
+      });
+    }
+
     const url = data?.payment_link?.url;
 
     if (!url) {
-      console.error("Square error:", data);
-      return res.status(500).json({ error: "Failed to create payment link" });
+      console.error("❌ Missing payment link in response:");
+      console.error(data);
+
+      return res.status(500).json({
+        error: "No payment link returned",
+        details: data,
+      });
     }
 
     return res.json({ url });
 
   } catch (err) {
-    console.error("Server error:", err);
-    res.status(500).json({ error: "Server error" });
+    console.error("❌ Server crash:");
+    console.error(err);
+
+    return res.status(500).json({
+      error: "Server error",
+    });
   }
 });
 
