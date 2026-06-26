@@ -10,6 +10,7 @@ type TierOption = {
   perk: string;
   features: string[];
   amount: number;
+  highlight?: boolean;
 };
 
 /* ================= DATA ================= */
@@ -43,6 +44,7 @@ const tiers: TierOption[] = [
     amount: 5000,
     perk: "Full access",
     features: ["5000+ Videos", "All Categories", "Priority Updates"],
+    highlight: true,
   },
 ];
 
@@ -68,7 +70,7 @@ const CommunityButtons = () => {
 
         <div className="mt-6 space-y-4">
 
-          <a
+          
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
@@ -84,7 +86,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          <a
+          
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
@@ -100,7 +102,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          <a
+          
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
@@ -173,7 +175,7 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[720px] px-4 text-center">
+    <div className="w-full mx-auto max-w-[960px] px-4 text-center">
 
       {/* STEPS */}
       <div className="grid grid-cols-3 gap-4 mb-10">
@@ -188,25 +190,47 @@ export const StepsSection = () => {
         ))}
       </div>
 
+      {/* TIERS HEADER */}
+      <div className="mb-8">
+        <h2 className="text-3xl md:text-4xl font-black text-white">
+          Choose Your Tier
+        </h2>
+        <p className="mt-2 text-sm md:text-base text-gray-400">
+          One-time payment · lifetime access · instant delivery
+        </p>
+      </div>
+
       {/* TIERS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className="rounded-2xl border border-red-500/20 bg-black/60 p-5 flex flex-col justify-between"
+            className={`relative rounded-3xl p-7 md:p-8 flex flex-col justify-between transition
+              ${
+                tier.highlight
+                  ? "border-2 border-red-500 bg-black/80 shadow-[0_0_50px_rgba(239,68,68,0.45)] md:scale-105"
+                  : "border border-red-500/20 bg-black/60"
+              }
+            `}
           >
+            {tier.highlight && (
+              <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-red-500 text-black text-[10px] font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(239,68,68,0.6)]">
+                ★ Highest Tier
+              </div>
+            )}
+
             <div>
-              <p className="text-xs uppercase text-red-300 tracking-widest">
+              <p className="text-sm uppercase text-red-300 tracking-widest mt-2">
                 {tier.name}
               </p>
 
-              <div className="text-3xl font-black text-red-400 mt-2">
+              <div className="text-4xl md:text-5xl font-black text-red-400 mt-3">
                 {tier.price}
               </div>
 
-              <div className="mt-4 space-y-2">
+              <div className="mt-6 space-y-3">
                 {tier.features.map((f) => (
-                  <div key={f} className="text-sm text-gray-200">
+                  <div key={f} className="text-base text-gray-200">
                     ✓ {f}
                   </div>
                 ))}
@@ -215,7 +239,7 @@ export const StepsSection = () => {
 
             <button
               onClick={() => handleBuy(tier)}
-              className="mt-6 w-full py-3 rounded-xl bg-red-500 text-black font-bold hover:bg-red-400 transition"
+              className="mt-8 w-full py-4 rounded-xl bg-red-500 text-black font-bold text-lg hover:bg-red-400 transition"
             >
               Buy {tier.name}
             </button>
