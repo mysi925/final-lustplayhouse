@@ -11,37 +11,20 @@ export const App = () => {
         <Route
           path="/"
           element={
-            <div className="accent-auto text-white min-h-screen relative overflow-x-hidden bg-black">
-              
-              {/* GLOBAL BACKGROUND LAYER */}
-              <div className="absolute inset-0 pointer-events-none">
-                {/* base gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black" />
-
-                {/* top glow */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] bg-cyan-500/10 blur-[120px] rounded-full" />
-
-                {/* bottom glow */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] bg-purple-500/10 blur-[120px] rounded-full" />
-              </div>
-
-              {/* CONTENT */}
-              <div className="relative">
-                <PageShell />
-              </div>
-
+            <div className="min-h-screen text-white bg-black overflow-x-hidden">
+              <PageShell />
             </div>
           }
         />
 
-        {/* CHECKOUT PAGE */}
+        {/* CHECKOUT */}
         <Route path="/checkout" element={<Checkout />} />
 
-        {/* CATCH-ALL */}
+        {/* 404 */}
         <Route
           path="*"
           element={
-            <div className="bg-black text-white min-h-screen flex items-center justify-center">
+            <div className="min-h-screen bg-black text-white flex items-center justify-center">
               Page Not Found
             </div>
           }
