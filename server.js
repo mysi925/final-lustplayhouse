@@ -1,36 +1,11 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import crypto from "crypto";
-
-dotenv.config();
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-/* =========================
-   PRICE MAP (TIERS)
-========================= */
-
-const PRICES = {
-  "tease-15": 1500,
-  "desire-25": 2500,
-  "obsession-50": 5000,
-};
-
-/* =========================
-   CHECKOUT ROUTE
-========================= */
-
-app.get("/checkout", async (req, res) => {
+app.post("/create-payment-link", async (req, res) => {
   try {
-    const tier = req.query.tier;
+    const { amountCents } = req.body;
 
-    const amount = PRICES[tier];
+    console.log("Incoming request:", amountCents);
 
-    if (!amount) {
-      return res.status(400).send("Invalid tier");
+    if (!amountCents || amountCents <= 0) {
+      return res.status(400).json({ error: "Invalid amount" });
     }
 
     const response = await fetch(
@@ -48,10 +23,10 @@ app.get("/checkout", async (req, res) => {
             location_id: process.env.SQUARE_LOCATION_ID,
             line_items: [
               {
-                name: tier,
+                name: "Membership Access",
                 quantity: "1",
                 base_price_money: {
-                  amount,
+                  amount: amountCents,
                   currency: "USD",
                 },
               },
@@ -63,32 +38,31 @@ app.get("/checkout", async (req, res) => {
 
     const data = await response.json();
 
+    console.log("SQUARE RESPONSE:", JSON.stringify(data, null, 2));
+
+    if (!response.ok) {
+      return res.status(500).json({
+        error: "Square API failed",
+        squareError: data,
+      });
+    }
+
     const url = data?.payment_link?.url;
 
     if (!url) {
-      console.error(data);
-      return res.status(500).send("Square failed");
+      return res.status(500).json({
+        error: "No payment link returned",
+        squareData: data,
+      });
     }
 
-    // 🔥 redirect user to Square checkout
-    res.redirect(url);
+    return res.json({ url });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
+    console.error("SERVER ERROR:", err);
+    res.status(500).json({
+      error: "Server crash",
+      message: err.message,
+    });
   }
-});
-
-/* =========================
-   HEALTH CHECK
-========================= */
-
-app.get("/", (req, res) => {
-  res.send("Backend running");
-});
-
-const PORT = process.env.PORT || 3001;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
