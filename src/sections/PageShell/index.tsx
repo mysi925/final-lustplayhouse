@@ -2,10 +2,12 @@ import { PreviewCard } from "@/sections/PageShell/components/PreviewCard";
 
 export const PageShell = () => {
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-center text-[13.3333px] md:text-[17.3333px] leading-5 md:leading-[26px] p-[13.3333px] md:p-[17.3333px] break-words caret-transparent">
+    <div className="relative w-full min-h-screen flex items-center justify-center">
 
-      {/* CONTENT */}
-      <div className="relative z-10 w-full flex flex-col items-center">
+      {/* FORCE TRANSPARENCY BACKGROUND TEST */}
+      <div className="absolute inset-0 bg-transparent pointer-events-none" />
+
+      <div className="relative z-10 w-full">
         <PreviewCard />
       </div>
 
