@@ -11,14 +11,24 @@ export const App = () => {
         <Route
           path="/"
           element={
-            <body className="accent-auto bg-zinc-950 text-white">
+            <div className="accent-auto bg-zinc-950 text-white min-h-screen">
               <PageShell />
-            </body>
+            </div>
           }
         />
 
         {/* CHECKOUT PAGE */}
         <Route path="/checkout" element={<Checkout />} />
+
+        {/* CATCH-ALL (IMPORTANT FOR DEPLOYMENT) */}
+        <Route
+          path="*"
+          element={
+            <div className="bg-black text-white min-h-screen flex items-center justify-center">
+              Page Not Found
+            </div>
+          }
+        />
 
       </Routes>
     </BrowserRouter>
