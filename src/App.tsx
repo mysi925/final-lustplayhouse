@@ -8,3 +8,5 @@ export const App = () => {
   );
 };
 import Checkout from "./pages/Checkout";
+
+<Route path="/checkout" element={<Checkout />} />
