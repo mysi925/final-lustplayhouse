@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import crypto from "crypto";
-import { Client, Environment } from "square";
+import pkg from "square";
+
+const { Client, Environment } = pkg;
 
 dotenv.config();
 
