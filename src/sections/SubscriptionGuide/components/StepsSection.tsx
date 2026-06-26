@@ -46,7 +46,7 @@ const tiers: TierOption[] = [
   },
 ];
 
-/* ================= COMMUNITY SECTION FIXED ================= */
+/* ================= COMMUNITY SECTION (FIXED JSX) ================= */
 const CommunityButtons = () => {
   return (
     <div className="mt-16 flex justify-center">
@@ -68,7 +68,7 @@ const CommunityButtons = () => {
 
         <div className="mt-6 space-y-4">
 
-          
+          <a
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
@@ -84,7 +84,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          
+          <a
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
@@ -100,7 +100,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          
+          <a
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
@@ -234,7 +234,6 @@ export const StepsSection = () => {
               >
                 Get {tier.name} — {tier.price}
               </button>
-              <p className="text-[11px] text-gray-500">or pay with crypto</p>
             </div>
           </div>
         ))}
