@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { Client, Environment } from "@square/square";
+import crypto from "crypto";
+import { Client, Environment } from "square";
 
 dotenv.config();
 
@@ -16,9 +17,6 @@ const client = new Client({
 
 const { checkoutApi } = client;
 
-/**
- * CREATE PAYMENT LINK
- */
 app.post("/create-payment-link", async (req, res) => {
   try {
     const { amountCents } = req.body;
