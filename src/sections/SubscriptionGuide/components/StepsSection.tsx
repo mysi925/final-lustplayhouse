@@ -2,44 +2,57 @@ import { useEffect, useState } from "react";
 
 const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
 
-/* ================= COMMUNITY BUTTONS ================= */
+/* ================= COMMUNITY SECTION ================= */
 const CommunityButtons = () => {
   return (
-    <div className="mt-16 grid gap-4 md:grid-cols-3">
+    <div className="mt-16 rounded-2xl border border-red-500/20 bg-black/40 p-6 md:p-8">
+      
+      <h3 className="text-lg font-bold text-red-300 text-center mb-6">
+        Join the Community
+      </h3>
 
-      <a
-        href="https://t.me/+FZv49DSqQ_lmODcx"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
-      >
-        <div className="text-2xl mb-2">📡</div>
-        <div className="text-white font-bold">Free Channel</div>
-        <div className="text-xs text-gray-400 mt-1">Previews & drops</div>
-      </a>
+      <div className="grid gap-4 md:grid-cols-3">
 
-      <a
-        href="https://t.me/+KsCdMv3mCSVlY2Vh"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
-      >
-        <div className="text-2xl mb-2">💬</div>
-        <div className="text-white font-bold">Chatroom</div>
-        <div className="text-xs text-gray-400 mt-1">Talk with members</div>
-      </a>
+        <a
+          href="https://t.me/+FZv49DSqQ_lmODcx"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-2xl border border-red-500/20 bg-black/60 p-5 text-center hover:border-red-400/60 transition"
+        >
+          <div className="text-2xl mb-2">📡</div>
+          <div className="text-white font-bold">Free Channel</div>
+          <div className="text-xs text-gray-400 mt-1">
+            Previews & drops
+          </div>
+        </a>
 
-      <a
-        href="https://t.me/savslayr"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
-      >
-        <div className="text-2xl mb-2">🛡️</div>
-        <div className="text-white font-bold">Admin Support</div>
-        <div className="text-xs text-gray-400 mt-1">Help & orders</div>
-      </a>
+        <a
+          href="https://t.me/+KsCdMv3mCSVlY2Vh"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-2xl border border-red-500/20 bg-black/60 p-5 text-center hover:border-red-400/60 transition"
+        >
+          <div className="text-2xl mb-2">💬</div>
+          <div className="text-white font-bold">Chatroom</div>
+          <div className="text-xs text-gray-400 mt-1">
+            Talk with members
+          </div>
+        </a>
 
+        <a
+          href="https://t.me/savslayr"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-2xl border border-red-500/20 bg-black/60 p-5 text-center hover:border-red-400/60 transition"
+        >
+          <div className="text-2xl mb-2">🛡️</div>
+          <div className="text-white font-bold">Admin Support</div>
+          <div className="text-xs text-gray-400 mt-1">
+            Help & orders
+          </div>
+        </a>
+
+      </div>
     </div>
   );
 };
@@ -99,7 +112,6 @@ export const StepsSection = () => {
     }
   }, []);
 
-  /* ================= PAYMENT FLOW (FIXED) ================= */
   const handleBuy = async (tier: TierOption) => {
     try {
       window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
@@ -108,9 +120,7 @@ export const StepsSection = () => {
         "https://lustplayhouse.cloud/create-payment-link",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             amountCents: tier.amount,
           }),
@@ -136,17 +146,17 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[720px] px-4 text-center">
+    <div className="w-full mx-auto max-w-[720px] px-4 text-center text-white">
 
       {/* ================= STEPS ================= */}
       <div className="grid grid-cols-3 gap-4 mb-10">
         {steps.map((step) => (
           <div
             key={step.id}
-            className="rounded-2xl border border-red-500/20 bg-black/40 p-5"
+            className="rounded-2xl border border-red-500/20 bg-black/50 p-5"
           >
             <div className="text-2xl mb-2">{step.icon}</div>
-            <div className="text-sm text-white">{step.copy}</div>
+            <div className="text-sm">{step.copy}</div>
           </div>
         ))}
       </div>
@@ -156,7 +166,7 @@ export const StepsSection = () => {
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className="rounded-2xl border border-red-500/20 bg-black/40 p-5 flex flex-col justify-between"
+            className="rounded-2xl border border-red-500/20 bg-black/50 p-5 flex flex-col justify-between"
           >
             <div>
               <p className="text-xs uppercase text-red-300 tracking-widest">
@@ -187,18 +197,20 @@ export const StepsSection = () => {
       </div>
 
       {/* ================= FAQ ================= */}
-      <div className="mt-12 space-y-4">
-        <h3 className="text-2xl font-bold text-white">FAQ</h3>
+      <div className="mt-12 space-y-4 text-left">
+        <h3 className="text-2xl font-bold text-red-300 text-center">
+          FAQ
+        </h3>
 
-        <div className="rounded-xl border border-red-500/20 bg-black/40 p-4 text-gray-300 text-sm">
+        <div className="rounded-xl border border-red-500/20 bg-black/50 p-4 text-gray-300 text-sm">
           Instant access after payment
         </div>
 
-        <div className="rounded-xl border border-red-500/20 bg-black/40 p-4 text-gray-300 text-sm">
+        <div className="rounded-xl border border-red-500/20 bg-black/50 p-4 text-gray-300 text-sm">
           Upgrade anytime
         </div>
 
-        <div className="rounded-xl border border-red-500/20 bg-black/40 p-4 text-gray-300 text-sm">
+        <div className="rounded-xl border border-red-500/20 bg-black/50 p-4 text-gray-300 text-sm">
           Secure checkout via backend
         </div>
       </div>
