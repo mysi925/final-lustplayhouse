@@ -185,37 +185,37 @@ export const StepsSection = () => {
         One-time payment · lifetime access · instant delivery
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 items-stretch max-w-[900px] mx-auto">
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className={`relative rounded-2xl p-5 flex flex-col justify-between w-full aspect-square md:w-[300px] md:h-[300px] md:aspect-auto overflow-hidden ${
+            className={`relative rounded-2xl p-6 flex flex-col justify-between min-h-[420px] ${
               tier.highlight
-                ? "border border-red-500 bg-[#0d0606] shadow-[0_0_70px_rgba(239,68,68,0.35)] md:scale-105"
+                ? "border border-red-500 bg-[#0d0606] shadow-[0_0_70px_rgba(239,68,68,0.35)] md:-mt-3 md:mb-[-12px]"
                 : "border border-white/10 bg-[#0a0a0a]"
             }`}
           >
             {tier.highlight && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-black text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
                 ★&nbsp;Highest&nbsp;Tier
               </span>
             )}
 
             <div>
-              <p className="text-xs font-semibold text-red-300 uppercase tracking-wide">
+              <p className="text-sm font-bold text-white uppercase tracking-wide">
                 {tier.name}
               </p>
 
-              <div className="mt-1 flex items-baseline justify-center gap-1.5">
-                <span className="text-2xl font-black text-red-400">
+              <div className="mt-2 flex items-baseline justify-center gap-2">
+                <span className="text-4xl font-black text-red-400">
                   {tier.price}
                 </span>
-                <span className="text-[10px] text-gray-500 font-medium">one-time</span>
+                <span className="text-xs text-gray-500 font-medium">one-time</span>
               </div>
 
-              <div className="mt-2 space-y-1 text-gray-300 text-[11px]">
+              <div className="mt-5 space-y-2.5 text-white text-sm">
                 {tier.features.map((f) => (
-                  <div key={f} className="flex items-center justify-center gap-1.5">
+                  <div key={f} className="flex items-center justify-center gap-2">
                     <span className="text-red-400">✓</span>
                     <span>{f}</span>
                   </div>
@@ -223,18 +223,31 @@ export const StepsSection = () => {
               </div>
             </div>
 
-            <button
-              onClick={() => handleBuy(tier)}
-              className={`w-full py-2 rounded-xl font-bold text-xs transition ${
-                tier.highlight
-                  ? "bg-gradient-to-r from-red-600 to-red-400 text-white hover:opacity-90"
-                  : "bg-red-500 text-black hover:bg-red-400"
-              }`}
-            >
-              Get {tier.name} — {tier.price}
-            </button>
+            <div className="mt-6 space-y-2">
+              <button
+                onClick={() => handleBuy(tier)}
+                className={`w-full py-3 rounded-xl font-bold text-sm transition ${
+                  tier.highlight
+                    ? "bg-gradient-to-r from-red-600 to-red-400 text-black hover:opacity-90"
+                    : "bg-red-500 text-black hover:bg-red-400"
+                }`}
+              >
+                Get {tier.name} — {tier.price}
+              </button>
+              <p className="text-[11px] text-gray-500">or pay with crypto</p>
+            </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-8 flex items-center justify-center gap-3 text-sm text-gray-400">
+        <span>Accepted:</span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black border border-white/15 text-white text-xs font-medium">
+          💳 Card
+        </span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black border border-white/15 text-white text-xs font-medium">
+          ₵ Crypto
+        </span>
       </div>
 
       <CommunityButtons />
