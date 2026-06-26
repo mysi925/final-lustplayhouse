@@ -60,7 +60,7 @@ module.exports = {
       },
 
       /* =========================
-         SHAPE SYSTEM (SQUARE FRIENDLY UI)
+         SHAPE SYSTEM
       ========================= */
       borderRadius: {
         lg: "0.9rem",
@@ -88,11 +88,11 @@ module.exports = {
       },
 
       /* =========================
-         TYPOGRAPHY (INTER FONT)
+         TYPOGRAPHY (INTER)
       ========================= */
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        heading: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        heading: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
 
       /* =========================
@@ -116,9 +116,6 @@ module.exports = {
       },
     },
 
-    /* =========================
-       CONTAINER SETTINGS
-    ========================= */
     container: {
       center: true,
       padding: "2rem",
