@@ -2,52 +2,35 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import crypto from "crypto";
-import path from "path";
-import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
-
-/* =========================
-   CORE MIDDLEWARE
-========================= */
-
-// allow frontend to talk to backend
-app.use(cors({
-  origin: [
-    "https://lustplayhouse.xyz",
-    "http://localhost:5173"
-  ]
-}));
-
+app.use(cors());
 app.use(express.json());
 
 /* =========================
-   ES MODULE FIX
+   PRICE MAP (TIERS)
 ========================= */
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const PRICES = {
+  "tease-15": 1500,
+  "desire-25": 2500,
+  "obsession-50": 5000,
+};
 
 /* =========================
-   HEALTH CHECK
+   CHECKOUT ROUTE
 ========================= */
 
-app.get("/health", (req, res) => {
-  res.send("OK");
-});
-
-/* =========================
-   SQUARE PAYMENT LINK
-========================= */
-
-app.post("/create-payment-link", async (req, res) => {
+app.get("/checkout", async (req, res) => {
   try {
-    const { amountCents } = req.body;
+    const tier = req.query.tier;
 
-    if (!amountCents || amountCents <= 0) {
-      return res.status(400).json({ error: "Invalid amount" });
+    const amount = PRICES[tier];
+
+    if (!amount) {
+      return res.status(400).send("Invalid tier");
     }
 
     const response = await fetch(
@@ -65,10 +48,10 @@ app.post("/create-payment-link", async (req, res) => {
             location_id: process.env.SQUARE_LOCATION_ID,
             line_items: [
               {
-                name: "Membership Access",
+                name: tier,
                 quantity: "1",
                 base_price_money: {
-                  amount: amountCents,
+                  amount,
                   currency: "USD",
                 },
               },
@@ -80,35 +63,29 @@ app.post("/create-payment-link", async (req, res) => {
 
     const data = await response.json();
 
-    const link = data?.payment_link?.url;
+    const url = data?.payment_link?.url;
 
-    if (!link) {
-      console.error("Square error:", data);
-      return res.status(500).json({ error: "Failed to create payment link" });
+    if (!url) {
+      console.error(data);
+      return res.status(500).send("Square failed");
     }
 
-    // send checkout URL back to frontend
-    res.json({ url: link });
+    // 🔥 redirect user to Square checkout
+    res.redirect(url);
 
   } catch (err) {
-    console.error("Server error:", err);
-    res.status(500).json({ error: "Server error" });
+    console.error(err);
+    res.status(500).send("Server error");
   }
 });
 
 /* =========================
-   SERVE FRONTEND (REACT BUILD)
+   HEALTH CHECK
 ========================= */
 
-app.use(express.static(path.join(__dirname, "dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+app.get("/", (req, res) => {
+  res.send("Backend running");
 });
-
-/* =========================
-   START SERVER
-========================= */
 
 const PORT = process.env.PORT || 3001;
 
