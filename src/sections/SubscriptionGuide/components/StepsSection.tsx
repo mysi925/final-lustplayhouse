@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { LandingHero } from "@/sections/LandingHero";
 
 const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
 
@@ -10,8 +9,6 @@ const CommunityButtons = () => {
 
       <a
         href="https://t.me/+FZv49DSqQ_lmODcx"
-        target="_blank"
-        rel="noreferrer"
         className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
       >
         <div className="text-2xl mb-2">📡</div>
@@ -21,8 +18,6 @@ const CommunityButtons = () => {
 
       <a
         href="https://t.me/+KsCdMv3mCSVlY2Vh"
-        target="_blank"
-        rel="noreferrer"
         className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
       >
         <div className="text-2xl mb-2">💬</div>
@@ -32,8 +27,6 @@ const CommunityButtons = () => {
 
       <a
         href="https://t.me/savslayr"
-        target="_blank"
-        rel="noreferrer"
         className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
       >
         <div className="text-2xl mb-2">🛡️</div>
@@ -45,28 +38,18 @@ const CommunityButtons = () => {
   );
 };
 
-type TierOption = {
-  id: string;
-  name: string;
-  price: string;
-  perk: string;
-  features: string[];
-  amount: number;
-};
-
 const steps = [
   { id: "1", icon: "💳", copy: "Pick a tier & pay securely" },
   { id: "2", icon: "🔗", copy: "Redirect to secure checkout instantly" },
   { id: "3", icon: "🚀", copy: "Get instant access after payment" },
 ];
 
-const tiers: TierOption[] = [
+const tiers = [
   {
     id: "tease-15",
     name: "Tease",
     price: "$15",
     amount: 1500,
-    perk: "Starter lounge access with a clean entry path.",
     features: ["Access 1000+ Videos", "Bop Content", "Snapchat Leaks"],
   },
   {
@@ -74,12 +57,10 @@ const tiers: TierOption[] = [
     name: "Desire",
     price: "$25",
     amount: 2500,
-    perk: "Expanded access with higher-quality premium drops.",
     features: [
       "Access 3000+ Videos",
       "Everything in Tease",
       "Higher Quality Drops",
-      "Real Homemade Content",
     ],
   },
   {
@@ -87,72 +68,77 @@ const tiers: TierOption[] = [
     name: "Obsession",
     price: "$50",
     amount: 5000,
-    perk: "Complete premium experience.",
-    features: [
-      "Access 5000+ Videos",
-      "All Categories",
-      "18+ Exclusives",
-      "Priority Updates",
-      "Member Requests",
-    ],
-  },
-];
-
-const faq = [
-  {
-    question: "What is this?",
-    answer: "A private membership with exclusive content updated daily.",
-  },
-  {
-    question: "When do I get access?",
-    answer: "Instantly after checkout.",
-  },
-  {
-    question: "Can I upgrade?",
-    answer: "Yes anytime.",
+    features: ["Access 5000+ Videos", "All Categories", "Priority Updates"],
   },
 ];
 
 export const StepsSection = () => {
-  const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
+  const [selectedTier] = useState(tiers[0]);
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
-    if (stored) {
-      setSelectedTier(tiers.find((t) => t.id === stored) ?? tiers[0]);
-    }
-  }, []);
+  const handleBuy = (tier) => {
+    window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
 
-  const handleBuy = async (tier: TierOption) => {
-    try {
-      window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
-
-      const res = await fetch(
-        "https://lustplayhouse.cloud/create-payment-link",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amountCents: tier.amount }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(JSON.stringify(data));
-        return;
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("No checkout URL returned");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Server error. Try again.");
-    }
+    window.location.href =
+      "https://lustplayhouse.cloud/create-payment-link?tier=" + tier.id;
   };
 
   return (
-    <div
+    <div className="w-full mx-auto max-w-[720px] px-4 text-center">
+
+      {/* STEPS */}
+      <div className="grid grid-cols-3 gap-4 mb-10">
+        {steps.map((step) => (
+          <div
+            key={step.id}
+            className="rounded-2xl border border-red-500/20 bg-black/40 p-5"
+          >
+            <div className="text-2xl mb-2">{step.icon}</div>
+            <div className="text-white text-sm">{step.copy}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* TIERS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {tiers.map((tier) => (
+          <div
+            key={tier.id}
+            className="rounded-2xl border border-red-500/20 bg-black/40 p-5 flex flex-col justify-between"
+          >
+            <div>
+              <p className="text-xs text-red-300 uppercase">{tier.name}</p>
+
+              <div className="text-3xl font-bold text-red-400 mt-2">
+                {tier.price}
+              </div>
+
+              <div className="mt-4 space-y-2">
+                {tier.features.map((f) => (
+                  <div key={f} className="text-sm text-gray-200">
+                    ✓ {f}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleBuy(tier)}
+              className="mt-6 w-full py-3 rounded-xl bg-red-500 text-black font-bold hover:bg-red-400"
+            >
+              Buy
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* FAQ */}
+      <div className="mt-12 text-gray-300 text-sm space-y-2">
+        <p className="text-white font-bold text-lg">FAQ</p>
+        <p>Instant access after payment</p>
+        <p>Upgrade anytime</p>
+      </div>
+
+      <CommunityButtons />
+    </div>
+  );
+};
