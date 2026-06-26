@@ -23,6 +23,7 @@ export const PreviewCard = () => {
         {/* ================= HEADER ================= */}
         <div className="mb-5 select-none text-center">
           <div className="leading-none">
+
             <h1
               className="
                 uppercase
@@ -35,11 +36,11 @@ export const PreviewCard = () => {
                 bg-clip-text
                 text-transparent
 
-                [text-shadow:
-                  0_0_6px_rgba(138,61,255,.95),
-                  0_0_14px_rgba(165,72,255,.85),
-                  0_0_28px_rgba(194,75,255,.65),
-                  0_0_44px_rgba(255,95,156,.45)]
+                drop-shadow-[0_0_4px_rgba(167,72,255,.95)]
+                drop-shadow-[0_0_10px_rgba(194,75,255,.95)]
+                drop-shadow-[0_0_22px_rgba(228,75,168,.85)]
+                drop-shadow-[0_0_42px_rgba(255,95,156,.65)]
+                drop-shadow-[0_0_70px_rgba(194,75,255,.55)]
               "
             >
               LUST
@@ -58,13 +59,14 @@ export const PreviewCard = () => {
                 bg-clip-text
                 text-transparent
 
-                [text-shadow:
-                  0_0_5px_rgba(138,61,255,.8),
-                  0_0_12px_rgba(194,75,255,.55)]
+                drop-shadow-[0_0_3px_rgba(167,72,255,.9)]
+                drop-shadow-[0_0_8px_rgba(194,75,255,.8)]
+                drop-shadow-[0_0_16px_rgba(255,95,156,.55)]
               "
             >
               PLAYHOUSE
             </p>
+
           </div>
         </div>
 
