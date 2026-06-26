@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { LandingHero } from "@/sections/LandingHero";
 
 const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
 
@@ -6,46 +7,72 @@ type TierOption = {
   id: string;
   name: string;
   price: string;
-  amountCents: number;
+  perk: string;
   features: string[];
+  amount: number;
 };
+
+const steps = [
+  { id: "1", icon: "💳", copy: "Pick a tier & pay securely" },
+  { id: "2", icon: "🔗", copy: "Redirect to secure checkout instantly" },
+  { id: "3", icon: "🚀", copy: "Get instant access after payment" },
+];
 
 const tiers: TierOption[] = [
   {
     id: "tease-15",
     name: "Tease",
     price: "$15",
-    amountCents: 1500,
+    amount: 1500,
+    perk: "Starter lounge access with a clean entry path.",
     features: ["Access 1000+ Videos", "Bop Content", "Snapchat Leaks"],
   },
   {
     id: "desire-25",
     name: "Desire",
     price: "$25",
-    amountCents: 2500,
+    amount: 2500,
+    perk: "Expanded access with higher-quality premium drops.",
     features: [
       "Access 3000+ Videos",
       "Everything in Tease",
       "Higher Quality Drops",
+      "Real Homemade Content",
     ],
   },
   {
     id: "obsession-50",
     name: "Obsession",
     price: "$50",
-    amountCents: 5000,
+    amount: 5000,
+    perk: "Complete premium experience.",
     features: [
       "Access 5000+ Videos",
       "All Categories",
       "18+ Exclusives",
       "Priority Updates",
+      "Member Requests",
     ],
+  },
+];
+
+const faq = [
+  {
+    question: "What is this?",
+    answer: "A private membership with exclusive content updated daily.",
+  },
+  {
+    question: "When do I get access?",
+    answer: "Instantly after checkout.",
+  },
+  {
+    question: "Can I upgrade?",
+    answer: "Yes anytime.",
   },
 ];
 
 export const StepsSection = () => {
   const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
-  const [loading, setLoading] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
@@ -54,82 +81,124 @@ export const StepsSection = () => {
     }
   }, []);
 
-  const handleCheckout = async (tier: TierOption) => {
-    try {
-      setLoading(tier.id);
+  const handleBuy = (tier: TierOption) => {
+    // save selection
+    window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
 
-      const res = await fetch(
-        "https://lustplayhouse.cloud/create-payment-link",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amountCents: tier.amountCents,
-          }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Payment link failed. Try again.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong.");
-    } finally {
-      setLoading(null);
-    }
+    // redirect to checkout page
+    window.location.href = "/checkout";
   };
 
   return (
-    <div className="w-full mx-auto max-w-[680px] px-4">
+    <div className="w-full mx-auto max-w-[720px] px-4 text-center md:text-left">
 
-      {/* TIERS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {/* ================= STEPS ================= */}
+      <div className="grid grid-cols-3 gap-4 mb-10">
+        {steps.map((step) => (
+          <article
+            key={step.id}
+            className="
+              relative
+              aspect-[4/3]
+              rounded-2xl
+              border border-emerald-500/20
+              bg-[linear-gradient(165deg,rgba(8,10,10,0.96)_0%,rgba(6,8,8,0.92)_100%)]
+              flex flex-col items-center justify-center
+              p-5
+              min-h-[140px]
+            "
+          >
+            <span className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[12px] flex items-center justify-center">
+              {step.id}
+            </span>
 
-        {tiers.map((tier) => {
-          const isLoading = loading === tier.id;
+            <span className="text-2xl mb-2">{step.icon}</span>
 
-          return (
-            <div
-              key={tier.id}
-              className="flex flex-col justify-between rounded-2xl border border-emerald-500/25 bg-[#050a08] p-6 min-h-[420px]"
-            >
+            <p className="text-xs md:text-sm text-gray-100 text-center">
+              {step.copy}
+            </p>
+          </article>
+        ))}
+      </div>
 
-              <div>
-                <h3 className="text-emerald-300 text-2xl font-bold">
-                  {tier.name}
-                </h3>
+      {/* ================= TIERS ================= */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                <p className="text-white text-4xl font-black mt-2">
-                  {tier.price}
-                </p>
+        {tiers.map((tier) => (
+          <div
+            key={tier.id}
+            className="
+              flex flex-col justify-between
+              rounded-2xl
+              border border-emerald-500/20
+              p-5
+              min-h-[460px]
+              bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.92)_100%)]
+            "
+          >
+            <div>
+              <p className="text-xs uppercase text-emerald-200 tracking-widest">
+                {tier.name}
+              </p>
 
-                <div className="mt-5 space-y-2 text-gray-200 text-sm">
-                  {tier.features.map((f) => (
-                    <div key={f}>✓ {f}</div>
-                  ))}
-                </div>
+              <div className="mt-2 text-4xl font-black text-emerald-300">
+                {tier.price}
               </div>
 
-              {/* BUTTON */}
-              <button
-                onClick={() => handleCheckout(tier)}
-                disabled={isLoading}
-                className="mt-6 w-full rounded-xl bg-emerald-400 text-black font-bold py-3 hover:bg-emerald-300 transition disabled:opacity-50"
-              >
-                {isLoading ? "Redirecting..." : `Get ${tier.name}`}
-              </button>
+              <p className="text-xs text-gray-400 mt-2">
+                {tier.perk}
+              </p>
 
+              <div className="mt-5 space-y-2">
+                {tier.features.map((f) => (
+                  <div key={f} className="text-sm text-gray-200">
+                    ✓ {f}
+                  </div>
+                ))}
+              </div>
             </div>
-          );
-        })}
+
+            {/* BUTTON */}
+            <button
+              onClick={() => handleBuy(tier)}
+              className="
+                mt-6
+                w-full
+                rounded-xl
+                bg-emerald-400
+                text-black
+                font-bold
+                py-3
+                hover:bg-emerald-300
+                transition
+              "
+            >
+              Buy {tier.name}
+            </button>
+          </div>
+        ))}
       </div>
+
+      {/* ================= FAQ ================= */}
+      <div className="mt-12 space-y-4">
+        <h3 className="text-2xl font-bold text-white">FAQ</h3>
+
+        {faq.map((item) => (
+          <div
+            key={item.question}
+            className="rounded-xl border border-emerald-500/20 bg-black/40 p-4"
+          >
+            <p className="text-sm font-bold text-emerald-200">
+              {item.question}
+            </p>
+            <p className="text-sm text-gray-300 mt-2">
+              {item.answer}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <LandingHero />
     </div>
   );
 };
