@@ -31,7 +31,7 @@ export const HeroImage = () => {
     <div className="flex flex-col items-center mb-10">
       <div className="relative flex items-center justify-center w-full">
 
-        {/* LEFT ARROW (OUTSIDE CARD) */}
+        {/* LEFT ARROW */}
         <button
           onClick={goPrev}
           className="
@@ -39,16 +39,16 @@ export const HeroImage = () => {
             absolute left-2 md:left-6 top-1/2 -translate-y-1/2
             z-20
             w-10 h-10 rounded-full
-            bg-black/60 border border-white/15
+            bg-[#0d0f1a]/80 border border-white/15
             items-center justify-center
-            text-white/80 hover:text-white hover:bg-black/80
+            text-white/80 hover:text-white hover:bg-[#0d0f1a]
             text-xl
           "
         >
           ‹
         </button>
 
-        {/* RIGHT ARROW (OUTSIDE CARD) */}
+        {/* RIGHT ARROW */}
         <button
           onClick={goNext}
           className="
@@ -56,9 +56,9 @@ export const HeroImage = () => {
             absolute right-2 md:right-6 top-1/2 -translate-y-1/2
             z-20
             w-10 h-10 rounded-full
-            bg-black/60 border border-white/15
+            bg-[#0d0f1a]/80 border border-white/15
             items-center justify-center
-            text-white/80 hover:text-white hover:bg-black/80
+            text-white/80 hover:text-white hover:bg-[#0d0f1a]
             text-xl
           "
         >
@@ -86,7 +86,7 @@ export const HeroImage = () => {
             allow="autoplay"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-[#080a14]/50" />
         </div>
 
         {/* RIGHT PEEK CARD */}
@@ -110,7 +110,7 @@ export const HeroImage = () => {
             allow="autoplay"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-[#080a14]/50" />
         </div>
 
         {/* MAIN CARD */}
@@ -121,9 +121,9 @@ export const HeroImage = () => {
             h-[340px] md:h-[420px]
             rounded-[28px]
             overflow-hidden
-            bg-black
-            border border-red-500/60
-            shadow-[0_0_45px_rgba(239,68,68,0.45)]
+            bg-[#080a14]
+            border border-purple-500/60
+            shadow-[0_0_45px_rgba(168,85,247,0.45)]
           "
         >
           {/* MUTE TOGGLE */}
@@ -132,16 +132,16 @@ export const HeroImage = () => {
             className="
               absolute top-3 right-3 z-30
               w-9 h-9 rounded-full
-              bg-black/60 border border-white/20
+              bg-[#0d0f1a]/60 border border-white/20
               flex items-center justify-center
               text-white text-sm
-              hover:bg-black/80
+              hover:bg-[#0d0f1a]/80
             "
           >
             {muted ? "🔇" : "🔊"}
           </button>
 
-          {/* VIDEO (FORCED CLEAN LAYER) */}
+          {/* VIDEO */}
           <iframe
             key={activeIndex}
             src={previewVideos[activeIndex]}
@@ -156,24 +156,14 @@ export const HeroImage = () => {
             loading="lazy"
           />
 
-          {/* LEFT SWIPE */}
-          <button
-            onClick={goPrev}
-            className="absolute left-0 top-0 h-full w-1/2 z-10"
-          />
+          <button onClick={goPrev} className="absolute left-0 top-0 h-full w-1/2 z-10" />
+          <button onClick={goNext} className="absolute right-0 top-0 h-full w-1/2 z-10" />
 
-          {/* RIGHT SWIPE */}
-          <button
-            onClick={goNext}
-            className="absolute right-0 top-0 h-full w-1/2 z-10"
-          />
-
-          {/* FADE OVERLAY (HIDES ANY EMBED UI GLITCHES) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#080a14]/40 via-transparent to-[#0d0f1a]/20 pointer-events-none" />
         </div>
       </div>
 
-      {/* DOT PAGINATION (BELOW CARD) */}
+      {/* DOT PAGINATION */}
       <div className="mt-4 flex justify-center gap-1.5">
         {previewVideos.map((_, i) => (
           <button
@@ -181,7 +171,7 @@ export const HeroImage = () => {
             onClick={() => setActiveIndex(i)}
             className={`h-1.5 rounded-full transition-all ${
               i === activeIndex
-                ? "w-6 bg-red-400"
+                ? "w-6 bg-purple-400"
                 : "w-1.5 bg-white/30 hover:bg-white/50"
             }`}
           />
