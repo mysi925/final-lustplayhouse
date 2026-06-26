@@ -1,4 +1,41 @@
 import { useEffect, useState } from "react";
+{/* ================= COMMUNITY BUTTONS ================= */}
+<div className="mt-16 grid gap-4 md:grid-cols-3">
+
+  <a
+    href="https://t.me/+FZv49DSqQ_lmODcx"
+    target="_blank"
+    rel="noreferrer"
+    className="rounded-2xl border border-emerald-500/20 bg-black/40 p-5 text-center hover:border-emerald-300/60 transition"
+  >
+    <div className="text-2xl mb-2">📡</div>
+    <div className="text-white font-bold">Free Channel</div>
+    <div className="text-xs text-gray-400 mt-1">Previews & drops</div>
+  </a>
+
+  <a
+    href="https://t.me/+KsCdMv3mCSVlY2Vh"
+    target="_blank"
+    rel="noreferrer"
+    className="rounded-2xl border border-emerald-500/20 bg-black/40 p-5 text-center hover:border-emerald-300/60 transition"
+  >
+    <div className="text-2xl mb-2">💬</div>
+    <div className="text-white font-bold">Chatroom</div>
+    <div className="text-xs text-gray-400 mt-1">Talk with members</div>
+  </a>
+
+  <a
+    href="https://t.me/savslayr"
+    target="_blank"
+    rel="noreferrer"
+    className="rounded-2xl border border-emerald-500/20 bg-black/40 p-5 text-center hover:border-emerald-300/60 transition"
+  >
+    <div className="text-2xl mb-2">🛡️</div>
+    <div className="text-white font-bold">Admin Support</div>
+    <div className="text-xs text-gray-400 mt-1">Help & orders</div>
+  </a>
+
+</div>
 import { LandingHero } from "@/sections/LandingHero";
 
 const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
