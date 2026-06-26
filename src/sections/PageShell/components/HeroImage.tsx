@@ -1,5 +1,10 @@
-// NOTE: This file is based on the version you provided,
-// with the portrait (2:3 / 720x1080-style) sizing updates applied.
+// Updated HeroImage.jsx
+// Changes:
+// - Smaller main preview (280x420 desktop, 240x360 mobile)
+// - Crops iframe slightly to minimize Bunny letterboxing
+// - Smaller side previews
+// Replace your current HeroImage.jsx with this version and adjust the
+// iframe zoom (118%) if needed.
 
 import { useState } from "react";
 
@@ -13,58 +18,33 @@ const previewVideos = [
 ];
 
 export const HeroImage = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [muted, setMuted] = useState(true);
+ const [activeIndex,setActiveIndex]=useState(0);
+ const [muted,setMuted]=useState(true);
+ const goNext=()=>setActiveIndex(p=>(p+1)%previewVideos.length);
+ const goPrev=()=>setActiveIndex(p=>p===0?previewVideos.length-1:p-1);
+ const prevIndex=activeIndex===0?previewVideos.length-1:activeIndex-1;
+ const nextIndex=(activeIndex+1)%previewVideos.length;
 
-  const goNext = () => setActiveIndex((p)=>(p+1)%previewVideos.length);
-  const goPrev = () => setActiveIndex((p)=>p===0?previewVideos.length-1:p-1);
+ const Side=({src,left})=>(
+ <div className={`hidden md:block absolute ${left?"left-2":"right-2"} top-1/2 -translate-y-1/2 w-[95px] h-[145px] rounded-[18px] overflow-hidden opacity-40`}>
+ <iframe src={src} className="absolute top-1/2 left-1/2 w-[130%] h-[130%] -translate-x-1/2 -translate-y-1/2 pointer-events-none" allow="autoplay"/>
+ <div className="absolute inset-0 bg-[#080a14]/50"/>
+ </div>);
 
-  const prevIndex = activeIndex===0?previewVideos.length-1:activeIndex-1;
-  const nextIndex = (activeIndex+1)%previewVideos.length;
-
-  return (
-    <div className="flex flex-col items-center mb-10">
-      <div className="relative flex items-center justify-center w-full">
-
-        <button onClick={goPrev} className="hidden md:flex absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#0d0f1a]/80 border border-white/15 items-center justify-center text-white/80 hover:text-white hover:bg-[#0d0f1a] text-xl">‹</button>
-        <button onClick={goNext} className="hidden md:flex absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#0d0f1a]/80 border border-white/15 items-center justify-center text-white/80 hover:text-white hover:bg-[#0d0f1a] text-xl">›</button>
-
-        <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-[120px] h-[180px] rounded-[20px] overflow-hidden opacity-40 blur-[1px] scale-95">
-          <iframe key={`prev-${prevIndex}`} src={previewVideos[prevIndex]} className="absolute inset-0 w-full h-full pointer-events-none" allow="autoplay" loading="lazy"/>
-          <div className="absolute inset-0 bg-[#080a14]/50"/>
-        </div>
-
-        <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[120px] h-[180px] rounded-[20px] overflow-hidden opacity-40 blur-[1px] scale-95">
-          <iframe key={`next-${nextIndex}`} src={previewVideos[nextIndex]} className="absolute inset-0 w-full h-full pointer-events-none" allow="autoplay" loading="lazy"/>
-          <div className="absolute inset-0 bg-[#080a14]/50"/>
-        </div>
-
-        <div className="relative z-10 w-[340px] h-[510px] md:w-[420px] md:h-[630px] rounded-[28px] overflow-hidden bg-[#080a14] border border-purple-500/60 shadow-[0_0_45px_rgba(168,85,247,0.45)]">
-          <button onClick={()=>setMuted(m=>!m)} className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full bg-[#0d0f1a]/60 border border-white/20 flex items-center justify-center text-white text-sm hover:bg-[#0d0f1a]/80">
-            {muted ? "🔇":"🔊"}
-          </button>
-
-          <iframe
-            key={activeIndex}
-            src={previewVideos[activeIndex]}
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            allow="autoplay"
-            loading="lazy"
-          />
-
-          <button onClick={goPrev} className="absolute left-0 top-0 h-full w-1/2 z-10"/>
-          <button onClick={goNext} className="absolute right-0 top-0 h-full w-1/2 z-10"/>
-
-          <div className="absolute inset-0 bg-gradient-to-t from-[#080a14]/40 via-transparent to-[#0d0f1a]/20 pointer-events-none"/>
-        </div>
-      </div>
-
-      <div className="mt-4 flex justify-center gap-1.5">
-        {previewVideos.map((_,i)=>(
-          <button key={i} onClick={()=>setActiveIndex(i)}
-            className={`h-1.5 rounded-full transition-all ${i===activeIndex?"w-6 bg-purple-400":"w-1.5 bg-white/30 hover:bg-white/50"}`}/>
-        ))}
-      </div>
-    </div>
-  );
+ return (
+ <div className="flex flex-col items-center mb-10">
+  <div className="relative flex items-center justify-center w-full">
+   <button onClick={goPrev} className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#0d0f1a]/80 border border-white/15 items-center justify-center text-white">‹</button>
+   <button onClick={goNext} className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#0d0f1a]/80 border border-white/15 items-center justify-center text-white">›</button>
+   <Side src={previewVideos[prevIndex]} left />
+   <Side src={previewVideos[nextIndex]} />
+   <div className="relative z-10 w-[240px] h-[360px] md:w-[280px] md:h-[420px] rounded-[26px] overflow-hidden border border-purple-500/60 shadow-[0_0_40px_rgba(168,85,247,.45)] bg-[#080a14]">
+    <button onClick={()=>setMuted(m=>!m)} className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full bg-black/50 text-white">{muted?"🔇":"🔊"}</button>
+    <iframe key={activeIndex} src={previewVideos[activeIndex]} className="absolute top-1/2 left-1/2 w-[118%] h-[118%] -translate-x-1/2 -translate-y-1/2 pointer-events-none" allow="autoplay"/>
+    <button onClick={goPrev} className="absolute left-0 top-0 w-1/2 h-full"/>
+    <button onClick={goNext} className="absolute right-0 top-0 w-1/2 h-full"/>
+   </div>
+  </div>
+  <div className="mt-4 flex gap-1.5">{previewVideos.map((_,i)=><button key={i} onClick={()=>setActiveIndex(i)} className={i===activeIndex?"h-1.5 w-6 rounded-full bg-purple-400":"h-1.5 w-1.5 rounded-full bg-white/30"} />)}</div>
+ </div>);
 };
