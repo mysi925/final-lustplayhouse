@@ -2,24 +2,23 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
-/* =========================
-   HEALTH CHECK (Railway)
-========================= */
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
+// needed for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /* =========================
-   CREATE PAYMENT LINK
+   API ROUTES
 ========================= */
+
 app.post("/create-payment-link", async (req, res) => {
   try {
     const { amountCents } = req.body;
@@ -58,33 +57,34 @@ app.post("/create-payment-link", async (req, res) => {
 
     const data = await response.json();
 
-    // SAFE RESPONSE HANDLING (FIXES SQUARE VARIATIONS)
-    const link = data.payment_link || data.paymentLink;
+    const link = data?.payment_link?.url;
 
     if (!link) {
-      console.error("Square response error:", data);
-      return res.status(500).json({
-        error: "Invalid Square response",
-        details: data,
-      });
+      console.error(data);
+      return res.status(500).json({ error: "Square failed" });
     }
 
-    return res.json({
-      paymentLinkUrl: link.url,
-      orderId: link.order_id,
-    });
+    return res.json({ url: link });
 
   } catch (err) {
-    console.error("Server error:", err);
-    res.status(500).json({ error: "Payment failed" });
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
 /* =========================
-   START SERVER
+   SERVE REACT FRONTEND
 ========================= */
-const PORT = process.env.PORT || 3001;
 
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+/* ========================= */
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
