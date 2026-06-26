@@ -3,13 +3,16 @@
 @tailwind utilities;
 
 /* =========================
-   FONT OVERRIDE (GLOBAL)
+   FONT OVERRIDE (GLOBAL → INTER)
 ========================= */
 @layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
   html,
   body,
   * {
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 }
 
@@ -98,8 +101,6 @@
 
     /* pure black background */
     background: #000000;
-
-    /* removed green glow completely */
   }
 }
 
@@ -107,12 +108,10 @@
    OPTIONAL UI HELPERS
 ========================= */
 @layer components {
-  /* perfect square button helper */
   .btn-square {
     aspect-ratio: 1 / 1;
   }
 
-  /* spacing helper for button groups */
   .btn-group {
     display: grid;
     gap: 1rem;
