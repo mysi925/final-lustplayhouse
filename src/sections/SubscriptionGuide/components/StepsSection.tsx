@@ -46,7 +46,7 @@ const tiers: TierOption[] = [
   },
 ];
 
-/* ================= COMMUNITY SECTION (FIXED JSX) ================= */
+/* ================= COMMUNITY SECTION FIXED ================= */
 const CommunityButtons = () => {
   return (
     <div className="mt-16 flex justify-center">
@@ -68,7 +68,7 @@ const CommunityButtons = () => {
 
         <div className="mt-6 space-y-4">
 
-          <a
+          
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
@@ -84,7 +84,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          <a
+          
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
@@ -100,7 +100,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          <a
+          
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
@@ -185,19 +185,19 @@ export const StepsSection = () => {
         One-time payment · lifetime access · instant delivery
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 items-stretch">
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className={`relative rounded-2xl p-8 flex flex-col justify-between min-h-[480px] ${
+            className={`relative rounded-2xl p-7 flex flex-col justify-between min-h-[460px] ${
               tier.highlight
                 ? "border border-red-500 bg-[#0d0606] shadow-[0_0_70px_rgba(239,68,68,0.35)] md:scale-105"
                 : "border border-white/10 bg-[#0a0a0a]"
             }`}
           >
             {tier.highlight && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
-                ★ Highest Tier
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
+                ★&nbsp;Highest&nbsp;Tier
               </span>
             )}
 
@@ -234,6 +234,7 @@ export const StepsSection = () => {
               >
                 Get {tier.name} — {tier.price}
               </button>
+              <p className="text-[11px] text-gray-500">or pay with crypto</p>
             </div>
           </div>
         ))}
