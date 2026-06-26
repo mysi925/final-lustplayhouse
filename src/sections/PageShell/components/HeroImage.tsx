@@ -11,6 +11,7 @@ const previewVideos = [
 
 export const HeroImage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [muted, setMuted] = useState(true);
 
   const goNext = () => {
     setActiveIndex((prev) => (prev + 1) % previewVideos.length);
@@ -22,79 +23,182 @@ export const HeroImage = () => {
     );
   };
 
+  const prevIndex =
+    activeIndex === 0 ? previewVideos.length - 1 : activeIndex - 1;
+  const nextIndex = (activeIndex + 1) % previewVideos.length;
+
   return (
     <div className="flex justify-center mb-10">
-      <div
-        className="
-          relative
-          w-[340px] md:w-[460px]
-          h-[600px] md:h-[720px]
-          rounded-[28px]
-          overflow-hidden
-          bg-black
-          shadow-[0_0_60px_rgba(220,38,38,0.15)]
-        "
-      >
-        {/* VIDEO (FORCED CLEAN LAYER) */}
-        <iframe
-          key={activeIndex}
-          src={previewVideos[activeIndex]}
-          className="
-            absolute inset-0
-            w-[110%] h-[110%]
-            -translate-x-[5%] -translate-y-[5%]
-            pointer-events-none
-            object-cover
-          "
-          allow="autoplay"
-          loading="lazy"
-        />
+      <div className="relative flex items-center justify-center w-full">
 
-        {/* LEFT SWIPE */}
-        <button
-          onClick={goPrev}
+        {/* LEFT PEEK CARD */}
+        <div
           className="
-            absolute left-0 top-0 h-full w-1/2
-            z-10
-          "
-        />
-
-        {/* RIGHT SWIPE */}
-        <button
-          onClick={goNext}
-          className="
-            absolute right-0 top-0 h-full w-1/2
-            z-10
-          "
-        />
-
-        {/* ARROWS */}
-        <button
-          onClick={goPrev}
-          className="
-            absolute left-3 top-1/2 -translate-y-1/2
-            z-20
-            text-white/70 hover:text-white
-            text-2xl
+            hidden md:block
+            absolute left-0 top-1/2 -translate-y-1/2
+            w-[140px] h-[560px]
+            rounded-[20px]
+            overflow-hidden
+            opacity-40
+            blur-[1px]
+            scale-95
+            -z-0
           "
         >
-          ‹
-        </button>
+          <iframe
+            key={`prev-${prevIndex}`}
+            src={previewVideos[prevIndex]}
+            className="absolute inset-0 w-[160%] h-[110%] -translate-x-[20%] -translate-y-[5%] pointer-events-none"
+            allow="autoplay"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
 
-        <button
-          onClick={goNext}
+        {/* RIGHT PEEK CARD */}
+        <div
           className="
-            absolute right-3 top-1/2 -translate-y-1/2
-            z-20
-            text-white/70 hover:text-white
-            text-2xl
+            hidden md:block
+            absolute right-0 top-1/2 -translate-y-1/2
+            w-[140px] h-[560px]
+            rounded-[20px]
+            overflow-hidden
+            opacity-40
+            blur-[1px]
+            scale-95
+            -z-0
           "
         >
-          ›
-        </button>
+          <iframe
+            key={`next-${nextIndex}`}
+            src={previewVideos[nextIndex]}
+            className="absolute inset-0 w-[160%] h-[110%] -translate-x-[40%] -translate-y-[5%] pointer-events-none"
+            allow="autoplay"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
 
-        {/* FADE OVERLAY (HIDES ANY EMBED UI GLITCHES) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+        {/* MAIN CARD */}
+        <div
+          className="
+            relative z-10
+            w-[340px] md:w-[460px]
+            h-[600px] md:h-[720px]
+            rounded-[28px]
+            overflow-hidden
+            bg-black
+            border border-red-500/60
+            shadow-[0_0_45px_rgba(239,68,68,0.45)]
+          "
+        >
+          {/* PROGRESS / SEGMENT BAR */}
+          <div className="absolute top-3 left-3 right-3 z-30 flex gap-1.5">
+            {previewVideos.map((_, i) => (
+              <div
+                key={i}
+                className="h-[3px] flex-1 rounded-full bg-white/20 overflow-hidden"
+              >
+                <div
+                  className={`h-full rounded-full bg-red-400 transition-all ${
+                    i === activeIndex ? "w-full" : "w-0"
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* MUTE TOGGLE */}
+          <button
+            onClick={() => setMuted((m) => !m)}
+            className="
+              absolute top-7 right-3 z-30
+              w-9 h-9 rounded-full
+              bg-black/60 border border-white/20
+              flex items-center justify-center
+              text-white text-sm
+              hover:bg-black/80
+            "
+          >
+            {muted ? "🔇" : "🔊"}
+          </button>
+
+          {/* VIDEO (FORCED CLEAN LAYER) */}
+          <iframe
+            key={activeIndex}
+            src={previewVideos[activeIndex]}
+            className="
+              absolute inset-0
+              w-[110%] h-[110%]
+              -translate-x-[5%] -translate-y-[5%]
+              pointer-events-none
+              object-cover
+            "
+            allow="autoplay"
+            loading="lazy"
+          />
+
+          {/* LEFT SWIPE */}
+          <button
+            onClick={goPrev}
+            className="absolute left-0 top-0 h-full w-1/2 z-10"
+          />
+
+          {/* RIGHT SWIPE */}
+          <button
+            onClick={goNext}
+            className="absolute right-0 top-0 h-full w-1/2 z-10"
+          />
+
+          {/* ARROWS */}
+          <button
+            onClick={goPrev}
+            className="
+              absolute left-3 top-1/2 -translate-y-1/2
+              z-20
+              w-9 h-9 rounded-full
+              bg-black/50 border border-white/15
+              flex items-center justify-center
+              text-white/80 hover:text-white hover:bg-black/70
+              text-lg
+            "
+          >
+            ‹
+          </button>
+
+          <button
+            onClick={goNext}
+            className="
+              absolute right-3 top-1/2 -translate-y-1/2
+              z-20
+              w-9 h-9 rounded-full
+              bg-black/50 border border-white/15
+              flex items-center justify-center
+              text-white/80 hover:text-white hover:bg-black/70
+              text-lg
+            "
+          >
+            ›
+          </button>
+
+          {/* FADE OVERLAY (HIDES ANY EMBED UI GLITCHES) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+
+          {/* DOT PAGINATION */}
+          <div className="absolute bottom-4 left-0 right-0 z-30 flex justify-center gap-1.5">
+            {previewVideos.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === activeIndex
+                    ? "w-6 bg-red-400"
+                    : "w-1.5 bg-white/30 hover:bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
