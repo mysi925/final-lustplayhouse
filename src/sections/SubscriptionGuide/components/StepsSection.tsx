@@ -12,7 +12,7 @@ const CommunityButtons = () => {
         href="https://t.me/+FZv49DSqQ_lmODcx"
         target="_blank"
         rel="noreferrer"
-        className="rounded-2xl border border-emerald-500/20 bg-black/40 p-5 text-center hover:border-emerald-300/60 transition"
+        className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
       >
         <div className="text-2xl mb-2">📡</div>
         <div className="text-white font-bold">Free Channel</div>
@@ -23,7 +23,7 @@ const CommunityButtons = () => {
         href="https://t.me/+KsCdMv3mCSVlY2Vh"
         target="_blank"
         rel="noreferrer"
-        className="rounded-2xl border border-emerald-500/20 bg-black/40 p-5 text-center hover:border-emerald-300/60 transition"
+        className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
       >
         <div className="text-2xl mb-2">💬</div>
         <div className="text-white font-bold">Chatroom</div>
@@ -34,7 +34,7 @@ const CommunityButtons = () => {
         href="https://t.me/savslayr"
         target="_blank"
         rel="noreferrer"
-        className="rounded-2xl border border-emerald-500/20 bg-black/40 p-5 text-center hover:border-emerald-300/60 transition"
+        className="rounded-2xl border border-red-500/20 bg-black/40 p-5 text-center hover:border-red-400/60 transition"
       >
         <div className="text-2xl mb-2">🛡️</div>
         <div className="text-white font-bold">Admin Support</div>
@@ -123,7 +123,6 @@ export const StepsSection = () => {
     }
   }, []);
 
-  /* ================= BUY FLOW ================= */
   const handleBuy = async (tier: TierOption) => {
     try {
       window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
@@ -132,18 +131,12 @@ export const StepsSection = () => {
         "https://lustplayhouse.cloud/create-payment-link",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amountCents: tier.amount,
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amountCents: tier.amount }),
         }
       );
 
       const data = await res.json();
-
-      console.log("Checkout response:", data);
 
       if (!res.ok) {
         alert(JSON.stringify(data));
@@ -162,115 +155,4 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[720px] px-4 text-center md:text-left">
-
-      {/* ================= STEPS ================= */}
-      <div className="grid grid-cols-3 gap-4 mb-10">
-        {steps.map((step) => (
-          <article
-            key={step.id}
-            className="
-              relative
-              aspect-[4/3]
-              rounded-2xl
-              border border-emerald-500/20
-              bg-[linear-gradient(165deg,rgba(8,10,10,0.96)_0%,rgba(6,8,8,0.92)_100%)]
-              flex flex-col items-center justify-center
-              p-5
-              min-h-[140px]
-            "
-          >
-            <span className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-emerald-300/20 border border-emerald-300/40 text-[12px] flex items-center justify-center">
-              {step.id}
-            </span>
-
-            <span className="text-2xl mb-2">{step.icon}</span>
-
-            <p className="text-xs md:text-sm text-gray-100 text-center">
-              {step.copy}
-            </p>
-          </article>
-        ))}
-      </div>
-
-      {/* ================= TIERS ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-        {tiers.map((tier) => (
-          <div
-            key={tier.id}
-            className="
-              flex flex-col justify-between
-              rounded-2xl
-              border border-emerald-500/20
-              p-5
-              min-h-[460px]
-              bg-[linear-gradient(160deg,rgba(7,10,9,0.96)_0%,rgba(4,7,6,0.92)_100%)]
-            "
-          >
-            <div>
-              <p className="text-xs uppercase text-emerald-200 tracking-widest">
-                {tier.name}
-              </p>
-
-              <div className="mt-2 text-4xl font-black text-emerald-300">
-                {tier.price}
-              </div>
-
-              <p className="text-xs text-gray-400 mt-2">
-                {tier.perk}
-              </p>
-
-              <div className="mt-5 space-y-2">
-                {tier.features.map((f) => (
-                  <div key={f} className="text-sm text-gray-200">
-                    ✓ {f}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button
-              onClick={() => handleBuy(tier)}
-              className="
-                mt-6
-                w-full
-                rounded-xl
-                bg-emerald-400
-                text-black
-                font-bold
-                py-3
-                hover:bg-emerald-300
-                transition
-              "
-            >
-              Buy {tier.name}
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* ================= FAQ ================= */}
-      <div className="mt-12 space-y-4">
-        <h3 className="text-2xl font-bold text-white">FAQ</h3>
-
-        {faq.map((item) => (
-          <div
-            key={item.question}
-            className="rounded-xl border border-emerald-500/20 bg-black/40 p-4"
-          >
-            <p className="text-sm font-bold text-emerald-200">
-              {item.question}
-            </p>
-            <p className="text-sm text-gray-300 mt-2">
-              {item.answer}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <CommunityButtons />
-      <LandingHero />
-    </div>
-  );
-};
+    <div
