@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import crypto from "crypto";
 import pkg from "square";
 
-const { Client, Environment } = pkg;
+const { Client } = pkg;
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ app.use(express.json());
 
 const client = new Client({
   accessToken: process.env.SQUARE_ACCESS_TOKEN,
-  environment: Environment.Sandbox,
+  environment: "sandbox",
 });
 
 const { checkoutApi } = client;
