@@ -28,15 +28,49 @@ export const HeroImage = () => {
   const nextIndex = (activeIndex + 1) % previewVideos.length;
 
   return (
-    <div className="flex justify-center mb-10">
+    <div className="flex flex-col items-center mb-10">
       <div className="relative flex items-center justify-center w-full">
+
+        {/* LEFT ARROW (OUTSIDE CARD) */}
+        <button
+          onClick={goPrev}
+          className="
+            hidden md:flex
+            absolute left-2 md:left-6 top-1/2 -translate-y-1/2
+            z-20
+            w-10 h-10 rounded-full
+            bg-black/60 border border-white/15
+            items-center justify-center
+            text-white/80 hover:text-white hover:bg-black/80
+            text-xl
+          "
+        >
+          ‹
+        </button>
+
+        {/* RIGHT ARROW (OUTSIDE CARD) */}
+        <button
+          onClick={goNext}
+          className="
+            hidden md:flex
+            absolute right-2 md:right-6 top-1/2 -translate-y-1/2
+            z-20
+            w-10 h-10 rounded-full
+            bg-black/60 border border-white/15
+            items-center justify-center
+            text-white/80 hover:text-white hover:bg-black/80
+            text-xl
+          "
+        >
+          ›
+        </button>
 
         {/* LEFT PEEK CARD */}
         <div
           className="
             hidden md:block
             absolute left-0 top-1/2 -translate-y-1/2
-            w-[140px] h-[560px]
+            w-[100px] h-[400px]
             rounded-[20px]
             overflow-hidden
             opacity-40
@@ -60,7 +94,7 @@ export const HeroImage = () => {
           className="
             hidden md:block
             absolute right-0 top-1/2 -translate-y-1/2
-            w-[140px] h-[560px]
+            w-[100px] h-[400px]
             rounded-[20px]
             overflow-hidden
             opacity-40
@@ -83,8 +117,8 @@ export const HeroImage = () => {
         <div
           className="
             relative z-10
-            w-[340px] md:w-[460px]
-            h-[600px] md:h-[720px]
+            w-[340px] md:w-[420px]
+            h-[340px] md:h-[420px]
             rounded-[28px]
             overflow-hidden
             bg-black
@@ -92,27 +126,11 @@ export const HeroImage = () => {
             shadow-[0_0_45px_rgba(239,68,68,0.45)]
           "
         >
-          {/* PROGRESS / SEGMENT BAR */}
-          <div className="absolute top-3 left-3 right-3 z-30 flex gap-1.5">
-            {previewVideos.map((_, i) => (
-              <div
-                key={i}
-                className="h-[3px] flex-1 rounded-full bg-white/20 overflow-hidden"
-              >
-                <div
-                  className={`h-full rounded-full bg-red-400 transition-all ${
-                    i === activeIndex ? "w-full" : "w-0"
-                  }`}
-                />
-              </div>
-            ))}
-          </div>
-
           {/* MUTE TOGGLE */}
           <button
             onClick={() => setMuted((m) => !m)}
             className="
-              absolute top-7 right-3 z-30
+              absolute top-3 right-3 z-30
               w-9 h-9 rounded-full
               bg-black/60 border border-white/20
               flex items-center justify-center
@@ -150,55 +168,24 @@ export const HeroImage = () => {
             className="absolute right-0 top-0 h-full w-1/2 z-10"
           />
 
-          {/* ARROWS */}
-          <button
-            onClick={goPrev}
-            className="
-              absolute left-3 top-1/2 -translate-y-1/2
-              z-20
-              w-9 h-9 rounded-full
-              bg-black/50 border border-white/15
-              flex items-center justify-center
-              text-white/80 hover:text-white hover:bg-black/70
-              text-lg
-            "
-          >
-            ‹
-          </button>
-
-          <button
-            onClick={goNext}
-            className="
-              absolute right-3 top-1/2 -translate-y-1/2
-              z-20
-              w-9 h-9 rounded-full
-              bg-black/50 border border-white/15
-              flex items-center justify-center
-              text-white/80 hover:text-white hover:bg-black/70
-              text-lg
-            "
-          >
-            ›
-          </button>
-
           {/* FADE OVERLAY (HIDES ANY EMBED UI GLITCHES) */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
-
-          {/* DOT PAGINATION */}
-          <div className="absolute bottom-4 left-0 right-0 z-30 flex justify-center gap-1.5">
-            {previewVideos.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveIndex(i)}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === activeIndex
-                    ? "w-6 bg-red-400"
-                    : "w-1.5 bg-white/30 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
         </div>
+      </div>
+
+      {/* DOT PAGINATION (BELOW CARD) */}
+      <div className="mt-4 flex justify-center gap-1.5">
+        {previewVideos.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`h-1.5 rounded-full transition-all ${
+              i === activeIndex
+                ? "w-6 bg-red-400"
+                : "w-1.5 bg-white/30 hover:bg-white/50"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
