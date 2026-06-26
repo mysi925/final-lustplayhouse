@@ -7,3 +7,4 @@ export const App = () => {
     </body>
   );
 };
+import Checkout from "./pages/Checkout";
