@@ -8,15 +8,38 @@ import { fileURLToPath } from "url";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+/* =========================
+   CORE MIDDLEWARE
+========================= */
+
+// allow frontend to talk to backend
+app.use(cors({
+  origin: [
+    "https://lustplayhouse.xyz",
+    "http://localhost:5173"
+  ]
+}));
+
 app.use(express.json());
 
-// needed for ES modules
+/* =========================
+   ES MODULE FIX
+========================= */
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /* =========================
-   API ROUTES
+   HEALTH CHECK
+========================= */
+
+app.get("/health", (req, res) => {
+  res.send("OK");
+});
+
+/* =========================
+   SQUARE PAYMENT LINK
 ========================= */
 
 app.post("/create-payment-link", async (req, res) => {
@@ -60,20 +83,21 @@ app.post("/create-payment-link", async (req, res) => {
     const link = data?.payment_link?.url;
 
     if (!link) {
-      console.error(data);
-      return res.status(500).json({ error: "Square failed" });
+      console.error("Square error:", data);
+      return res.status(500).json({ error: "Failed to create payment link" });
     }
 
-    return res.json({ url: link });
+    // send checkout URL back to frontend
+    res.json({ url: link });
 
   } catch (err) {
-    console.error(err);
+    console.error("Server error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
 /* =========================
-   SERVE REACT FRONTEND
+   SERVE FRONTEND (REACT BUILD)
 ========================= */
 
 app.use(express.static(path.join(__dirname, "dist")));
@@ -82,9 +106,12 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-/* ========================= */
+/* =========================
+   START SERVER
+========================= */
 
 const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
