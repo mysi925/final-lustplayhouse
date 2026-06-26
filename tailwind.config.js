@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       /* =========================
-         COLORS (CHERRY RED + BLACK THEME)
+         COLORS (BLACK + CHERRY RED THEME)
       ========================= */
       colors: {
         border: "hsl(var(--border))",
@@ -45,7 +45,7 @@ module.exports = {
         },
 
         /* =========================
-           SURFACES (BLACK STACK)
+           SURFACES (PURE BLACK SYSTEM)
         ========================= */
         surface: "#000000",
         surface2: "#0a0a0a",
@@ -54,13 +54,13 @@ module.exports = {
         /* =========================
            CHERRY RED ACCENTS
         ========================= */
-        glow: "rgba(220, 38, 38, 0.08)",
-        glowStrong: "rgba(220, 38, 38, 0.15)",
-        redSoft: "rgba(220, 38, 38, 0.2)",
+        redGlow: "rgba(220, 38, 38, 0.18)",
+        redSoft: "rgba(220, 38, 38, 0.08)",
+        redStrong: "rgba(220, 38, 38, 0.35)",
       },
 
       /* =========================
-         SHAPE SYSTEM (CLEAN + SQUARE FRIENDLY)
+         SHAPE SYSTEM (SQUARE FRIENDLY UI)
       ========================= */
       borderRadius: {
         lg: "0.9rem",
@@ -77,23 +77,22 @@ module.exports = {
       },
 
       /* =========================
-         SHADOW SYSTEM (RED GLOW)
+         SHADOWS (RED FOCUS STYLE)
       ========================= */
       boxShadow: {
-        glow:
-          "0 0 0 1px rgba(255,255,255,0.04), 0 0 35px rgba(0,0,0,0.85)",
+        soft:
+          "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.8)",
         hover:
-          "0 0 0 1px rgba(255,255,255,0.08), 0 0 55px rgba(0,0,0,0.95)",
-        neon: "0 0 25px rgba(220, 38, 38, 0.12)",
+          "0 0 0 1px rgba(255,255,255,0.08), 0 25px 80px rgba(0,0,0,0.95)",
         red: "0 0 25px rgba(220, 38, 38, 0.18)",
       },
 
       /* =========================
-         TYPOGRAPHY (SIMPLIFIED)
+         TYPOGRAPHY (INTER FONT)
       ========================= */
       fontFamily: {
-        sans: ["Times New Roman", "Times", "serif"],
-        heading: ["Times New Roman", "Times", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        heading: ["Inter", "system-ui", "sans-serif"],
       },
 
       /* =========================
@@ -104,18 +103,22 @@ module.exports = {
           from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
-        glowPulse: {
-          "0%, 100%": { opacity: "0.5" },
+
+        redPulse: {
+          "0%, 100%": { opacity: "0.6" },
           "50%": { opacity: "1" },
         },
       },
 
       animation: {
         fadeUp: "fadeUp 0.5s ease-out",
-        glowPulse: "glowPulse 2.5s ease-in-out infinite",
+        redPulse: "redPulse 2.5s ease-in-out infinite",
       },
     },
 
+    /* =========================
+       CONTAINER SETTINGS
+    ========================= */
     container: {
       center: true,
       padding: "2rem",
