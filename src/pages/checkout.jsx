@@ -10,7 +10,6 @@ const tierMap = {
 
 export default function Checkout() {
   const [tier, setTier] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -25,37 +24,10 @@ export default function Checkout() {
     setTier({ id: stored, ...selected });
   }, []);
 
-  const startCheckout = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const res = await fetch(
-        "https://lustplayhouse.cloud/create-payment-link",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amountCents: tier.amountCents,
-          }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (!data.url) {
-        throw new Error("No payment link returned");
-      }
-
-      // redirect to Square checkout
-      window.location.href = data.url;
-    } catch (err) {
-      console.error(err);
-      setError("Checkout failed. Try again.");
-      setLoading(false);
-    }
+  const startCheckout = () => {
+    // 🔥 THIS is now your ONLY job:
+    // send user to backend (Railway)
+    window.location.href = `https://lustplayhouse.cloud/checkout?tier=${tier.id}`;
   };
 
   if (error) {
@@ -86,7 +58,8 @@ export default function Checkout() {
         </h1>
 
         <p className="text-center text-gray-400 mt-2">
-          You selected: <span className="text-white font-semibold">{tier.name}</span>
+          You selected:{" "}
+          <span className="text-white font-semibold">{tier.name}</span>
         </p>
 
         <div className="mt-6 text-center">
@@ -101,10 +74,9 @@ export default function Checkout() {
 
         <button
           onClick={startCheckout}
-          disabled={loading}
           className="mt-8 w-full py-3 rounded-xl bg-emerald-400 text-black font-bold hover:bg-emerald-300 transition"
         >
-          {loading ? "Redirecting..." : "Continue to Payment"}
+          Continue to Payment
         </button>
 
         <p className="text-xs text-gray-500 text-center mt-4">
