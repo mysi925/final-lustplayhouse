@@ -189,7 +189,7 @@ export const StepsSection = () => {
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className={`relative rounded-2xl p-7 flex flex-col justify-between aspect-square overflow-y-auto ${
+            className={`relative rounded-2xl p-5 flex flex-col justify-between w-full aspect-square md:w-[300px] md:h-[300px] md:aspect-auto overflow-hidden ${
               tier.highlight
                 ? "border border-red-500 bg-[#0d0606] shadow-[0_0_70px_rgba(239,68,68,0.35)] md:scale-105"
                 : "border border-white/10 bg-[#0a0a0a]"
@@ -202,20 +202,20 @@ export const StepsSection = () => {
             )}
 
             <div>
-              <p className="text-sm font-semibold text-red-300 uppercase tracking-wide">
+              <p className="text-xs font-semibold text-red-300 uppercase tracking-wide">
                 {tier.name}
               </p>
 
-              <div className="mt-2 flex items-baseline justify-center gap-2">
-                <span className="text-4xl font-black text-red-400">
+              <div className="mt-1 flex items-baseline justify-center gap-1.5">
+                <span className="text-2xl font-black text-red-400">
                   {tier.price}
                 </span>
-                <span className="text-xs text-gray-500 font-medium">one-time</span>
+                <span className="text-[10px] text-gray-500 font-medium">one-time</span>
               </div>
 
-              <div className="mt-4 space-y-2 text-gray-300 text-sm">
+              <div className="mt-2 space-y-1 text-gray-300 text-[11px]">
                 {tier.features.map((f) => (
-                  <div key={f} className="flex items-center justify-center gap-2">
+                  <div key={f} className="flex items-center justify-center gap-1.5">
                     <span className="text-red-400">✓</span>
                     <span>{f}</span>
                   </div>
@@ -223,19 +223,16 @@ export const StepsSection = () => {
               </div>
             </div>
 
-            <div className="mt-4 space-y-2">
-              <button
-                onClick={() => handleBuy(tier)}
-                className={`w-full py-3 rounded-xl font-bold transition ${
-                  tier.highlight
-                    ? "bg-gradient-to-r from-red-600 to-red-400 text-white hover:opacity-90"
-                    : "bg-red-500 text-black hover:bg-red-400"
-                }`}
-              >
-                Get {tier.name} — {tier.price}
-              </button>
-              <p className="text-[11px] text-gray-500">or pay with crypto</p>
-            </div>
+            <button
+              onClick={() => handleBuy(tier)}
+              className={`w-full py-2 rounded-xl font-bold text-xs transition ${
+                tier.highlight
+                  ? "bg-gradient-to-r from-red-600 to-red-400 text-white hover:opacity-90"
+                  : "bg-red-500 text-black hover:bg-red-400"
+              }`}
+            >
+              Get {tier.name} — {tier.price}
+            </button>
           </div>
         ))}
       </div>
