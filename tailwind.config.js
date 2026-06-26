@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       /* =========================
-         COLORS (BLACK + CHERRY RED THEME)
+         COLORS (DARK NAVY + PURPLE/PINK THEME)
       ========================= */
       colors: {
         border: "hsl(var(--border))",
@@ -45,18 +45,18 @@ module.exports = {
         },
 
         /* =========================
-           SURFACES (PURE BLACK SYSTEM)
+           SURFACES (DARK NAVY SYSTEM)
         ========================= */
-        surface: "#000000",
-        surface2: "#0a0a0a",
-        surface3: "#111111",
+        surface: "#080a14",
+        surface2: "#0d0f1a",
+        surface3: "#111525",
 
         /* =========================
-           CHERRY RED ACCENTS
+           PURPLE/PINK GLOW ACCENTS
         ========================= */
-        redGlow: "rgba(220, 38, 38, 0.18)",
-        redSoft: "rgba(220, 38, 38, 0.08)",
-        redStrong: "rgba(220, 38, 38, 0.35)",
+        purpleGlow: "rgba(168, 85, 247, 0.18)",
+        purpleSoft: "rgba(168, 85, 247, 0.08)",
+        purpleStrong: "rgba(168, 85, 247, 0.35)",
       },
 
       /* =========================
@@ -77,14 +77,14 @@ module.exports = {
       },
 
       /* =========================
-         SHADOWS (RED FOCUS STYLE)
+         SHADOWS (PURPLE FOCUS STYLE)
       ========================= */
       boxShadow: {
         soft:
           "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.8)",
         hover:
           "0 0 0 1px rgba(255,255,255,0.08), 0 25px 80px rgba(0,0,0,0.95)",
-        red: "0 0 25px rgba(220, 38, 38, 0.18)",
+        purple: "0 0 25px rgba(168, 85, 247, 0.25)",
       },
 
       /* =========================
@@ -104,7 +104,7 @@ module.exports = {
           to: { opacity: "1", transform: "translateY(0)" },
         },
 
-        redPulse: {
+        purplePulse: {
           "0%, 100%": { opacity: "0.6" },
           "50%": { opacity: "1" },
         },
@@ -112,7 +112,7 @@ module.exports = {
 
       animation: {
         fadeUp: "fadeUp 0.5s ease-out",
-        redPulse: "redPulse 2.5s ease-in-out infinite",
+        purplePulse: "purplePulse 2.5s ease-in-out infinite",
       },
     },
 
