@@ -11,13 +11,12 @@ export const PreviewCard = () => {
       <div className="relative w-[480px] max-w-full p-5 md:w-[624px] md:p-[26px] scale-[0.9] origin-top">
 
         {/* ================= HEADER ================= */}
-        <div className="mb-5 text-center select-none leading-none">
+        <div className="mb-5 text-center select-none">
 
-          {/* ===== STACKED LOGO ===== */}
-          <div>
+          <div className="flex flex-col items-center leading-none">
 
             {/* ================= LUST ================= */}
-            <div className="relative inline-block">
+            <div className="relative">
 
               {/* Glow */}
               <h1
@@ -52,7 +51,7 @@ export const PreviewCard = () => {
             </div>
 
             {/* ================= PLAYHOUSE ================= */}
-            <div className="relative inline-block mt-[-6px]">
+            <div className="relative mt-[-8px]">
 
               {/* Glow */}
               <p
