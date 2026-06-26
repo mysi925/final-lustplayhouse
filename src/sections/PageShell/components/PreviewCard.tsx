@@ -51,7 +51,7 @@ export const PreviewCard = () => {
             </div>
 
             {/* ================= PLAYHOUSE ================= */}
-            <div className="relative mt-[-8px]">
+            <div className="relative mt-[4px] md:mt-[6px]">
 
               {/* Glow */}
               <p
