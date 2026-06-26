@@ -32,7 +32,7 @@ app.post("/create-payment-link", async (req, res) => {
     }
 
     const response = await fetch(
-      "https://connect.squareupsandbox.com/v2/online-checkout/payment-links",
+      "https://connect.squareup.com/v2/online-checkout/payment-links",
       {
         method: "POST",
         headers: {
