@@ -123,28 +123,37 @@ export const StepsSection = () => {
     }
   }, []);
 
-  /* ================= BUY FLOW (SQUARE BACKEND) ================= */
+  /* ================= BUY FLOW ================= */
   const handleBuy = async (tier: TierOption) => {
-    window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
-
     try {
-      const res = await fetch("https://lustplayhouse.cloud/create-payment-link", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amountCents: tier.amount,
-        }),
-      });
+      window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
+
+      const res = await fetch(
+        "https://lustplayhouse.cloud/create-payment-link",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amountCents: tier.amount,
+          }),
+        }
+      );
 
       const data = await res.json();
 
+      console.log("Checkout response:", data);
+
+      if (!res.ok) {
+        alert(JSON.stringify(data));
+        return;
+      }
+
       if (data.url) {
-        window.location.href = data.url; // redirect to Square checkout
+        window.location.href = data.url;
       } else {
-        console.error(data);
-        alert("Payment failed. Try again.");
+        alert("No checkout URL returned");
       }
     } catch (err) {
       console.error(err);
@@ -221,7 +230,6 @@ export const StepsSection = () => {
               </div>
             </div>
 
-            {/* BUTTON */}
             <button
               onClick={() => handleBuy(tier)}
               className="
@@ -262,7 +270,6 @@ export const StepsSection = () => {
       </div>
 
       <CommunityButtons />
-
       <LandingHero />
     </div>
   );
