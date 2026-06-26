@@ -16,17 +16,17 @@ export const App = () => {
               {/* FIXED BACKGROUND LAYER (FORCE VISIBILITY) */}
               <div className="fixed inset-0 pointer-events-none -z-10">
 
-                {/* base black */}
-                <div className="absolute inset-0 bg-black" />
+                {/* base navy */}
+                <div className="absolute inset-0 bg-[#0a0618]" />
 
-                {/* red glow top */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90vw] h-[70vh] bg-red-600/25 blur-[160px] rounded-full" />
+                {/* purple glow top */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90vw] h-[70vh] bg-purple-600/25 blur-[160px] rounded-full" />
 
-                {/* red glow bottom */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] h-[70vh] bg-red-900/25 blur-[180px] rounded-full" />
+                {/* pink glow bottom */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] h-[70vh] bg-pink-700/20 blur-[180px] rounded-full" />
 
                 {/* gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#160b2e] via-[#0a0618] to-[#050410] opacity-80" />
 
               </div>
 
