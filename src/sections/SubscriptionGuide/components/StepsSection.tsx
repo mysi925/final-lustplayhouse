@@ -68,7 +68,7 @@ const CommunityButtons = () => {
 
         <div className="mt-6 space-y-4">
 
-          
+          <a
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
@@ -84,7 +84,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          
+          <a
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
@@ -100,7 +100,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          
+          <a
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
@@ -197,7 +197,7 @@ export const StepsSection = () => {
           >
             {tier.highlight && (
               <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
-                ★&nbsp;Highest&nbsp;Tier
+                ★ Highest Tier
               </span>
             )}
 
@@ -234,7 +234,6 @@ export const StepsSection = () => {
               >
                 Get {tier.name} — {tier.price}
               </button>
-              <p className="text-[11px] text-gray-500">or pay with crypto</p>
             </div>
           </div>
         ))}
