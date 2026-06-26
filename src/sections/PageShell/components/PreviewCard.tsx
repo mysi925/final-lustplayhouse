@@ -7,50 +7,63 @@ export const PreviewCard = () => {
     <div
       role="main"
       className="
-        items-center box-border caret-transparent flex shrink-0
-        text-[13.3333px] justify-center leading-5
-        max-w-full min-h-[auto] min-w-[auto]
-        relative text-center no-underline z-[1]
+        flex items-center justify-center
+        max-w-full relative z-[1]
         rounded-[20px]
-        md:text-[17.3333px] md:leading-[26px] md:text-left md:rounded-[26px]
+        md:rounded-[26px]
       "
     >
       <div
         className="
-          box-border caret-transparent
-          text-[13.3333px] leading-5
-          max-w-full min-h-[auto] min-w-[auto]
-          relative text-center no-underline
-          w-[480px] z-[1]
-          p-5 rounded-[20px]
-          md:text-[17.3333px] md:leading-[26px]
-          md:text-left md:w-[624px]
-          md:p-[26px] md:rounded-[26px]
+          relative w-[480px] max-w-full
+          rounded-[20px] p-5
+          md:w-[624px] md:p-[26px] md:rounded-[26px]
         "
       >
         {/* ================= HEADER ================= */}
-        <div className="mb-4 select-none text-center md:mb-5">
+        <div className="mb-5 select-none text-center">
           <div className="leading-none">
             <h1
               className="
-                bg-gradient-to-r from-white via-purple-200 to-purple-500
-                bg-clip-text text-transparent
-                text-[54px] font-black uppercase tracking-[0.08em]
-                drop-shadow-[0_0_18px_rgba(220,38,38,0.35)]
-                md:text-[74px]
+                uppercase
+                font-black
+                text-[56px]
+                md:text-[76px]
+                tracking-[0.04em]
+
+                bg-[linear-gradient(90deg,#8A3DFF_0%,#A548FF_20%,#C24BFF_45%,#E64BA8_75%,#FF5F9C_100%)]
+                bg-clip-text
+                text-transparent
+
+                [text-shadow:
+                  0_0_6px_rgba(138,61,255,.95),
+                  0_0_14px_rgba(165,72,255,.85),
+                  0_0_28px_rgba(194,75,255,.65),
+                  0_0_44px_rgba(255,95,156,.45)]
               "
             >
-              Lust
+              LUST
             </h1>
 
             <p
               className="
-                mt-1 text-[13px] font-semibold uppercase tracking-[0.52em]
-                text-purple-100/90
+                mt-2
+                uppercase
+                font-semibold
+                tracking-[0.52em]
+                text-[13px]
                 md:text-[16px]
+
+                bg-[linear-gradient(90deg,#8A3DFF_0%,#A548FF_35%,#C24BFF_60%,#FF5F9C_100%)]
+                bg-clip-text
+                text-transparent
+
+                [text-shadow:
+                  0_0_5px_rgba(138,61,255,.8),
+                  0_0_12px_rgba(194,75,255,.55)]
               "
             >
-              Playhouse
+              PLAYHOUSE
             </p>
           </div>
         </div>
