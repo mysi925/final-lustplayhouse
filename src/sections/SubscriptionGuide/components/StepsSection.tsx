@@ -68,7 +68,7 @@ const CommunityButtons = () => {
 
         <div className="mt-6 space-y-4">
 
-          <a
+          
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
@@ -84,7 +84,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          <a
+          
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
@@ -100,7 +100,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          <a
+          
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
@@ -185,35 +185,57 @@ export const StepsSection = () => {
         One-time payment · lifetime access · instant delivery
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 items-stretch">
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className={`rounded-3xl p-7 flex flex-col justify-between ${
+            className={`relative rounded-2xl p-8 flex flex-col justify-between min-h-[480px] ${
               tier.highlight
-                ? "border-2 border-red-500 bg-black shadow-[0_0_50px_rgba(239,68,68,0.45)] md:scale-105"
-                : "border border-red-500/20 bg-black/60"
+                ? "border border-red-500 bg-[#0d0606] shadow-[0_0_70px_rgba(239,68,68,0.35)] md:scale-105"
+                : "border border-white/10 bg-[#0a0a0a]"
             }`}
           >
+            {tier.highlight && (
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
+                ★ Highest Tier
+              </span>
+            )}
+
             <div>
-              <p className="text-red-300 uppercase">{tier.name}</p>
-              <div className="text-4xl font-black text-red-400 mt-2">
-                {tier.price}
+              <p className="text-sm font-semibold text-red-300 uppercase tracking-wide">
+                {tier.name}
+              </p>
+
+              <div className="mt-3 flex items-baseline justify-center gap-2">
+                <span className="text-5xl font-black text-red-400">
+                  {tier.price}
+                </span>
+                <span className="text-xs text-gray-500 font-medium">one-time</span>
               </div>
 
-              <div className="mt-4 space-y-2 text-gray-200">
+              <div className="mt-7 space-y-3 text-gray-300 text-sm">
                 {tier.features.map((f) => (
-                  <div key={f}>✓ {f}</div>
+                  <div key={f} className="flex items-center justify-center gap-2">
+                    <span className="text-red-400">✓</span>
+                    <span>{f}</span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <button
-              onClick={() => handleBuy(tier)}
-              className="mt-6 w-full py-3 rounded-xl bg-red-500 text-black font-bold hover:bg-red-400"
-            >
-              Buy {tier.name}
-            </button>
+            <div className="mt-8 space-y-2">
+              <button
+                onClick={() => handleBuy(tier)}
+                className={`w-full py-3 rounded-xl font-bold transition ${
+                  tier.highlight
+                    ? "bg-gradient-to-r from-red-600 to-red-400 text-white hover:opacity-90"
+                    : "bg-red-500 text-black hover:bg-red-400"
+                }`}
+              >
+                Get {tier.name} — {tier.price}
+              </button>
+              <p className="text-[11px] text-gray-500">or pay with crypto</p>
+            </div>
           </div>
         ))}
       </div>
