@@ -46,14 +46,14 @@ const tiers: TierOption[] = [
   },
 ];
 
-/* ================= COMMUNITY SECTION FIXED ================= */
+/* ================= COMMUNITY SECTION ================= */
 const CommunityButtons = () => {
   return (
     <div className="mt-16 flex justify-center">
-      <div className="w-full max-w-[520px] rounded-3xl border border-red-500/25 bg-gradient-to-b from-black/95 to-black/90 shadow-[0_0_60px_rgba(220,38,38,0.12)] p-6 md:p-8">
+      <div className="w-full max-w-[520px] rounded-3xl border border-purple-500/25 bg-gradient-to-b from-[#0d0f1a]/95 to-[#080a14]/90 shadow-[0_0_60px_rgba(168,85,247,0.12)] p-6 md:p-8">
 
         <div className="flex justify-center mb-6">
-          <div className="px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-300 text-xs tracking-[2px] uppercase">
+          <div className="px-4 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs tracking-[2px] uppercase">
             LUST PLAYHOUSE: LIVE
           </div>
         </div>
@@ -72,7 +72,7 @@ const CommunityButtons = () => {
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border border-red-500/20 bg-black/60 p-4 hover:border-red-400/60 transition"
+            className="flex items-center justify-between rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-4 hover:border-purple-400/60 transition"
           >
             <div className="flex items-center gap-3">
               <span>📡</span>
@@ -81,14 +81,14 @@ const CommunityButtons = () => {
                 <div className="text-xs text-gray-400">Previews & drops</div>
               </div>
             </div>
-            <span className="text-red-300">→</span>
+            <span className="text-purple-300">→</span>
           </a>
 
           <a
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border border-red-500/20 bg-black/60 p-4 hover:border-red-400/60 transition"
+            className="flex items-center justify-between rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-4 hover:border-purple-400/60 transition"
           >
             <div className="flex items-center gap-3">
               <span>💬</span>
@@ -97,14 +97,14 @@ const CommunityButtons = () => {
                 <div className="text-xs text-gray-400">Talk with members</div>
               </div>
             </div>
-            <span className="text-red-300">→</span>
+            <span className="text-purple-300">→</span>
           </a>
 
           <a
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border border-red-500/20 bg-black/60 p-4 hover:border-red-400/60 transition"
+            className="flex items-center justify-between rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-4 hover:border-purple-400/60 transition"
           >
             <div className="flex items-center gap-3">
               <span>🛡️</span>
@@ -113,7 +113,7 @@ const CommunityButtons = () => {
                 <div className="text-xs text-gray-400">Support & orders</div>
               </div>
             </div>
-            <span className="text-red-300">→</span>
+            <span className="text-purple-300">→</span>
           </a>
 
         </div>
@@ -170,7 +170,7 @@ export const StepsSection = () => {
 
       <div className="grid grid-cols-3 gap-4 mb-10">
         {steps.map((step) => (
-          <div key={step.id} className="rounded-2xl border border-red-500/20 bg-black/60 p-5">
+          <div key={step.id} className="rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-5">
             <div className="text-2xl mb-2">{step.icon}</div>
             <div className="text-sm text-white">{step.copy}</div>
           </div>
@@ -191,12 +191,12 @@ export const StepsSection = () => {
             key={tier.id}
             className={`relative rounded-2xl p-6 flex flex-col justify-between min-h-[420px] ${
               tier.highlight
-                ? "border border-red-500 bg-[#0d0606] shadow-[0_0_70px_rgba(239,68,68,0.35)] md:-mt-3 md:mb-[-12px]"
-                : "border border-white/10 bg-[#0a0a0a]"
+                ? "border border-purple-500 bg-[#0d0f1a] shadow-[0_0_70px_rgba(168,85,247,0.35)] md:-mt-3 md:mb-[-12px]"
+                : "border border-white/10 bg-[#0d0f1a]/80"
             }`}
           >
             {tier.highlight && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-red-400 text-black text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)]">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(168,85,247,0.6)]">
                 ★&nbsp;Highest&nbsp;Tier
               </span>
             )}
@@ -207,7 +207,7 @@ export const StepsSection = () => {
               </p>
 
               <div className="mt-2 flex items-baseline justify-center gap-2">
-                <span className="text-4xl font-black text-red-400">
+                <span className="text-4xl font-black text-purple-400">
                   {tier.price}
                 </span>
                 <span className="text-xs text-gray-500 font-medium">one-time</span>
@@ -216,7 +216,7 @@ export const StepsSection = () => {
               <div className="mt-5 space-y-2.5 text-white text-sm">
                 {tier.features.map((f) => (
                   <div key={f} className="flex items-center justify-center gap-2">
-                    <span className="text-red-400">✓</span>
+                    <span className="text-purple-400">✓</span>
                     <span>{f}</span>
                   </div>
                 ))}
@@ -228,8 +228,8 @@ export const StepsSection = () => {
                 onClick={() => handleBuy(tier)}
                 className={`w-full py-3 rounded-xl font-bold text-sm transition ${
                   tier.highlight
-                    ? "bg-gradient-to-r from-red-600 to-red-400 text-black hover:opacity-90"
-                    : "bg-red-500 text-black hover:bg-red-400"
+                    ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:opacity-90 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+                    : "bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:opacity-90"
                 }`}
               >
                 Get {tier.name} — {tier.price}
@@ -242,10 +242,10 @@ export const StepsSection = () => {
 
       <div className="mt-8 flex items-center justify-center gap-3 text-sm text-gray-400">
         <span>Accepted:</span>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black border border-white/15 text-white text-xs font-medium">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d0f1a] border border-white/15 text-white text-xs font-medium">
           💳 Card
         </span>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black border border-white/15 text-white text-xs font-medium">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d0f1a] border border-white/15 text-white text-xs font-medium">
           ₵ Crypto
         </span>
       </div>
