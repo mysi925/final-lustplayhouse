@@ -1,8 +1,31 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import crypto from "crypto";
+
+dotenv.config();
+
+const app = express();
+
+/* =========================
+   MIDDLEWARE
+========================= */
+app.use(cors());
+app.use(express.json());
+
+/* =========================
+   HEALTH CHECK
+========================= */
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
+/* =========================
+   CREATE SQUARE PAYMENT LINK
+========================= */
 app.post("/create-payment-link", async (req, res) => {
   try {
     const { amountCents } = req.body;
-
-    console.log("Incoming request:", amountCents);
 
     if (!amountCents || amountCents <= 0) {
       return res.status(400).json({ error: "Invalid amount" });
@@ -38,31 +61,26 @@ app.post("/create-payment-link", async (req, res) => {
 
     const data = await response.json();
 
-    console.log("SQUARE RESPONSE:", JSON.stringify(data, null, 2));
-
-    if (!response.ok) {
-      return res.status(500).json({
-        error: "Square API failed",
-        squareError: data,
-      });
-    }
-
     const url = data?.payment_link?.url;
 
     if (!url) {
-      return res.status(500).json({
-        error: "No payment link returned",
-        squareData: data,
-      });
+      console.error("Square error:", data);
+      return res.status(500).json({ error: "Failed to create payment link" });
     }
 
     return res.json({ url });
 
   } catch (err) {
-    console.error("SERVER ERROR:", err);
-    res.status(500).json({
-      error: "Server crash",
-      message: err.message,
-    });
+    console.error("Server error:", err);
+    res.status(500).json({ error: "Server error" });
   }
+});
+
+/* =========================
+   START SERVER
+========================= */
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
