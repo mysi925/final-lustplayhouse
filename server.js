@@ -6,14 +6,20 @@ import crypto from "crypto";
 dotenv.config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-// Optional: health check route (helps Railway)
+/* =========================
+   HEALTH CHECK (Railway)
+========================= */
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+/* =========================
+   CREATE PAYMENT LINK
+========================= */
 app.post("/create-payment-link", async (req, res) => {
   try {
     const { amountCents } = req.body;
@@ -52,21 +58,31 @@ app.post("/create-payment-link", async (req, res) => {
 
     const data = await response.json();
 
-    if (!data.payment_link) {
-      console.error(data);
-      return res.status(500).json({ error: "Invalid Square response" });
+    // SAFE RESPONSE HANDLING (FIXES SQUARE VARIATIONS)
+    const link = data.payment_link || data.paymentLink;
+
+    if (!link) {
+      console.error("Square response error:", data);
+      return res.status(500).json({
+        error: "Invalid Square response",
+        details: data,
+      });
     }
 
-    res.json({
-      paymentLinkUrl: data.payment_link.url,
-      orderId: data.payment_link.order_id,
+    return res.json({
+      paymentLinkUrl: link.url,
+      orderId: link.order_id,
     });
+
   } catch (err) {
-    console.error(err);
+    console.error("Server error:", err);
     res.status(500).json({ error: "Payment failed" });
   }
 });
 
+/* =========================
+   START SERVER
+========================= */
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
