@@ -9,12 +9,12 @@ const tierMap = {
 };
 
 export default function Checkout() {
-  const [tier, setTier] = useState(null);
+  const [tier, setTier] = useState<any>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
-    const selected = tierMap[stored];
+    const selected = tierMap[stored as keyof typeof tierMap];
 
     if (!selected) {
       setError("No tier selected. Please go back and choose a plan.");
@@ -25,16 +25,14 @@ export default function Checkout() {
   }, []);
 
   const startCheckout = () => {
-    // 🔥 THIS is now your ONLY job:
-    // send user to backend (Railway)
     window.location.href = `https://lustplayhouse.cloud/checkout?tier=${tier.id}`;
   };
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white p-6 text-center">
+      <div className="min-h-screen flex items-center justify-center bg-black text-white p-6 text-center font-sans">
         <div>
-          <h1 className="text-2xl font-bold text-red-400 mb-4">Error</h1>
+          <h1 className="text-2xl font-bold text-red-500 mb-4">Error</h1>
           <p className="text-gray-300">{error}</p>
         </div>
       </div>
@@ -43,17 +41,17 @@ export default function Checkout() {
 
   if (!tier) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+      <div className="min-h-screen flex items-center justify-center bg-black text-white font-sans">
         Loading checkout...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white p-6">
-      <div className="w-full max-w-md rounded-2xl border border-emerald-500/20 p-6 bg-[linear-gradient(160deg,rgba(10,10,10,0.95),rgba(5,5,5,0.9))]">
+    <div className="min-h-screen flex items-center justify-center bg-black text-white p-6 font-sans">
+      <div className="w-full max-w-md rounded-2xl border border-red-500/20 p-6 bg-[linear-gradient(160deg,rgba(10,10,10,0.95),rgba(5,5,5,0.9))] shadow-[0_0_40px_rgba(220,38,38,0.12)]">
 
-        <h1 className="text-3xl font-bold text-center text-emerald-300">
+        <h1 className="text-3xl font-bold text-center text-red-400">
           Checkout
         </h1>
 
@@ -63,7 +61,7 @@ export default function Checkout() {
         </p>
 
         <div className="mt-6 text-center">
-          <div className="text-5xl font-black text-emerald-300">
+          <div className="text-5xl font-black text-red-400">
             ${(tier.amountCents / 100).toFixed(0)}
           </div>
 
@@ -74,7 +72,7 @@ export default function Checkout() {
 
         <button
           onClick={startCheckout}
-          className="mt-8 w-full py-3 rounded-xl bg-emerald-400 text-black font-bold hover:bg-emerald-300 transition"
+          className="mt-8 w-full py-3 rounded-xl bg-red-500 text-black font-bold hover:bg-red-400 transition"
         >
           Continue to Payment
         </button>
