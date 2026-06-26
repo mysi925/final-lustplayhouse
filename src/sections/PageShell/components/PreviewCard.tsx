@@ -26,7 +26,6 @@ export const PreviewCard = () => {
           md:text-[17.3333px] md:leading-[26px]
           md:text-left md:w-[624px]
           md:p-[26px] md:rounded-[26px]
-          bg-black
         "
       >
         {/* ================= HEADER ================= */}
