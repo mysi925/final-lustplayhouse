@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 const TIER_STORAGE_KEY = "lust-playhouse-selected-tier";
 
-/* ================= TYPES ================= */
 type TierOption = {
   id: string;
   name: string;
@@ -13,7 +12,6 @@ type TierOption = {
   highlight?: boolean;
 };
 
-/* ================= DATA ================= */
 const steps = [
   { id: "1", icon: "💳", copy: "Pick a tier & pay securely" },
   { id: "2", icon: "🔗", copy: "Redirect to secure checkout instantly" },
@@ -48,11 +46,11 @@ const tiers: TierOption[] = [
   },
 ];
 
-/* ================= COMMUNITY SECTION (RESTORED + CHERRY RED) ================= */
+/* ================= COMMUNITY SECTION FIXED ================= */
 const CommunityButtons = () => {
   return (
     <div className="mt-16 flex justify-center">
-      <div className="w-full max-w-[520px] rounded-3xl border border-red-500/25 bg-[linear-gradient(180deg,rgba(10,10,10,0.95),rgba(0,0,0,0.98))] shadow-[0_0_60px_rgba(220,38,38,0.12)] p-6 md:p-8">
+      <div className="w-full max-w-[520px] rounded-3xl border border-red-500/25 bg-gradient-to-b from-black/95 to-black/90 shadow-[0_0_60px_rgba(220,38,38,0.12)] p-6 md:p-8">
 
         <div className="flex justify-center mb-6">
           <div className="px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-300 text-xs tracking-[2px] uppercase">
@@ -70,7 +68,7 @@ const CommunityButtons = () => {
 
         <div className="mt-6 space-y-4">
 
-          
+          <a
             href="https://t.me/+FZv49DSqQ_lmODcx"
             target="_blank"
             rel="noreferrer"
@@ -86,7 +84,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          
+          <a
             href="https://t.me/+KsCdMv3mCSVlY2Vh"
             target="_blank"
             rel="noreferrer"
@@ -102,7 +100,7 @@ const CommunityButtons = () => {
             <span className="text-red-300">→</span>
           </a>
 
-          
+          <a
             href="https://t.me/savslayr"
             target="_blank"
             rel="noreferrer"
@@ -121,7 +119,7 @@ const CommunityButtons = () => {
         </div>
 
         <div className="mt-8 text-center text-[10px] tracking-[2px] text-gray-500 uppercase">
-          © 2026 Lust Playhouse • Private Member Lounge • The Biggest Internet Playhouse
+          © 2026 Lust Playhouse • Private Member Lounge
         </div>
 
       </div>
@@ -129,7 +127,7 @@ const CommunityButtons = () => {
   );
 };
 
-/* ================= MAIN COMPONENT ================= */
+/* ================= MAIN ================= */
 export const StepsSection = () => {
   const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
 
@@ -145,18 +143,11 @@ export const StepsSection = () => {
     try {
       window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
 
-      const res = await fetch(
-        "https://lustplayhouse.cloud/create-payment-link",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amountCents: tier.amount,
-          }),
-        }
-      );
+      const res = await fetch("https://lustplayhouse.cloud/create-payment-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amountCents: tier.amount }),
+      });
 
       const data = await res.json();
 
@@ -177,69 +168,49 @@ export const StepsSection = () => {
   return (
     <div className="w-full mx-auto max-w-[960px] px-4 text-center">
 
-      {/* STEPS */}
       <div className="grid grid-cols-3 gap-4 mb-10">
         {steps.map((step) => (
-          <div
-            key={step.id}
-            className="rounded-2xl border border-red-500/20 bg-black/60 p-5"
-          >
+          <div key={step.id} className="rounded-2xl border border-red-500/20 bg-black/60 p-5">
             <div className="text-2xl mb-2">{step.icon}</div>
             <div className="text-sm text-white">{step.copy}</div>
           </div>
         ))}
       </div>
 
-      {/* TIERS HEADER */}
-      <div className="mb-8">
-        <h2 className="text-3xl md:text-4xl font-black text-white">
-          Choose Your Tier
-        </h2>
-        <p className="mt-2 text-sm md:text-base text-gray-400">
-          One-time payment · lifetime access · instant delivery
-        </p>
-      </div>
+      <h2 className="text-3xl md:text-4xl font-black text-white">
+        Choose Your Tier
+      </h2>
 
-      {/* TIERS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+      <p className="mt-2 text-gray-400">
+        One-time payment · lifetime access · instant delivery
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         {tiers.map((tier) => (
           <div
             key={tier.id}
-            className={`relative rounded-3xl p-7 md:p-8 flex flex-col justify-between transition
-              ${
-                tier.highlight
-                  ? "border-2 border-red-500 bg-black/80 shadow-[0_0_50px_rgba(239,68,68,0.45)] md:scale-105"
-                  : "border border-red-500/20 bg-black/60"
-              }
-            `}
+            className={`rounded-3xl p-7 flex flex-col justify-between ${
+              tier.highlight
+                ? "border-2 border-red-500 bg-black shadow-[0_0_50px_rgba(239,68,68,0.45)] md:scale-105"
+                : "border border-red-500/20 bg-black/60"
+            }`}
           >
-            {tier.highlight && (
-              <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-red-500 text-black text-[10px] font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(239,68,68,0.6)]">
-                ★ Highest Tier
-              </div>
-            )}
-
             <div>
-              <p className="text-sm uppercase text-red-300 tracking-widest mt-2">
-                {tier.name}
-              </p>
-
-              <div className="text-4xl md:text-5xl font-black text-red-400 mt-3">
+              <p className="text-red-300 uppercase">{tier.name}</p>
+              <div className="text-4xl font-black text-red-400 mt-2">
                 {tier.price}
               </div>
 
-              <div className="mt-6 space-y-3">
+              <div className="mt-4 space-y-2 text-gray-200">
                 {tier.features.map((f) => (
-                  <div key={f} className="text-base text-gray-200">
-                    ✓ {f}
-                  </div>
+                  <div key={f}>✓ {f}</div>
                 ))}
               </div>
             </div>
 
             <button
               onClick={() => handleBuy(tier)}
-              className="mt-8 w-full py-4 rounded-xl bg-red-500 text-black font-bold text-lg hover:bg-red-400 transition"
+              className="mt-6 w-full py-3 rounded-xl bg-red-500 text-black font-bold hover:bg-red-400"
             >
               Buy {tier.name}
             </button>
@@ -247,9 +218,7 @@ export const StepsSection = () => {
         ))}
       </div>
 
-      {/* COMMUNITY (BIG BOX RESTORED) */}
       <CommunityButtons />
-
     </div>
   );
 };
