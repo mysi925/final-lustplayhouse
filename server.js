@@ -23,7 +23,21 @@ app.use(express.static(path.join(__dirname, "public")));
    HEALTH CHECK
 ========================= */
 app.get("/", (req, res) => {
-  res.send("Server is running");
+  res.redirect("/tease");
+});
+
+/* =========================
+   APPLE PAY DOMAIN VERIFICATION
+   File must be downloaded from Square Dashboard and placed at:
+   public/.well-known/apple-developer-merchantid-domain-association
+========================= */
+app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
+  const filePath = path.join(__dirname, "public", ".well-known", "apple-developer-merchantid-domain-association");
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send("Apple Pay domain verification file not found. See setup instructions.");
+  }
 });
 
 /* =========================
@@ -80,7 +94,7 @@ for (const [route, tierId] of Object.entries(ROUTE_TO_TIER)) {
    SUCCESS PAGE
 ========================= */
 app.get("/success", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "checkout", "_success.html"));
+  res.sendFile(path.join(__dirname, "public", "checkout", "checkout", "_success.html"));
 });
 
 /* =========================
@@ -106,6 +120,7 @@ app.get("/api/tiers/:tierId", (req, res) => {
 /* =========================
    CHARGE A CARD DIRECTLY
    (custom checkout — Web Payments SDK token -> Square Payments API)
+   Works for both card tokens AND Apple Pay tokens — no changes needed here.
 ========================= */
 app.post("/api/checkout/:tierId", async (req, res) => {
   try {
@@ -206,7 +221,6 @@ app.post("/create-payment-link", async (req, res) => {
 
     const data = await response.json();
 
-    // 🔥 IMPORTANT: show real Square errors
     if (!response.ok) {
       console.error("❌ Square API Error:");
       console.error(JSON.stringify(data, null, 2));
