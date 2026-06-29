@@ -6,130 +6,311 @@ type TierOption = {
   id: string;
   name: string;
   price: string;
-  perk: string;
   features: string[];
   amount: number;
   highlight?: boolean;
 };
 
+/* ─── DATA ─────────────────────────────────────────── */
+
 const steps = [
-  { id: "1", icon: "💳", copy: "Pick a tier & pay securely" },
-  { id: "2", icon: "🔗", copy: "Redirect to secure checkout instantly" },
-  { id: "3", icon: "🚀", copy: "Get instant access after payment" },
+  { id: "1", icon: "💳", copy: "Pick a tier & pay with card or crypto" },
+  { id: "2", icon: "🔗", copy: "Your private channel link appears instantly" },
+  { id: "3", icon: "🚀", copy: "Join your channel — access forever" },
 ];
 
 const tiers: TierOption[] = [
   {
     id: "tease-15",
-    name: "Tease",
+    name: "TEASE",
     price: "$15",
     amount: 1500,
-    perk: "Starter access",
-    features: ["1000+ Videos", "Bop Content", "Leaks"],
+    features: ["Access 750+ Videos", "Bop Content", "Snapchat Leaks"],
   },
   {
     id: "desire-25",
-    name: "Desire",
+    name: "DESIRE",
     price: "$25",
     amount: 2500,
-    perk: "Expanded access",
-    features: ["3000+ Videos", "Higher Quality", "Everything in Tease"],
+    features: ["Access 5000+ Videos", "Everything in Tease", "Higher Quality Drops"],
   },
   {
     id: "obsession-50",
-    name: "Obsession",
+    name: "OBSESSION",
     price: "$50",
     amount: 5000,
-    perk: "Full access",
-    features: ["5000+ Videos", "All Categories", "Priority Updates"],
+    features: [
+      "Access 10000+ Videos",
+      "All Categories",
+      "Teen Exclusives (18+)",
+      "Priority Updates",
+      "Member Requests",
+    ],
     highlight: true,
   },
 ];
 
-/* ================= COMMUNITY SECTION ================= */
-const CommunityButtons = () => {
-  return (
-    <div className="mt-16 flex justify-center">
-      <div className="w-full max-w-[520px] rounded-3xl border border-purple-500/25 bg-gradient-to-b from-[#0d0f1a]/95 to-[#080a14]/90 shadow-[0_0_60px_rgba(168,85,247,0.12)] p-6 md:p-8">
+const communityLinks = [
+  {
+    id: "channel",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-purple-300" stroke="currentColor" strokeWidth={1.8}>
+        <path d="M22 2L11 13" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M22 2L15 22l-4-9-9-4 20-7z" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    title: "Join Free Channel",
+    sub: "Official link · previews & drops",
+    href: "https://t.me/+FZv49DSqQ_lmODcx",
+  },
+  {
+    id: "chat",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-purple-300" stroke="currentColor" strokeWidth={1.8}>
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    title: "Official Chatroom",
+    sub: "Active now · talk to members",
+    href: "https://t.me/+KsCdMv3mCSVlY2Vh",
+  },
+  {
+    id: "admin",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-purple-300" stroke="currentColor" strokeWidth={1.8}>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    title: "Contact Admin",
+    sub: "Support & manual orders",
+    href: "https://t.me/savslayr",
+  },
+];
 
-        <div className="flex justify-center mb-6">
-          <div className="px-4 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs tracking-[2px] uppercase">
-            LUST PLAYHOUSE: LIVE
+/* ─── HOW IT WORKS ──────────────────────────────────── */
+
+const HowItWorksSection = () => (
+  <div className="w-full px-4 mb-10">
+    <p className="text-center text-xs text-gray-400 uppercase tracking-widest mb-5">
+      From payment to access in seconds
+    </p>
+
+    <div className="grid grid-cols-3 gap-2 max-w-[480px] mx-auto">
+      {steps.map((step) => (
+        <div
+          key={step.id}
+          className="
+            relative flex flex-col items-center justify-start
+            rounded-2xl
+            border border-purple-500/20
+            bg-[#0d0f1a]/80
+            p-3
+            aspect-square
+          "
+        >
+          {/* Step number bubble */}
+          <div className="
+            absolute -top-2.5 -left-2.5
+            w-5 h-5 rounded-full
+            bg-gradient-to-br from-purple-500 to-pink-500
+            flex items-center justify-center
+            text-[10px] font-black text-white
+            shadow-[0_0_8px_rgba(168,85,247,0.6)]
+          ">
+            {step.id}
           </div>
+
+          {/* Icon circle */}
+          <div className="
+            w-9 h-9 rounded-full mt-2 mb-2
+            border border-purple-400/30
+            bg-purple-500/10
+            flex items-center justify-center
+            text-base
+            shadow-[0_0_12px_rgba(168,85,247,0.15)]
+          ">
+            {step.icon}
+          </div>
+
+          {/* Text */}
+          <p className="text-white text-[10px] leading-[1.3] text-center font-medium">
+            {step.copy}
+          </p>
         </div>
+      ))}
+    </div>
+  </div>
+);
 
-        <h2 className="text-2xl md:text-3xl font-black text-white text-center">
-          Join The Community
-        </h2>
+/* ─── PRICING CARDS ─────────────────────────────────── */
 
-        <p className="text-center text-gray-400 text-sm mt-2">
-          Free channel, live chatroom & direct admin support
+const PricingCards = ({ onBuy }: { onBuy: (tier: TierOption) => void }) => (
+  <div className="w-full px-4 max-w-[480px] mx-auto space-y-3">
+    {tiers.map((tier) => (
+      <div
+        key={tier.id}
+        className={`
+          relative rounded-2xl p-5
+          border
+          ${tier.highlight
+            ? "border-purple-500/70 bg-[#0d0f1a] shadow-[0_0_40px_rgba(168,85,247,0.25)]"
+            : "border-white/10 bg-[#0d0f1a]/80"
+          }
+        `}
+      >
+        {/* Highest Tier badge */}
+        {tier.highlight && (
+          <div className="mb-3">
+            <span className="
+              inline-flex items-center gap-1
+              px-2.5 py-0.5 rounded-full
+              bg-gradient-to-r from-purple-600/30 to-pink-500/30
+              border border-purple-400/40
+              text-purple-200 text-[10px] font-bold uppercase tracking-widest
+            ">
+              ★ Highest Tier
+            </span>
+          </div>
+        )}
+
+        {/* Tier name */}
+        <p className="text-[10px] font-black text-gray-400 uppercase tracking-[2px] mb-1">
+          {tier.name}
         </p>
 
-        <div className="mt-6 space-y-4">
-
-          <a
-            href="https://t.me/+FZv49DSqQ_lmODcx"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-4 hover:border-purple-400/60 transition"
-          >
-            <div className="flex items-center gap-3">
-              <span>📡</span>
-              <div>
-                <div className="text-white font-bold">Join Free Channel</div>
-                <div className="text-xs text-gray-400">Previews & drops</div>
-              </div>
-            </div>
-            <span className="text-purple-300">→</span>
-          </a>
-
-          <a
-            href="https://t.me/+KsCdMv3mCSVlY2Vh"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-4 hover:border-purple-400/60 transition"
-          >
-            <div className="flex items-center gap-3">
-              <span>💬</span>
-              <div>
-                <div className="text-white font-bold">Official Chatroom</div>
-                <div className="text-xs text-gray-400">Talk with members</div>
-              </div>
-            </div>
-            <span className="text-purple-300">→</span>
-          </a>
-
-          <a
-            href="https://t.me/savslayr"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-4 hover:border-purple-400/60 transition"
-          >
-            <div className="flex items-center gap-3">
-              <span>🛡️</span>
-              <div>
-                <div className="text-white font-bold">Contact Admin</div>
-                <div className="text-xs text-gray-400">Support & orders</div>
-              </div>
-            </div>
-            <span className="text-purple-300">→</span>
-          </a>
-
+        {/* Price */}
+        <div className="flex items-baseline gap-2 mb-4">
+          <span className="text-4xl font-black text-white">{tier.price}</span>
+          <span className="text-xs text-gray-500">one-time</span>
         </div>
 
-        <div className="mt-8 text-center text-[10px] tracking-[2px] text-gray-500 uppercase">
-          © 2026 Lust Playhouse • Private Member Lounge
+        {/* Features */}
+        <div className="space-y-2 mb-5">
+          {tier.features.map((f) => (
+            <div key={f} className="flex items-center gap-2.5">
+              {/* Purple circle checkmark */}
+              <span className="
+                flex-shrink-0 w-4 h-4 rounded-full
+                border border-purple-400/60
+                bg-purple-500/20
+                flex items-center justify-center
+                text-[9px] text-purple-300 font-bold
+              ">
+                ✓
+              </span>
+              <span className="text-white text-sm">{f}</span>
+            </div>
+          ))}
         </div>
 
+        {/* CTA Button */}
+        <button
+          onClick={() => onBuy(tier)}
+          className="
+            w-full py-3.5 rounded-xl
+            font-bold text-sm text-white
+            bg-gradient-to-r from-purple-600 to-pink-500
+            hover:opacity-90 active:scale-[0.98]
+            transition-all duration-150
+            shadow-[0_0_20px_rgba(168,85,247,0.35)]
+          "
+        >
+          Get {tier.name.charAt(0) + tier.name.slice(1).toLowerCase()} — {tier.price}
+        </button>
+
+        <p className="text-center text-[11px] text-gray-500 mt-2">or pay with crypto</p>
       </div>
-    </div>
-  );
-};
+    ))}
+  </div>
+);
 
-/* ================= MAIN ================= */
+/* ─── COMMUNITY SECTION ──────────────────────────────── */
+
+const CommunitySection = () => (
+  <div className="w-full px-4 mt-14 max-w-[480px] mx-auto">
+    <div className="
+      rounded-3xl
+      border border-purple-500/25
+      bg-gradient-to-b from-[#0d0f1a] to-[#080a14]
+      shadow-[0_0_60px_rgba(168,85,247,0.12)]
+      p-6
+    ">
+      {/* Live badge */}
+      <div className="flex justify-center mb-5">
+        <span className="
+          inline-flex items-center gap-1.5
+          px-3 py-1 rounded-full
+          border border-purple-500/30
+          bg-purple-500/10
+          text-purple-300 text-[10px] font-bold tracking-[2px] uppercase
+        ">
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(168,85,247,0.8)]" />
+          LUST PLAYHOUSE: LIVE
+        </span>
+      </div>
+
+      {/* Heading */}
+      <h2 className="text-2xl font-black text-white text-center leading-tight mb-1">
+        Join The Community
+      </h2>
+      <p className="text-center text-gray-400 text-sm mb-6">
+        Free channel, live chatroom & direct admin support
+      </p>
+
+      {/* Links */}
+      <div className="space-y-3">
+        {communityLinks.map((link) => (
+          <a
+            key={link.id}
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            className="
+              flex items-center gap-3
+              rounded-2xl
+              border border-purple-500/20
+              bg-[#111525]/60
+              px-4 py-4
+              hover:border-purple-400/50
+              hover:shadow-[0_0_20px_rgba(168,85,247,0.1)]
+              transition-all duration-200
+              group
+            "
+          >
+            {/* Icon bubble */}
+            <div className="
+              w-9 h-9 rounded-xl flex-shrink-0
+              border border-purple-400/25
+              bg-purple-500/10
+              flex items-center justify-center
+            ">
+              {link.icon}
+            </div>
+
+            {/* Text */}
+            <div className="flex-1 min-w-0">
+              <div className="text-white font-bold text-base leading-tight">{link.title}</div>
+              <div className="text-gray-400 text-xs mt-0.5">{link.sub}</div>
+            </div>
+
+            {/* Arrow */}
+            <span className="text-purple-300 text-lg group-hover:translate-x-0.5 transition-transform">→</span>
+          </a>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <p className="text-center text-[10px] text-gray-600 uppercase tracking-[2px] mt-7">
+        © 2026 Lust Playhouse • Private Member Lounge • Curated Nightly Access
+      </p>
+    </div>
+  </div>
+);
+
+/* ─── MAIN EXPORT ───────────────────────────────────── */
+
 export const StepsSection = () => {
-  const [selectedTier, setSelectedTier] = useState<TierOption>(tiers[0]);
+  const [, setSelectedTier] = useState<TierOption>(tiers[0]);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(TIER_STORAGE_KEY);
@@ -166,91 +347,39 @@ export const StepsSection = () => {
   };
 
   return (
-    <div className="w-full mx-auto max-w-[960px] px-4 text-center">
+    <div className="w-full flex flex-col items-center text-center pb-16">
 
-      <div className="grid grid-cols-3 gap-4 mb-10">
-        {steps.map((step) => (
-          <div key={step.id} className="rounded-2xl border border-purple-500/20 bg-[#0d0f1a]/60 p-5">
-            <div className="text-2xl mb-2">{step.icon}</div>
-            <div className="text-sm text-white">{step.copy}</div>
-          </div>
-        ))}
+      {/* Section heading */}
+      <div className="px-4 mb-8 w-full max-w-[480px]">
+        <h2 className="text-3xl font-black text-white">How It Works</h2>
+        <p className="text-gray-400 text-sm mt-1">Simple. Instant. Lifetime access.</p>
       </div>
 
-      <h2 className="text-3xl md:text-4xl font-black text-white">
-        Choose Your Tier
-      </h2>
+      {/* 1 — How it works (3 square cards) */}
+      <HowItWorksSection />
 
-      <p className="mt-2 text-gray-400">
-        One-time payment · lifetime access · instant delivery
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 items-stretch max-w-[900px] mx-auto">
-        {tiers.map((tier) => (
-          <div
-            key={tier.id}
-            className={`relative rounded-2xl p-6 flex flex-col justify-between min-h-[420px] ${
-              tier.highlight
-                ? "border border-purple-500 bg-[#0d0f1a] shadow-[0_0_70px_rgba(168,85,247,0.35)] md:-mt-3 md:mb-[-12px]"
-                : "border border-white/10 bg-[#0d0f1a]/80"
-            }`}
-          >
-            {tier.highlight && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(168,85,247,0.6)]">
-                ★&nbsp;Highest&nbsp;Tier
-              </span>
-            )}
-
-            <div>
-              <p className="text-sm font-bold text-white uppercase tracking-wide">
-                {tier.name}
-              </p>
-
-              <div className="mt-2 flex items-baseline justify-center gap-2">
-                <span className="text-4xl font-black text-purple-400">
-                  {tier.price}
-                </span>
-                <span className="text-xs text-gray-500 font-medium">one-time</span>
-              </div>
-
-              <div className="mt-5 space-y-2.5 text-white text-sm">
-                {tier.features.map((f) => (
-                  <div key={f} className="flex items-center justify-center gap-2">
-                    <span className="text-purple-400">✓</span>
-                    <span>{f}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-2">
-              <button
-                onClick={() => handleBuy(tier)}
-                className={`w-full py-3 rounded-xl font-bold text-sm transition ${
-                  tier.highlight
-                    ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:opacity-90 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
-                    : "bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:opacity-90"
-                }`}
-              >
-                Get {tier.name} — {tier.price}
-              </button>
-              <p className="text-[11px] text-gray-500">or pay with crypto</p>
-            </div>
-          </div>
-        ))}
+      {/* 2 — Pricing */}
+      <div className="w-full px-4 mb-8 max-w-[480px] mx-auto">
+        <h2 className="text-2xl font-black text-white mb-1">Choose Your Tier</h2>
+        <p className="text-gray-400 text-sm">One-time payment · lifetime access · instant delivery</p>
       </div>
 
-      <div className="mt-8 flex items-center justify-center gap-3 text-sm text-gray-400">
+      <PricingCards onBuy={handleBuy} />
+
+      {/* Accepted payments */}
+      <div className="flex items-center gap-3 mt-5 text-sm text-gray-400">
         <span>Accepted:</span>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d0f1a] border border-white/15 text-white text-xs font-medium">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d0f1a] border border-white/10 text-white text-xs font-medium">
           💳 Card
         </span>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d0f1a] border border-white/15 text-white text-xs font-medium">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d0f1a] border border-white/10 text-white text-xs font-medium">
           ₵ Crypto
         </span>
       </div>
 
-      <CommunityButtons />
+      {/* 3 — Community links */}
+      <CommunitySection />
+
     </div>
   );
 };
