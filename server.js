@@ -13,66 +13,27 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 /* =========================
-   ENV / SITE CONFIG
-========================= */
-const PORT = parseInt(process.env.PORT || "4000", 10);
-const PUBLIC_BASE_URL = (process.env.PUBLIC_BASE_URL || `http://localhost:${PORT}`).replace(/\/$/, "");
-
-// Two-domain setup: main site (.xyz) and the payment site (.cloud). Both are
-// served by THIS one app; requests are routed by hostname. The "Get" buttons
-// on the main site send the buyer to PAYMENT_SITE_URL to actually pay.
-const PAYMENT_HOST     = (process.env.PAYMENT_HOST     || "lustplayhouse.cloud").toLowerCase();
-const PAYMENT_SITE_URL = (process.env.PAYMENT_SITE_URL || "https://lustplayhouse.cloud").replace(/\/$/, "");
-const MAIN_SITE_URL    = (process.env.MAIN_SITE_URL    || "https://lustplayhouse.xyz").replace(/\/$/, "");
-const PREVIEW_BASE_URL = (process.env.PREVIEW_BASE_URL || "").replace(/\/$/, "");
-
-/* =========================
    MIDDLEWARE
 ========================= */
 app.use(cors());
 app.use(express.json());
 
 // "dotfiles: allow" is required so /.well-known/... (used for Apple Pay domain
-// verification) is actually served. Express ignores dotfiles by default.
+// verification) is actually served. Express ignores dotfiles by default,
+// which is why the verification file wasn't reachable before.
 app.use(express.static(path.join(__dirname, "public"), { dotfiles: "allow" }));
 
 /* =========================
-   APPLE PAY DOMAIN VERIFICATION
-   Apple fetches this file and expects:
-     • HTTP 200
-     • Complete file body (no truncation)
-     • Content-Type: application/json  ← Square's file IS JSON despite no extension
-     • Content-Length set explicitly   ← prevents chunked / partial responses
-   This explicit route runs BEFORE express.static so nothing intercepts it.
+   APPLE PAY DOMAIN VERIFICATION (explicit backup route)
+   Serves the real file straight from disk — belt-and-suspenders alongside
+   the dotfiles:"allow" static config above, in case any platform-level
+   proxy/CDN still filters dotfiles before it reaches express.static.
 ========================= */
-const APPLE_PAY_FILE_PATH = path.join(
-  __dirname,
-  "public",
-  ".well-known",
-  "apple-developer-merchantid-domain-association"
-);
-
 app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
-  try {
-    const fileBuffer = fs.readFileSync(APPLE_PAY_FILE_PATH);
-
-    // Apple / Square require application/json for this file.
-    // Some guides say text/plain — application/json is what Square's
-    // own dashboard expects and what resolves "partial response" errors.
-    res.setHeader("Content-Type", "application/json");
-
-    // Explicit Content-Length stops Express from using chunked transfer
-    // encoding, which Apple Pay's verifier can misread as a partial response.
-    res.setHeader("Content-Length", fileBuffer.length);
-
-    // No caching — Apple re-fetches on every verification attempt.
-    res.setHeader("Cache-Control", "no-store");
-
-    res.status(200).end(fileBuffer);
-  } catch (err) {
-    console.error("❌ Apple Pay verification file missing:", APPLE_PAY_FILE_PATH, err.message);
-    res.status(404).send("Verification file not found");
-  }
+  res.setHeader("Content-Type", "text/plain");
+  res.sendFile(
+    path.join(__dirname, "public", ".well-known", "apple-developer-merchantid-domain-association")
+  );
 });
 
 /* =========================
@@ -300,10 +261,8 @@ app.post("/create-payment-link", async (req, res) => {
 /* =========================
    START SERVER
 ========================= */
+const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Payment host : ${PAYMENT_HOST}`);
-  console.log(`Payment site : ${PAYMENT_SITE_URL}`);
-  console.log(`Main site    : ${MAIN_SITE_URL}`);
-  if (PREVIEW_BASE_URL) console.log(`Preview base : ${PREVIEW_BASE_URL}`);
 });
