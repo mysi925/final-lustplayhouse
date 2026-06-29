@@ -31,10 +31,19 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
-   HEALTH CHECK
+   ROOT — serve /tease content without redirecting
+   (keeps URL as lustplayhouse.cloud for Square domain verification)
 ========================= */
 app.get("/", (req, res) => {
-  res.redirect("/tease");
+  const tier = TIERS["tease-15"];
+  const dollars = (tier.amountCents / 100).toFixed(0);
+
+  const html = checkoutTemplate
+    .replaceAll("__TIER_NAME__", tier.name)
+    .replaceAll("__TIER_PRICE__", dollars)
+    .replaceAll("__TIER_ID__", "tease-15");
+
+  res.send(html);
 });
 
 /* =========================
