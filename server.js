@@ -13,6 +13,21 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 /* =========================
+   APPLE PAY DOMAIN VERIFICATION
+   Must be defined BEFORE express.static so it isn't intercepted.
+   File goes at: public/.well-known/apple-developer-merchantid-domain-association
+========================= */
+app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
+  const filePath = path.join(__dirname, "public", ".well-known", "apple-developer-merchantid-domain-association");
+  if (fs.existsSync(filePath)) {
+    res.setHeader("Content-Type", "text/plain");
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send("Apple Pay domain verification file not found.");
+  }
+});
+
+/* =========================
    MIDDLEWARE
 ========================= */
 app.use(cors());
@@ -24,21 +39,6 @@ app.use(express.static(path.join(__dirname, "public")));
 ========================= */
 app.get("/", (req, res) => {
   res.redirect("/tease");
-});
-
-/* =========================
-   APPLE PAY DOMAIN VERIFICATION
-   File must be downloaded from Square Dashboard and placed at:
-   public/.well-known/apple-developer-merchantid-domain-association
-========================= */
-app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
-  const filePath = path.join(__dirname, "public", ".well-known", "apple-developer-merchantid-domain-association");
-  if (fs.existsSync(filePath)) {
-    res.setHeader("Content-Type", "text/plain");
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send("Apple Pay domain verification file not found. See setup instructions.");
-  }
 });
 
 /* =========================
