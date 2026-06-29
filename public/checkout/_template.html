@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>__TIER_NAME__ — Lust Playhouse Checkout</title>
+<script src="https://web.squarecdn.com/v1/square.js"></script>
+<style>
+  :root {
+    --bg: #0a0618;
+    --card-bg: #0d0b1a;
+    --purple: #a855f7;
+    --purple-light: #d8b4fe;
+    --purple-deep: #7c3aed;
+    --pink: #ec4899;
+    --text: #f5f3ff;
+    --text-dim: #9c93b8;
+    --border: rgba(168,85,247,0.2);
+    --error: #f87171;
+    --green: #4ade80;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #0a0618;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(236,72,153,0.18) 0%, transparent 60%),
+      linear-gradient(to bottom, #160b2e, #0a0618, #050410);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 20px;
+  }
+  .brand {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(216,180,254,0.8);
+    margin-bottom: 28px;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+  }
+  .tier-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(18,15,36,0.8);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .tier-strip-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple-light);
+  }
+  .tier-strip-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .tier-strip-price {
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .checkout-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 0 50px rgba(168,85,247,0.12);
+  }
+  .checkout-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  #card-container {
+    background: #161329;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    min-height: 56px;
+  }
+  button#pay-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    box-shadow: 0 0 20px rgba(168,85,247,0.35);
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+  }
+  button#pay-button:hover { opacity: 0.92; }
+  button#pay-button:active { transform: scale(0.98); }
+  button#pay-button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .footnote {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  #payment-status {
+    margin-top: 14px;
+    font-size: 13px;
+    text-align: center;
+    min-height: 18px;
+  }
+  #payment-status.error { color: var(--error); }
+  #payment-status.success { color: var(--green); }
+  .copyright {
+    margin-top: 36px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.15);
+  }
+</style>
+</head>
+<body>
+
+  <div class="brand">Lust Playhouse</div>
+
+  <div class="card">
+    <div class="tier-strip">
+      <div>
+        <div class="tier-strip-name">__TIER_NAME__ Tier</div>
+        <div class="tier-strip-sub">One-time payment &middot; lifetime access</div>
+      </div>
+      <div class="tier-strip-price">$__TIER_PRICE__</div>
+    </div>
+
+    <div class="checkout-box">
+      <div class="checkout-label">Card details</div>
+      <div id="card-container"></div>
+      <button id="pay-button" disabled>Pay $__TIER_PRICE__</button>
+      <div id="payment-status"></div>
+      <p class="footnote">Encrypted checkout &middot; your card details never touch our servers</p>
+    </div>
+  </div>
+
+  <div class="copyright">(c) 2026 Lust Playhouse</div>
+
+<script>
+(async function () {
+  const tierId = "__TIER_ID__";
+  const statusEl = document.getElementById('payment-status');
+  const payButton = document.getElementById('pay-button');
+
+  try {
+    const cfgRes = await fetch('/api/square-config');
+    const cfg = await cfgRes.json();
+
+    const payments = window.Square.payments(cfg.applicationId, cfg.locationId);
+    const card = await payments.card({
+      style: {
+        input: { fontSize: '16px', color: '#f5f3ff' },
+        'input::placeholder': { color: '#9c93b8' },
+      },
+    });
+    await card.attach('#card-container');
+    payButton.disabled = false;
+
+    payButton.addEventListener('click', async () => {
+      payButton.disabled = true;
+      statusEl.className = '';
+      statusEl.textContent = 'Processing…';
+
+      try {
+        const tokenResult = await card.tokenize();
+        if (tokenResult.status !== 'OK') {
+          throw new Error(tokenResult.errors?.[0]?.message || 'Card details look invalid.');
+        }
+
+        const res = await fetch('/api/checkout/' + tierId, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourceId: tokenResult.token }),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Payment failed. Please try again.');
+        }
+
+        statusEl.className = 'success';
+        statusEl.textContent = 'Payment successful! Redirecting…';
+        window.location.href = '/success?tier=' + encodeURIComponent(tierId);
+      } catch (err) {
+        statusEl.className = 'error';
+        statusEl.textContent = err.message || 'Something went wrong. Please try again.';
+        payButton.disabled = false;
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    statusEl.className = 'error';
+    statusEl.textContent = 'Could not load secure payment form. Please refresh and try again.';
+  }
+})();
+</script>
+</body>
+</html>
