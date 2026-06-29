@@ -163,7 +163,7 @@ export const HeroImage = () => {
               src={buildSrc(previewVideos[activeIndex])}
               className="absolute pointer-events-none"
               style={{
-                width: "105%",
+                width: "100%",
                 height: "180%",
                 top: "-40%",
                 left: "0",
