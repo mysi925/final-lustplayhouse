@@ -34,6 +34,7 @@ app.get("/", (req, res) => {
 app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
   const filePath = path.join(__dirname, "public", ".well-known", "apple-developer-merchantid-domain-association");
   if (fs.existsSync(filePath)) {
+    res.setHeader("Content-Type", "text/plain");
     res.sendFile(filePath);
   } else {
     res.status(404).send("Apple Pay domain verification file not found. See setup instructions.");
