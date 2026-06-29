@@ -46,20 +46,20 @@ export default function Success() {
 
         <h1 className="text-2xl font-black mb-1">Thank you for your purchase!</h1>
         <p className="text-gray-400 text-sm mb-8">
-          Tap below to unlock your access — it only works once, so save it.
+          Tap below to unlock your access - it only works once, so save it.
         </p>
 
         <div className="w-full rounded-2xl border border-purple-500/25 bg-[#0d0f1a]/90 p-6">
           {error && <p className="text-pink-400 text-sm">{error}</p>}
 
           {!error && !linkInfo && (
-            <p className="text-gray-400 text-sm">Loading your access link…</p>
+            <p className="text-gray-400 text-sm">Loading your access link...</p>
           )}
 
           {linkInfo && (
             <>
               <p className="text-[10px] uppercase tracking-[2px] text-gray-400 font-bold mb-4">
-                {linkInfo.name} Tier — Access Link
+                {linkInfo.name} Tier - Access Link
               </p>
               
                 href={linkInfo.link}
@@ -74,7 +74,7 @@ export default function Success() {
         </div>
 
         <p className="text-[10px] uppercase tracking-[2px] mt-8 text-white/15">
-          © 2026 Lust Playhouse
+          (c) 2026 Lust Playhouse
         </p>
       </div>
     </div>
