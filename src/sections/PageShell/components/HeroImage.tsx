@@ -9,15 +9,27 @@ const previewVideos = [
   { id: "36fbc681-637c-4cd1-9dea-fa36e867df3e", lib: "690906" },
 ];
 
-const buildSrc = (v: { id: string; lib: string }, muted: boolean) =>
+const buildSrc = (v: { id: string; lib: string }) =>
   `https://player.mediadelivery.net/embed/${v.lib}/${v.id}` +
-  `?autoplay=true&muted=${muted}&loop=true&preload=true&responsive=true&controls=0`;
+  `?autoplay=true&muted=true&loop=true&preload=true&responsive=true&controls=0&playsinline=true`;
 
 export const HeroImage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [muted, setMuted] = useState(true);
   const [transitioning, setTransitioning] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const autoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const toggleMute = () => {
+    setMuted((m) => {
+      const next = !m;
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: next ? "mute" : "unmute" }),
+        "*"
+      );
+      return next;
+    });
+  };
 
   const len = previewVideos.length;
   const prevIdx = (activeIndex - 1 + len) % len;
@@ -66,7 +78,7 @@ export const HeroImage = () => {
         >
           <iframe
             key={`prev-${prevIdx}`}
-            src={buildSrc(previewVideos[prevIdx], true)}
+            src={buildSrc(previewVideos[prevIdx])}
             className="absolute pointer-events-none"
             style={{
               width: "350%",
@@ -98,7 +110,7 @@ export const HeroImage = () => {
         >
           <iframe
             key={`next-${nextIdx}`}
-            src={buildSrc(previewVideos[nextIdx], true)}
+            src={buildSrc(previewVideos[nextIdx])}
             className="absolute pointer-events-none"
             style={{
               width: "350%",
@@ -146,11 +158,12 @@ export const HeroImage = () => {
             `}
           >
             <iframe
-              key={`main-${activeIndex}-${muted}`}
-              src={buildSrc(previewVideos[activeIndex], muted)}
+              key={`main-${activeIndex}`}
+              ref={iframeRef}
+              src={buildSrc(previewVideos[activeIndex])}
               className="absolute pointer-events-none"
               style={{
-                width: "100%",
+                width: "105%",
                 height: "180%",
                 top: "-40%",
                 left: "0",
@@ -177,7 +190,7 @@ export const HeroImage = () => {
 
             {/* Mute toggle */}
             <button
-              onClick={(e) => { e.stopPropagation(); setMuted((m) => !m); }}
+              onClick={(e) => { e.stopPropagation(); toggleMute(); }}
               className="
                 absolute top-2.5 right-2.5 z-30
                 w-8 h-8 rounded-full
