@@ -150,10 +150,10 @@ export const HeroImage = () => {
               src={buildSrc(previewVideos[activeIndex], muted)}
               className="absolute pointer-events-none"
               style={{
-                width: "175%",
-                height: "175%",
-                top: "-20%",
-                left: "-20%",
+                width: "160%",
+                height: "160%",
+                top: "-35%",
+                left: "-35%",
               }}
               allow="autoplay; fullscreen"
             />
