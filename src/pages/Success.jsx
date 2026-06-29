@@ -61,12 +61,7 @@ export default function Success() {
               <p className="text-[10px] uppercase tracking-[2px] text-gray-400 font-bold mb-4">
                 {linkInfo.name} Tier - Access Link
               </p>
-              
-                href={linkInfo.link}
-                target="_blank"
-                rel="noreferrer"
-                className="block w-full py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-[0_0_20px_rgba(168,85,247,0.35)]"
-              >
+              <a href={linkInfo.link} target="_blank" rel="noreferrer" className="block w-full py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-purple-600 to-pink-500 hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-[0_0_20px_rgba(168,85,247,0.35)]">
                 Join Now
               </a>
             </>
