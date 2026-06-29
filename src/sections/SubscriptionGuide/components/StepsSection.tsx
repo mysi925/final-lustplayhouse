@@ -262,21 +262,9 @@ export const StepsSection = () => {
     }
   }, []);
 
-  const handleBuy = async (tier: TierOption) => {
-    try {
-      window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
-      const res = await fetch("https://lustplayhouse.cloud/create-payment-link", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amountCents: tier.amount }),
-      });
-      const data = await res.json();
-      if (!res.ok) { alert("Payment error: " + JSON.stringify(data)); return; }
-      if (data.url) window.location.href = data.url;
-    } catch (err) {
-      console.error(err);
-      alert("Server error. Try again.");
-    }
+  const handleBuy = (tier: TierOption) => {
+    window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
+    window.location.href = `/pay?tier=${tier.id}`;
   };
 
   return (
