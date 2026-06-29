@@ -264,7 +264,15 @@ export const StepsSection = () => {
 
   const handleBuy = (tier: TierOption) => {
     window.localStorage.setItem(TIER_STORAGE_KEY, tier.id);
-    window.location.href = `/pay?tier=${tier.id}`;
+
+    const routeByTierId: Record<string, string> = {
+      "tease-15": "tease",
+      "desire-25": "desire",
+      "obsession-50": "obsession",
+    };
+
+    const route = routeByTierId[tier.id];
+    window.location.href = `https://lustplayhouse.cloud/${route}`;
   };
 
   return (
