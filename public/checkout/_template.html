@@ -81,6 +81,33 @@
     padding: 24px;
     box-shadow: 0 0 50px rgba(168,85,247,0.12);
   }
+  #apple-pay-container {
+    display: none;
+    margin-bottom: 16px;
+  }
+  #apple-pay-container apple-pay-button {
+    --apple-pay-button-width: 100%;
+    --apple-pay-button-height: 48px;
+    --apple-pay-button-border-radius: 12px;
+    --apple-pay-button-padding: 0;
+  }
+  .divider {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider-text {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
   .checkout-label {
     font-size: 11px;
     font-weight: 700;
@@ -150,6 +177,14 @@
     </div>
 
     <div class="checkout-box">
+      <!-- Apple Pay (only shown on eligible Apple devices) -->
+      <div id="apple-pay-container"></div>
+      <div class="divider" id="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">or pay with card</div>
+        <div class="divider-line"></div>
+      </div>
+
       <div class="checkout-label">Card details</div>
       <div id="card-container"></div>
       <button id="pay-button" disabled>Pay $__TIER_PRICE__</button>
@@ -165,12 +200,70 @@
   const tierId = "__TIER_ID__";
   const statusEl = document.getElementById('payment-status');
   const payButton = document.getElementById('pay-button');
+  const applePayContainer = document.getElementById('apple-pay-container');
+  const divider = document.getElementById('divider');
+
+  // Shared: charge the card/Apple Pay token
+  async function processPayment(sourceId) {
+    const res = await fetch('/api/checkout/' + tierId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sourceId }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'Payment failed. Please try again.');
+    }
+    return data;
+  }
 
   try {
     const cfgRes = await fetch('/api/square-config');
     const cfg = await cfgRes.json();
-
     const payments = window.Square.payments(cfg.applicationId, cfg.locationId);
+
+    // ── Apple Pay ──────────────────────────────────────────────
+    try {
+      const paymentRequest = payments.paymentRequest({
+        countryCode: 'US',
+        currencyCode: 'USD',
+        total: {
+          amount: '__TIER_PRICE__',
+          label: '__TIER_NAME__ Membership',
+        },
+      });
+      const applePay = await payments.applePay(paymentRequest);
+      const applePayButton = await applePay.createButton({
+        buttonType: 'plain',
+        buttonColor: 'black',
+      });
+      applePayContainer.appendChild(applePayButton);
+      applePayContainer.style.display = 'block';
+      divider.style.display = 'flex';
+
+      applePayButton.addEventListener('click', async () => {
+        statusEl.className = '';
+        statusEl.textContent = '';
+        try {
+          const tokenResult = await applePay.tokenize();
+          if (tokenResult.status !== 'OK') {
+            throw new Error(tokenResult.errors?.[0]?.message || 'Apple Pay failed.');
+          }
+          await processPayment(tokenResult.token);
+          statusEl.className = 'success';
+          statusEl.textContent = 'Payment successful! Redirecting…';
+          window.location.href = '/success?tier=' + encodeURIComponent(tierId);
+        } catch (err) {
+          statusEl.className = 'error';
+          statusEl.textContent = err.message || 'Something went wrong. Please try again.';
+        }
+      });
+    } catch (e) {
+      // Apple Pay unavailable on this browser/device — silently skip
+      console.log('Apple Pay not available:', e.message);
+    }
+
+    // ── Card ───────────────────────────────────────────────────
     const card = await payments.card({
       style: {
         input: { fontSize: '16px', color: '#f5f3ff' },
@@ -190,18 +283,7 @@
         if (tokenResult.status !== 'OK') {
           throw new Error(tokenResult.errors?.[0]?.message || 'Card details look invalid.');
         }
-
-        const res = await fetch('/api/checkout/' + tierId, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sourceId: tokenResult.token }),
-        });
-        const data = await res.json();
-
-        if (!res.ok || !data.success) {
-          throw new Error(data.error || 'Payment failed. Please try again.');
-        }
-
+        await processPayment(tokenResult.token);
         statusEl.className = 'success';
         statusEl.textContent = 'Payment successful! Redirecting…';
         window.location.href = '/success?tier=' + encodeURIComponent(tierId);
@@ -211,6 +293,7 @@
         payButton.disabled = false;
       }
     });
+
   } catch (err) {
     console.error(err);
     statusEl.className = 'error';
