@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PageShell } from "@/sections/PageShell";
 import Checkout from "./pages/Checkout";
-import Pay from "./pages/Pay";
-import Success from "./pages/Success";
+
 
 export const App = () => {
   return (
@@ -43,8 +42,6 @@ export const App = () => {
 
         {/* CHECKOUT PAGE */}
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/pay" element={<Pay />} />
-        <Route path="/success" element={<Success />} />
 
         {/* 404 */}
         <Route
