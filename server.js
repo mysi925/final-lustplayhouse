@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 const app = express();
@@ -8,43 +9,51 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 🔥 Prevent partial / chunked response issues (important for Apple Pay)
+// 🔥 Prevent ETag caching issues
 app.disable("etag");
 
-// Optional but safe
+// Optional middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // =====================================================
-// ✅ APPLE PAY DOMAIN VERIFICATION (MUST BE FIRST)
+// ✅ APPLE PAY DOMAIN VERIFICATION (FIXED - NO sendFile)
 // =====================================================
-app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
-  res.set({
-    "Content-Type": "text/plain",
-    "Content-Encoding": "identity",
-    "Cache-Control": "no-store",
-  });
-
-  res.sendFile(
-    path.join(
+app.get(
+  "/.well-known/apple-developer-merchantid-domain-association",
+  (req, res) => {
+    const filePath = path.join(
       __dirname,
       "public",
       ".well-known",
       "apple-developer-merchantid-domain-association"
-    )
-  );
-});
+    );
+
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).send("Missing verification file");
+    }
+
+    const file = fs.readFileSync(filePath);
+
+    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Content-Length", file.length);
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Connection", "close");
+
+    return res.end(file);
+  }
+);
 
 // =====================================================
 // ✅ YOUR ROUTES
 // =====================================================
 
-// Root redirect (this is fine)
+// Root redirect
 app.get("/", (req, res) => {
   res.redirect("/tease");
 });
 
-// Your product/payment pages
+// Product/payment pages
 app.get("/tease", (req, res) => {
   res.send("Tease page");
 });
@@ -58,12 +67,12 @@ app.get("/obsession", (req, res) => {
 });
 
 // =====================================================
-// ✅ STATIC FILES (if you use frontend build later)
+// ✅ STATIC FILES
 // =====================================================
 app.use(express.static(path.join(__dirname, "public")));
 
 // =====================================================
-// ✅ FALLBACK (optional)
+// ✅ 404 FALLBACK
 // =====================================================
 app.use((req, res) => {
   res.status(404).send("Not Found");
