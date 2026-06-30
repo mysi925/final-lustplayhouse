@@ -132,8 +132,25 @@ for (const [route, tierId] of Object.entries(ROUTE_TO_TIER)) {
 /* =========================
    SUCCESS PAGE
 ========================= */
+const successTemplate = fs.readFileSync(
+  path.join(__dirname, "public", "checkout", "_success.html"),
+  "utf8"
+);
+
 app.get("/success", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "checkout", "_success.html"));
+  const tier = TIERS[req.query.tier];
+
+  // Fallback if tier query param is missing/invalid — avoid leaking a
+  // broken page with unresolved __PLACEHOLDER__ text.
+  if (!tier) {
+    return res.redirect("/");
+  }
+
+  const html = successTemplate
+    .replaceAll("__TIER_NAME__", tier.name)
+    .replaceAll("__COMMUNITY_LINK__", tier.communityLink);
+
+  res.send(html);
 });
 
 /* =========================
