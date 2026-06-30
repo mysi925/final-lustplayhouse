@@ -18,23 +18,36 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// "dotfiles: allow" is required so /.well-known/... (used for Apple Pay domain
-// verification) is actually served. Express ignores dotfiles by default,
-// which is why the verification file wasn't reachable before.
-app.use(express.static(path.join(__dirname, "public"), { dotfiles: "allow" }));
-
 /* =========================
-   APPLE PAY DOMAIN VERIFICATION (explicit backup route)
-   Serves the real file straight from disk — belt-and-suspenders alongside
-   the dotfiles:"allow" static config above, in case any platform-level
-   proxy/CDN still filters dotfiles before it reaches express.static.
+   APPLE PAY DOMAIN VERIFICATION
+   Registered BEFORE express.static so this handler always wins the route,
+   regardless of static-file middleware behavior (dotfiles, etags, range
+   requests, compression, etc). Response is fully buffered in memory and
+   sent with an explicit Content-Length so there is no possibility of
+   chunked transfer-encoding — some strict automated verifiers (Apple's
+   included) can misinterpret chunked responses as truncated/partial.
 ========================= */
+const APPLE_PAY_FILE_PATH = path.join(
+  __dirname,
+  "public",
+  ".well-known",
+  "apple-developer-merchantid-domain-association"
+);
+const APPLE_PAY_FILE_BUFFER = fs.readFileSync(APPLE_PAY_FILE_PATH);
+
 app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
+  res.status(200);
   res.setHeader("Content-Type", "text/plain");
-  res.sendFile(
-    path.join(__dirname, "public", ".well-known", "apple-developer-merchantid-domain-association")
-  );
+  res.setHeader("Content-Length", APPLE_PAY_FILE_BUFFER.length);
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Connection", "close");
+  res.removeHeader("ETag");
+  res.end(APPLE_PAY_FILE_BUFFER);
 });
+
+// "dotfiles: allow" is required so other /.well-known/... files (if any)
+// are served. Express ignores dotfiles by default.
+app.use(express.static(path.join(__dirname, "public"), { dotfiles: "allow" }));
 
 /* =========================
    HEALTH CHECK
