@@ -44,7 +44,11 @@ app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res)
   // Square's docs require this file to DOWNLOAD when visiting the URL,
   // not render inline in the browser. application/octet-stream +
   // Content-Disposition: attachment forces that behavior.
-  const fileBuffer = fs.readFileSync(filePath);
+  // Strip any trailing whitespace/newline that may have been introduced by
+  // editors/zip tools on save — Apple's signature validation is byte-exact,
+  // so even one stray trailing byte can break verification.
+  const rawBuffer = fs.readFileSync(filePath);
+  const fileBuffer = Buffer.from(rawBuffer.toString("utf8").replace(/\s+$/, ""));
 
   res.setHeader("Content-Type", "application/octet-stream");
   res.setHeader(
