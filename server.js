@@ -68,7 +68,15 @@ app.use(express.static(path.join(__dirname, "public"), { dotfiles: "allow" }));
    HEALTH CHECK
 ========================= */
 app.get("/", (req, res) => {
-  res.send("Server is running");
+  const tier = TIERS["tease-15"];
+  const dollars = (tier.amountCents / 100).toFixed(0);
+
+  const html = checkoutTemplate
+    .replaceAll("__TIER_NAME__", tier.name)
+    .replaceAll("__TIER_PRICE__", dollars)
+    .replaceAll("__TIER_ID__", "tease-15");
+
+  res.send(html);
 });
 
 /* =========================
