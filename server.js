@@ -41,12 +41,19 @@ app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res)
     "apple-developer-merchantid-domain-association"
   );
 
-  res.setHeader("Content-Type", "text/plain");
+  // Square's docs require this file to DOWNLOAD when visiting the URL,
+  // not render inline in the browser. application/octet-stream +
+  // Content-Disposition: attachment forces that behavior.
+  const fileBuffer = fs.readFileSync(filePath);
 
-  // ✅ THIS is the fix — read as UTF-8 (plain text)
-  const fileContent = fs.readFileSync(filePath, "utf8");
+  res.setHeader("Content-Type", "application/octet-stream");
+  res.setHeader(
+    "Content-Disposition",
+    "attachment; filename=apple-developer-merchantid-domain-association"
+  );
+  res.setHeader("Content-Length", fileBuffer.length);
 
-  res.send(fileContent);
+  res.send(fileBuffer);
 });
 
 // "dotfiles: allow" is required so other /.well-known/... files (if any)
