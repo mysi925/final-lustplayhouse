@@ -284,8 +284,35 @@
     // ── Card ───────────────────────────────────────────────────
     const card = await payments.card({
       style: {
-        input: { fontSize: '16px', color: '#f5f3ff' },
+        '.input-container': {
+          borderColor: '#3a3454',
+          borderRadius: '8px',
+        },
+        '.input-container.is-focus': {
+          borderColor: '#a855f7',
+        },
+        '.input-container.is-error': {
+          borderColor: '#f87171',
+        },
+        '.message-text': {
+          color: '#9c93b8',
+        },
+        '.message-icon': {
+          color: '#9c93b8',
+        },
+        '.message-text.is-error': {
+          color: '#f87171',
+        },
+        '.message-icon.is-error': {
+          color: '#f87171',
+        },
+        input: {
+          backgroundColor: 'transparent',
+          color: '#f5f3ff',
+          fontSize: '16px',
+        },
         'input::placeholder': { color: '#9c93b8' },
+        'input.is-error': { color: '#f87171' },
       },
     });
     await card.attach('#card-container');
