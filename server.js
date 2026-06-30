@@ -33,16 +33,20 @@ const APPLE_PAY_FILE_PATH = path.join(
   ".well-known",
   "apple-developer-merchantid-domain-association"
 );
-const APPLE_PAY_FILE_BUFFER = fs.readFileSync(APPLE_PAY_FILE_PATH);
-
 app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res) => {
-  res.status(200);
+  const filePath = path.join(
+    __dirname,
+    "public",
+    ".well-known",
+    "apple-developer-merchantid-domain-association"
+  );
+
   res.setHeader("Content-Type", "text/plain");
-  res.setHeader("Content-Length", APPLE_PAY_FILE_BUFFER.length);
-  res.setHeader("Cache-Control", "no-store");
-  res.setHeader("Connection", "close");
-  res.removeHeader("ETag");
-  res.end(APPLE_PAY_FILE_BUFFER);
+
+  // ✅ THIS is the fix — read as UTF-8 (plain text)
+  const fileContent = fs.readFileSync(filePath, "utf8");
+
+  res.send(fileContent);
 });
 
 // "dotfiles: allow" is required so other /.well-known/... files (if any)
