@@ -261,6 +261,13 @@
     } catch (e) {
       // Apple Pay unavailable on this browser/device — silently skip
       console.log('Apple Pay not available:', e.message);
+
+      // TEMPORARY DEBUG — remove once Apple Pay is confirmed working
+      const debugBox = document.createElement('div');
+      debugBox.style.cssText = 'margin-top:12px;padding:10px;background:#2a1430;border:1px solid #f87171;border-radius:8px;color:#f87171;font-size:12px;word-break:break-word;';
+      debugBox.textContent = 'Apple Pay debug: ' + (e && e.message ? e.message : String(e));
+      applePayContainer.style.display = 'block';
+      applePayContainer.appendChild(debugBox);
     }
 
     // ── Card ───────────────────────────────────────────────────
