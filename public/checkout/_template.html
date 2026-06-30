@@ -234,13 +234,20 @@
       });
       const applePay = await payments.applePay(paymentRequest);
 
-      // Square's ApplePay object has no createButton() method — that's a
-      // Google Pay-only API. For Apple Pay you create Apple's native
-      // <apple-pay-button> element yourself and wire tokenize() to its click.
-      const applePayButton = document.createElement('apple-pay-button');
-      applePayButton.setAttribute('buttonstyle', 'black');
-      applePayButton.setAttribute('type', 'plain');
-      applePayButton.setAttribute('locale', 'en');
+      // Square's ApplePay object has no createButton() method, and the
+      // <apple-pay-button> custom element only renders if Apple's own
+      // apple-pay-sdk.js is loaded on the page (it isn't here). Square's
+      // actual reference implementation just uses a plain styled <button>
+      // with tokenize() wired to its click handler.
+      const applePayButton = document.createElement('button');
+      applePayButton.type = 'button';
+      applePayButton.id = 'apple-pay-button';
+      applePayButton.setAttribute('aria-label', 'Pay with Apple Pay');
+      applePayButton.style.cssText =
+        '-webkit-appearance:-apple-pay-button;' +
+        '-apple-pay-button-type:plain;' +
+        '-apple-pay-button-style:black;' +
+        'width:100%;height:48px;border-radius:12px;border:none;cursor:pointer;';
       applePayContainer.appendChild(applePayButton);
       applePayContainer.style.display = 'block';
       divider.style.display = 'flex';
